@@ -1,0 +1,104 @@
+<!doctype html>
+<head>
+    <meta charset="utf-8" />
+    <title>JSON Form</title>
+</head>
+
+<body>
+    <script src="elm.js"></script>
+    <script>
+let initValue = null;
+
+try {
+    initValue = localStorage.editMe ? JSON.parse(localStorage.editMe) : {}
+} catch(e) {
+    initValue = {};
+}
+
+const elm = Elm.JsonFormApp.fullscreen(initValue);
+
+elm.ports.download.subscribe(x => download(x));
+
+function download(value) {
+    const a = document.createElement('a');
+    const blob = new Blob([JSON.stringify(value, null, '    ')], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    a.setAttribute('href', url);
+    a.download = 'JSON Schema';
+    a.click();
+}
+
+setTimeout(() => {
+
+    document.body.addEventListener('dragstart', () => {
+        // console.log('drag started');
+    });
+    document.body.addEventListener('dragover', e => {
+        const b = e.dataTransfer.effectAllowed;
+        e.dataTransfer.dropEffect = ('move' === b || 'linkMove' === b ||
+                'copyMove' === b) ? 'move' : 'copy';
+        // console.log('drag over');
+        return cancel(e);
+    });
+    document.body.addEventListener('dragenter', e => {
+        elm.ports.dragOver.send(true);
+        return cancel(e);
+    });
+    document.body.addEventListener('dragleave', e => {
+        elm.ports.dragOver.send(false);
+        return cancel(e);
+    });
+    document.body.addEventListener('drop', drop);
+    document.body.addEventListener('dragdrop', drop);
+
+    function drop(e) {
+        cancel(e);
+        if (e.dataTransfer.types.includes('Files')) {
+            const files = e.dataTransfer.files;
+            elm.ports.dragOver.send(false);
+            [].forEach.call(files, file => readContents(file));
+        } else if (e.dataTransfer.types.includes('text/uri-list')) {
+            elm.ports.dragOver.send(false);
+            fetch(e.dataTransfer.getData('text/uri-list'))
+                .then(x => x.text())
+                .then(load);
+        }
+    }
+
+
+    function readContents(file) {
+        const reader = new FileReader();
+        reader.readAsText(file);
+        reader.addEventListener('loadend', () => {
+            try {
+                load(reader.result);
+            } catch(e) {
+                console.error(e);
+            }
+        });
+    }
+
+    function load(text) {
+        const data = JSON.parse(text);
+        localStorage.editMe = text;
+        elm.ports.editJson.send(data);
+    }
+
+    function cancel(e) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        return false;
+    }
+
+    function offsetTop(el, limit) {
+        if (el === limit) {
+            return 0;
+        } else {
+            return el.offsetTop + offsetTop(el.parentNode, limit);
+        }
+    }
+}, 100);
+
+    </script>
+</body>
