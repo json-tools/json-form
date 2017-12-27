@@ -68,8 +68,9 @@ init : Schema -> Value -> Model
 init schema value =
     { value =
         value
-            |> Debug.log "incoming value"
-            |> decodeValue JsonValue.decoder
+            -- |> Debug.log "incoming value"
+            |>
+                decodeValue JsonValue.decoder
             |> Result.withDefault JsonValue.NullValue
     , schema = schema
     , expandedNodes = [ [] ]
@@ -86,7 +87,7 @@ update msg model =
             { model
                 | value =
                     model.value
-                        |> JsonValue.setIn path (StringValue str)
+                        |> JsonValue.setIn path (JsonValue.StringValue str)
                         |> Result.mapError (Debug.log "StringInput")
                         |> Result.withDefault model.value
             }
@@ -129,9 +130,6 @@ viewObject model schema props path =
             let
                 deeperLevelPath =
                     path ++ [ key ]
-
-                x =
-                    Debug.log key subSchema
             in
                 column None
                     []
@@ -150,32 +148,77 @@ viewObject model schema props path =
                         empty
                     ]
 
-        iterateOverSchemata propsDict (Schemata schemata) =
+        iterateOverSchemata propsDict required (Schemata schemata) =
             schemata
-                |> List.filterMap
+                |> List.map
                     (\( propName, subSchema ) ->
                         propsDict
                             |> Dict.get propName
                             |> Maybe.map (viewProperty propName subSchema)
+                            |> Maybe.withDefault
+                                (case required of
+                                    Just names ->
+                                        if List.member propName names then
+                                            viewProperty propName subSchema JsonValue.NullValue
+                                        else
+                                            empty
+
+                                    Nothing ->
+                                        empty
+                                )
                     )
-                |> column None [ paddingLeft 10 ]
 
         iterateOverProps list schema =
             list
                 |> List.map (\( key, value ) -> viewProperty key schema value)
-                |> column None [ paddingLeft 10 ]
     in
         case schema of
             BooleanSchema True ->
                 iterateOverProps props blankSchema
+                    |> column None [ paddingLeft 10 ]
 
             BooleanSchema False ->
-                iterateOverProps props <| ObjectSchema { blankSubSchema | not = Just blankSchema }
+                iterateOverProps props disallowEverythingSchema
+                    |> column None [ paddingLeft 10 ]
 
             ObjectSchema os ->
-                os.properties
-                    |> Maybe.map (iterateOverSchemata (Dict.fromList props))
-                    |> Maybe.withDefault empty
+                let
+                    knownProperties =
+                        case os.properties of
+                            Just (Schemata x) ->
+                                x
+                                    |> List.map (\( key, _ ) -> key)
+
+                            _ ->
+                                []
+
+                    extraProps =
+                        props
+                            |> List.filter
+                                (\( name, _ ) ->
+                                    List.member name knownProperties |> not
+                                )
+                in
+                    [ os.properties
+                        |> Maybe.map (iterateOverSchemata (Dict.fromList props) os.required)
+                        |> Maybe.withDefault []
+                    , case os.additionalProperties of
+                        Just (ObjectSchema os) ->
+                            iterateOverProps extraProps (ObjectSchema os)
+
+                        Just (BooleanSchema False) ->
+                            iterateOverProps extraProps disallowEverythingSchema
+
+                        _ ->
+                            iterateOverProps extraProps blankSchema
+                    ]
+                        |> List.concat
+                        |> column None [ paddingLeft 10 ]
+
+
+disallowEverythingSchema : Schema
+disallowEverythingSchema =
+    ObjectSchema { blankSubSchema | not = Just blankSchema }
 
 
 displayDescription : Schema -> View
@@ -233,13 +276,13 @@ viewString model schema stringValue path =
 viewValue : Model -> Schema -> JsonValue -> Path -> View
 viewValue model schema value path =
     case value of
-        ObjectValue ov ->
+        JsonValue.ObjectValue ov ->
             viewObject model schema ov path
 
-        ArrayValue av ->
+        JsonValue.ArrayValue av ->
             viewArray model schema av path
 
-        StringValue sv ->
+        JsonValue.StringValue sv ->
             viewString model schema sv path
 
         _ ->
