@@ -2,6 +2,7 @@ module JsonFormApp exposing (main)
 
 import Html exposing (Html, programWithFlags)
 import Json.Encode as Encode exposing (Value)
+import Json.Schemata as Schemata
 import Element exposing (Element, el, row, text, column, paragraph, empty)
 import Styles
     exposing
@@ -31,7 +32,7 @@ type alias Model =
 
 init : Value -> ( Model, Cmd Msg )
 init v =
-    { form = Form.init v
+    { form = Form.init Schemata.draft6 v
     }
         ! []
 
@@ -39,7 +40,7 @@ init v =
 view : Model -> Html Msg
 view model =
     Element.viewport stylesheet
-        (Form.view model.form |> Element.map FormMsg)
+        (Form.view model.form |> Element.map FormMsg |> el Main [])
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

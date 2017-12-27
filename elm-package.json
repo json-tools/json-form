@@ -3,10 +3,14 @@
     "summary": "Form generation showcase",
     "repository": "https://github.com/1602/json-form.git",
     "license": "BSD3",
-    "source-directories": [ "./src", "../json-schema/src" ],
+    "source-directories": [
+        "./src",
+        "../json-schema/src",
+        "../json-value/src"
+    ],
     "exposed-modules": [],
     "dependencies": {
-        "1602/json-value": "1.0.0 <= v < 2.0.0",
+        "1602/elm-feather": "2.2.0 <= v < 3.0.0",
         "NoRedInk/elm-decode-pipeline": "3.0.0 <= v < 4.0.0",
         "elm-community/json-extra": "2.0.0 <= v < 3.0.0",
         "elm-community/list-extra": "6.1.0 <= v < 7.0.0",

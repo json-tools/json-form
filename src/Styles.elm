@@ -25,6 +25,7 @@ type Styles
     | SchemaHeader
     | JsonEditor
     | SourceCode
+    | TextInput
     | InlineError
     | DataRowHint
 
@@ -161,5 +162,11 @@ stylesheet =
             [ Style.prop "font-family" "Menlo, monospace"
             , Font.size 11
             , Style.paddingHint 10
+            ]
+        , style TextInput
+            [ Border.rounded 2
+            , Border.all 1
+            , Color.border Color.darkGrey
+            , Style.paddingHint 3
             ]
         ]
