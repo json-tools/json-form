@@ -47,12 +47,13 @@ type alias Path =
 type Msg
     = NoOp
     | StringInput Path String
-    | DeleteKey Path String
+    | DeletePath Path
 
 
 type alias Model =
     { value : JsonValue
     , schema : Schema
+    , expandedNodes : List (List String)
     }
 
 
@@ -63,6 +64,7 @@ init schema value =
             |> decodeValue JsonValue.decoder
             |> Result.withDefault JsonValue.NullValue
     , schema = schema
+    , expandedNodes = [ [] ]
     }
 
 
@@ -82,12 +84,12 @@ update msg model =
             }
                 ! []
 
-        DeleteKey path str ->
+        DeletePath path ->
             { model
                 | value =
                     model.value
-                        |> JsonValue.deleteIn (path ++ [ str ])
-                        |> Result.mapError (Debug.log "DeleteKey")
+                        |> JsonValue.deleteIn path
+                        |> Result.mapError (Debug.log "DeletePath")
                         |> Result.withDefault model.value
             }
                 ! []
@@ -98,15 +100,15 @@ view model =
     viewValue model model.value []
 
 
-delete : Path -> String -> View
-delete path key =
+delete : Path -> View
+delete path =
     Icons.xCircle
         |> Icons.withStrokeWidth 1
         |> Icons.withSize 18
         |> Icons.toHtml []
         |> Element.html
         |> el None
-            [ onClick <| DeleteKey path key
+            [ onClick <| DeletePath path
             , width <| px 18
             , height <| px 18
             ]
@@ -117,18 +119,25 @@ viewObject model props path =
     props
         |> List.map
             (\( key, value ) ->
-                column None
-                    []
-                    [ row None
-                        [ verticalCenter, spacing 5, width <| px 200 ]
-                        [ text key
-                        , delete path key
-                        ]
-                    , row None
+                let
+                    deeperLevelPath =
+                        path ++ [ key ]
+                in
+                    column None
                         []
-                        [ viewValue model value (path ++ [ key ])
+                        [ row None
+                            [ verticalCenter, spacing 5, width <| px 200 ]
+                            [ text key
+                            , delete deeperLevelPath
+                            ]
+                        , if List.member deeperLevelPath model.expandedNodes then
+                            row None
+                                []
+                                [ viewValue model value deeperLevelPath
+                                ]
+                          else
+                            empty
                         ]
-                    ]
             )
         |> column None [ paddingLeft 10 ]
 
@@ -138,18 +147,22 @@ viewArray model list path =
     list
         |> List.indexedMap
             (\index value ->
-                column None
-                    []
-                    [ row None
-                        [ verticalCenter, spacing 5, width <| px 200 ]
-                        [ text <| toString index
-                        , delete path (toString index)
+                let
+                    deeperLevelPath =
+                        path ++ [ toString index ]
+                in
+                    column None
+                        []
+                        [ row None
+                            [ verticalCenter, spacing 5, width <| px 200 ]
+                            [ text <| toString index
+                            , delete deeperLevelPath
+                            ]
+                        , row None
+                            [ verticalCenter, spacing 5, width <| fill 1 ]
+                            [ viewValue model value deeperLevelPath
+                            ]
                         ]
-                    , row None
-                        [ verticalCenter, spacing 5, width <| fill 1 ]
-                        [ viewValue model value (path ++ [ toString index ])
-                        ]
-                    ]
             )
         |> column None [ paddingLeft 10 ]
 
