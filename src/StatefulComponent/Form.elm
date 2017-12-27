@@ -1,6 +1,7 @@
 module StatefulComponent.Form exposing (Model, Msg, init, update, view)
 
 import Dict
+import Ref
 import Json.Decode as Decode exposing (decodeValue)
 import Json.Encode as Encode exposing (Value)
 import JsonValue exposing (JsonValue(..))
@@ -109,7 +110,12 @@ update msg model =
             { model | expandedNodes = path :: model.expandedNodes } ! []
 
         CollapseNode path ->
-            { model | expandedNodes = model.expandedNodes |> List.filter ((/=) path) } ! []
+            { model
+                | expandedNodes =
+                    model.expandedNodes
+                        |> List.filter ((/=) path)
+            }
+                ! []
 
 
 view : Model -> View
@@ -144,10 +150,20 @@ isBlankSchema s =
 viewObject : Model -> Schema -> List ( String, JsonValue ) -> Path -> View
 viewObject model schema props path =
     let
-        viewProperty key subSchema value =
+        viewProperty key rawSubSchema value =
             let
                 deeperLevelPath =
                     path ++ [ key ]
+
+                ( _, subSchema ) =
+                    case rawSubSchema of
+                        ObjectSchema os ->
+                            os.ref
+                                |> Maybe.andThen (Ref.resolveReference "" Ref.defaultPool model.schema)
+                                |> Maybe.withDefault (( "", rawSubSchema ))
+
+                        _ ->
+                            ( "", rawSubSchema )
 
                 isBlank =
                     isBlankSchema subSchema
@@ -172,8 +188,9 @@ viewObject model schema props path =
                                     model.expandedNodes
 
                         JsonValue.ArrayValue _ ->
-                            List.member deeperLevelPath model.expandedNodes
+                            True
 
+                        --List.member deeperLevelPath model.expandedNodes
                         _ ->
                             True
             in
