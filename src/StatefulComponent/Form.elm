@@ -1,9 +1,16 @@
 module StatefulComponent.Form exposing (Model, Msg, init, update, view)
 
+import Dict
 import Json.Decode as Decode exposing (decodeValue)
 import Json.Encode as Encode exposing (Value)
 import JsonValue exposing (JsonValue(..))
-import Json.Schema.Definitions exposing (Schema(ObjectSchema, BooleanSchema))
+import Json.Schema.Definitions as Schema
+    exposing
+        ( Schemata(Schemata)
+        , Schema(ObjectSchema, BooleanSchema)
+        , blankSchema
+        , blankSubSchema
+        )
 import Element.Events as Events exposing (onInput, onClick)
 import FeatherIcons as Icons
 import Element.Attributes as Attributes
@@ -61,6 +68,7 @@ init : Schema -> Value -> Model
 init schema value =
     { value =
         value
+            |> Debug.log "incoming value"
             |> decodeValue JsonValue.decoder
             |> Result.withDefault JsonValue.NullValue
     , schema = schema
@@ -116,35 +124,58 @@ delete path =
 
 viewObject : Model -> Schema -> List ( String, JsonValue ) -> Path -> View
 viewObject model schema props path =
-    props
-        |> List.map
-            (\( key, value ) ->
-                let
-                    deeperLevelPath =
-                        path ++ [ key ]
+    let
+        viewProperty key subSchema value =
+            let
+                deeperLevelPath =
+                    path ++ [ key ]
 
-                    -- TODO use subschema for property
-                    schema =
-                        model.schema
-                in
-                    column None
-                        []
-                        [ row None
-                            [ verticalCenter, spacing 5, width <| px 200 ]
-                            [ text key
-                            , delete deeperLevelPath
-                            ]
-                        , displayDescription schema
-                        , if List.member deeperLevelPath model.expandedNodes then
-                            row None
-                                []
-                                [ viewValue model schema value deeperLevelPath
-                                ]
-                          else
-                            empty
+                x =
+                    Debug.log key subSchema
+            in
+                column None
+                    []
+                    [ row None
+                        [ verticalCenter, spacing 5, width <| px 200 ]
+                        [ text key
+                        , delete deeperLevelPath
                         ]
-            )
-        |> column None [ paddingLeft 10 ]
+                    , displayDescription subSchema
+                    , if List.member deeperLevelPath model.expandedNodes then
+                        row None
+                            []
+                            [ viewValue model subSchema value deeperLevelPath
+                            ]
+                      else
+                        empty
+                    ]
+
+        iterateOverSchemata propsDict (Schemata schemata) =
+            schemata
+                |> List.filterMap
+                    (\( propName, subSchema ) ->
+                        propsDict
+                            |> Dict.get propName
+                            |> Maybe.map (viewProperty propName subSchema)
+                    )
+                |> column None [ paddingLeft 10 ]
+
+        iterateOverProps list schema =
+            list
+                |> List.map (\( key, value ) -> viewProperty key schema value)
+                |> column None [ paddingLeft 10 ]
+    in
+        case schema of
+            BooleanSchema True ->
+                iterateOverProps props blankSchema
+
+            BooleanSchema False ->
+                iterateOverProps props <| ObjectSchema { blankSubSchema | not = Just blankSchema }
+
+            ObjectSchema os ->
+                os.properties
+                    |> Maybe.map (iterateOverSchemata (Dict.fromList props))
+                    |> Maybe.withDefault empty
 
 
 displayDescription : Schema -> View
