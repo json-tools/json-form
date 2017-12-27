@@ -131,6 +131,16 @@ delete path =
             ]
 
 
+isBlankSchema : Schema -> Bool
+isBlankSchema s =
+    case s of
+        ObjectSchema os ->
+            Encode.encode 0 os.source == "{}"
+
+        _ ->
+            False
+
+
 viewObject : Model -> Schema -> List ( String, JsonValue ) -> Path -> View
 viewObject model schema props path =
     let
@@ -258,21 +268,26 @@ viewObject model schema props path =
                                     List.member name knownProperties |> not
                                 )
                 in
-                    [ os.properties
-                        |> Maybe.map (iterateOverSchemata (Dict.fromList props) os.required)
-                        |> Maybe.withDefault []
-                    , case os.additionalProperties of
-                        Just (ObjectSchema os) ->
-                            iterateOverProps extraProps (ObjectSchema os)
+                    if isBlankSchema schema then
+                        "{}"
+                            |> text
+                            |> el SourceCode [ paddingLeft 10 ]
+                    else
+                        [ os.properties
+                            |> Maybe.map (iterateOverSchemata (Dict.fromList props) os.required)
+                            |> Maybe.withDefault []
+                        , case os.additionalProperties of
+                            Just (ObjectSchema os) ->
+                                iterateOverProps extraProps (ObjectSchema os)
 
-                        Just (BooleanSchema False) ->
-                            iterateOverProps extraProps disallowEverythingSchema
+                            Just (BooleanSchema False) ->
+                                iterateOverProps extraProps disallowEverythingSchema
 
-                        _ ->
-                            iterateOverProps extraProps blankSchema
-                    ]
-                        |> List.concat
-                        |> column None [ paddingLeft 10 ]
+                            _ ->
+                                iterateOverProps extraProps blankSchema
+                        ]
+                            |> List.concat
+                            |> column None [ paddingLeft 10 ]
 
 
 disallowEverythingSchema : Schema
