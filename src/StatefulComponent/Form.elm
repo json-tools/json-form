@@ -55,6 +55,8 @@ type Msg
     = NoOp
     | StringInput Path String
     | DeletePath Path
+    | ExpandNode Path
+    | CollapseNode Path
 
 
 type alias Model =
@@ -103,6 +105,12 @@ update msg model =
             }
                 ! []
 
+        ExpandNode path ->
+            { model | expandedNodes = path :: model.expandedNodes } ! []
+
+        CollapseNode path ->
+            { model | expandedNodes = model.expandedNodes |> List.filter ((/=) path) } ! []
+
 
 view : Model -> View
 view model =
@@ -130,16 +138,67 @@ viewObject model schema props path =
             let
                 deeperLevelPath =
                     path ++ [ key ]
+
+                isBlank =
+                    isBlankSchema subSchema
+
+                isExpandable =
+                    case value of
+                        JsonValue.ObjectValue _ ->
+                            isBlank |> not
+
+                        JsonValue.ArrayValue _ ->
+                            isBlank |> not
+
+                        _ ->
+                            False
+
+                isExpanded =
+                    case value of
+                        JsonValue.ObjectValue _ ->
+                            isBlankSchema subSchema
+                                || List.member
+                                    deeperLevelPath
+                                    model.expandedNodes
+
+                        JsonValue.ArrayValue _ ->
+                            List.member deeperLevelPath model.expandedNodes
+
+                        _ ->
+                            True
             in
                 column None
                     []
                     [ row None
                         [ verticalCenter, spacing 5, width <| px 200 ]
-                        [ text key
+                        [ (if isExpandable then
+                            (if isExpanded then
+                                Icons.chevronDown
+                             else
+                                Icons.chevronRight
+                            )
+                                |> Icons.withSize 18
+                                |> Icons.withStrokeWidth 1
+                                |> Icons.toHtml []
+                                |> Element.html
+                                |> el None
+                                    [ width <| px 18
+                                    , height <| px 18
+                                    , inlineStyle [ ( "cursor", "pointer" ) ]
+                                    , if isExpanded then
+                                        onClick <| CollapseNode deeperLevelPath
+                                      else
+                                        onClick <| ExpandNode deeperLevelPath
+                                    ]
+                           else
+                            text ""
+                                |> el None [ width <| px 18, height <| px 18 ]
+                          )
+                        , text key
                         , delete deeperLevelPath
                         ]
-                    , displayDescription subSchema
-                    , if List.member deeperLevelPath model.expandedNodes then
+                      --, displayDescription subSchema
+                    , if isExpanded then
                         row None
                             []
                             [ viewValue model subSchema value deeperLevelPath
