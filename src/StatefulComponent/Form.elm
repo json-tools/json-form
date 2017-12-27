@@ -97,7 +97,7 @@ update msg model =
 
 view : Model -> View
 view model =
-    viewValue model model.value []
+    viewValue model model.schema model.value []
 
 
 delete : Path -> View
@@ -114,14 +114,18 @@ delete path =
             ]
 
 
-viewObject : Model -> List ( String, JsonValue ) -> Path -> View
-viewObject model props path =
+viewObject : Model -> Schema -> List ( String, JsonValue ) -> Path -> View
+viewObject model schema props path =
     props
         |> List.map
             (\( key, value ) ->
                 let
                     deeperLevelPath =
                         path ++ [ key ]
+
+                    -- TODO use subschema for property
+                    schema =
+                        model.schema
                 in
                     column None
                         []
@@ -130,10 +134,11 @@ viewObject model props path =
                             [ text key
                             , delete deeperLevelPath
                             ]
+                        , displayDescription schema
                         , if List.member deeperLevelPath model.expandedNodes then
                             row None
                                 []
-                                [ viewValue model value deeperLevelPath
+                                [ viewValue model schema value deeperLevelPath
                                 ]
                           else
                             empty
@@ -142,14 +147,31 @@ viewObject model props path =
         |> column None [ paddingLeft 10 ]
 
 
-viewArray : Model -> List JsonValue -> Path -> View
-viewArray model list path =
+displayDescription : Schema -> View
+displayDescription schema =
+    case schema of
+        ObjectSchema os ->
+            os.description
+                |> Maybe.map text
+                |> Maybe.map (el None [])
+                |> Maybe.withDefault empty
+
+        _ ->
+            empty
+
+
+viewArray : Model -> Schema -> List JsonValue -> Path -> View
+viewArray model schema list path =
     list
         |> List.indexedMap
             (\index value ->
                 let
                     deeperLevelPath =
                         path ++ [ toString index ]
+
+                    -- TODO use subschema for property
+                    schema =
+                        model.schema
                 in
                     column None
                         []
@@ -158,17 +180,18 @@ viewArray model list path =
                             [ text <| toString index
                             , delete deeperLevelPath
                             ]
+                        , displayDescription schema
                         , row None
                             [ verticalCenter, spacing 5, width <| fill 1 ]
-                            [ viewValue model value deeperLevelPath
+                            [ viewValue model schema value deeperLevelPath
                             ]
                         ]
             )
         |> column None [ paddingLeft 10 ]
 
 
-viewString : Model -> String -> Path -> View
-viewString model stringValue path =
+viewString : Model -> Schema -> String -> Path -> View
+viewString model schema stringValue path =
     row None
         []
         [ stringValue
@@ -176,17 +199,17 @@ viewString model stringValue path =
         ]
 
 
-viewValue : Model -> JsonValue -> Path -> View
-viewValue model value path =
+viewValue : Model -> Schema -> JsonValue -> Path -> View
+viewValue model schema value path =
     case value of
         ObjectValue ov ->
-            viewObject model ov path
+            viewObject model schema ov path
 
         ArrayValue av ->
-            viewArray model av path
+            viewArray model schema av path
 
         StringValue sv ->
-            viewString model sv path
+            viewString model schema sv path
 
         _ ->
             text "something else"
