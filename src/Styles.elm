@@ -164,9 +164,14 @@ stylesheet =
             , Style.paddingHint 10
             ]
         , style TextInput
-            [ Border.rounded 2
-            , Border.all 1
+            [ Style.prop "font-family" "Menlo, monospace"
+            , Border.bottom 2
+            , Style.prop "outline" "none"
             , Color.border Color.darkGrey
             , Style.paddingHint 3
+            , Style.prop "transition" "border-color 0.2s linear"
+            , Style.pseudo "focus"
+                [ Color.border Color.lightBlue
+                ]
             ]
         ]

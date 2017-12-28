@@ -79,12 +79,7 @@ init schema value =
                 decodeValue JsonValue.decoder
             |> Result.withDefault JsonValue.NullValue
     , schema = schema
-    , expandedNodes =
-        [ []
-        , [ "definitions" ]
-        , [ "definitions", "simpleTypes" ]
-        , [ "definitions", "simpleTypes", "enum" ]
-        ]
+    , expandedNodes = [ [] ]
     }
 
 
@@ -150,7 +145,8 @@ update msg model =
 
 view : Model -> View
 view model =
-    viewValue model model.schema model.value []
+    el None [ inlineStyle [ ( "font-family", "Menlo, monospace" ), ( "font-size", "12px" ), ( "line-height", "1.4" ) ], width <| percent 50 ] <|
+        viewValue model model.schema model.value []
 
 
 delete : Path -> View
@@ -172,7 +168,7 @@ isBlankSchema =
     Schema.encode >> (Encode.encode 0) >> ((==) "{}")
 
 
-viewObject : Model -> Schema -> List ( String, JsonValue ) -> Bool -> Path -> View
+viewObject : Model -> Schema -> List ( String, JsonValue ) -> Bool -> Path -> List View
 viewObject model schema props isArray path =
     let
         viewProperty key rawSubSchema value =
@@ -230,7 +226,7 @@ viewObject model schema props isArray path =
                 column None
                     []
                     [ row None
-                        [ verticalCenter, spacing 5, width <| px 200 ]
+                        [ verticalCenter, spacing 5 ]
                         [ (if isExpandable then
                             (if isExpanded then
                                 Icons.chevronDown
@@ -251,8 +247,16 @@ viewObject model schema props isArray path =
                                         onClick <| ExpandNode deeperLevelPath
                                     ]
                            else
-                            text ""
-                                |> el None [ width <| px 18, height <| px 18 ]
+                            Icons.chevronDown
+                                |> Icons.withSize 18
+                                |> Icons.withStrokeWidth 1
+                                |> Icons.toHtml []
+                                |> Element.html
+                                |> el None
+                                    [ width <| px 18
+                                    , height <| px 18
+                                    , inlineStyle [ ( "color", "lightgrey" ) ]
+                                    ]
                           )
                         , text key
                         , delete deeperLevelPath
@@ -294,11 +298,9 @@ viewObject model schema props isArray path =
         case schema of
             BooleanSchema True ->
                 iterateOverProps props blankSchema
-                    |> column None [ paddingLeft 10 ]
 
             BooleanSchema False ->
                 iterateOverProps props disallowEverythingSchema
-                    |> column None [ paddingLeft 10 ]
 
             ObjectSchema os ->
                 let
@@ -319,11 +321,12 @@ viewObject model schema props isArray path =
                                 )
                 in
                     if isBlankSchema schema then
-                        (ObjectValue props)
+                        [ (ObjectValue props)
                             |> JsonValue.encode
                             |> Encode.encode 4
                             |> text
                             |> el SourceCode [ paddingLeft 10 ]
+                        ]
                     else
                         (if isArray then
                             case os.items of
@@ -352,7 +355,6 @@ viewObject model schema props isArray path =
                             ]
                                 |> List.concat
                         )
-                            |> column None [ paddingLeft 10 ]
 
 
 disallowEverythingSchema : Schema
@@ -380,19 +382,19 @@ viewString model schema stringValue path =
             []
             [ stringValue
                 |> toString
-                |> Element.textArea TextInput [ onInput <| ValueInput path ]
+                |> Element.textArea TextInput [ onInput <| ValueInput path, width <| fill 1 ]
             ]
     else
         row None
             []
             [ stringValue
-                |> Element.inputText TextInput [ onInput <| StringInput path ]
+                |> Element.inputText TextInput [ onInput <| StringInput path, width <| fill 1 ]
             ]
 
 
 viewValue : Model -> Schema -> JsonValue -> Path -> View
 viewValue model schema value path =
-    case value of
+    (case value of
         JsonValue.ObjectValue ov ->
             viewObject model schema ov False path
 
@@ -400,7 +402,9 @@ viewValue model schema value path =
             viewObject model schema (av |> List.indexedMap (\index val -> ( toString index, val ))) True path
 
         JsonValue.StringValue sv ->
-            viewString model schema sv path
+            [ viewString model schema sv path ]
 
         _ ->
-            text "something else"
+            [ text "something else" ]
+    )
+        |> column None [ paddingLeft 20, spacing 5, width <| fill 1 ]
