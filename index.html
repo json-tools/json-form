@@ -7,15 +7,23 @@
 <body>
     <script src="elm.js"></script>
     <script>
-let initValue = null;
+let editMe = null;
 
 try {
-    initValue = localStorage.editMe ? JSON.parse(localStorage.editMe) : {}
+    editMe = localStorage.editMe ? JSON.parse(localStorage.editMe) : {}
 } catch(e) {
-    initValue = {};
+    editMe = {};
 }
 
-const elm = Elm.JsonFormApp.fullscreen(initValue);
+let expandedNodes = null;
+
+try {
+    expandedNodes = localStorage.expandedNodes ? JSON.parse(localStorage.expandedNodes) : {}
+} catch(e) {
+    expandedNodes = {};
+}
+
+const elm = Elm.JsonFormApp.fullscreen({ value: editMe, expandedNodes: expandedNodes });
 
 if (elm.ports && elm.ports.download) {
     elm.ports.download.subscribe(x => download(x));
@@ -23,6 +31,10 @@ if (elm.ports && elm.ports.download) {
 
 elm.ports.save.subscribe(x => {
     localStorage.editMe = JSON.stringify(x, null, '    ');
+});
+
+elm.ports.expandedNodes.subscribe(x => {
+    localStorage.expandedNodes = JSON.stringify(x, null, '    ');
 });
 
 function download(value) {

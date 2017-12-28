@@ -1,11 +1,12 @@
 module StatefulComponent.Form exposing (Model, Msg, init, update, view)
 
-import Ports exposing (save)
+import Ports exposing (save, expandedNodes)
 import Dict
 import Ref
-import Json.Decode as Decode exposing (decodeValue)
+import Json.Decode as Decode exposing (Decoder, decodeValue)
 import Json.Encode as Encode exposing (Value)
 import JsonValue exposing (JsonValue(..))
+import Json.Schema
 import Json.Schema.Definitions as Schema
     exposing
         ( Schemata(Schemata)
@@ -70,17 +71,37 @@ type alias Model =
     }
 
 
-init : Schema -> Value -> Model
-init schema value =
-    { value =
-        value
-            -- |> Debug.log "incoming value"
-            |>
-                decodeValue JsonValue.decoder
-            |> Result.withDefault JsonValue.NullValue
-    , schema = schema
-    , expandedNodes = [ [] ]
+type alias SessionData =
+    { value : JsonValue
+    , expandedNodes : List (List String)
     }
+
+
+sessionDataDecoder : Decoder SessionData
+sessionDataDecoder =
+    Decode.map2 SessionData
+        (Decode.field "value" JsonValue.decoder)
+        (Decode.field "expandedNodes" (Decode.list (Decode.list Decode.string)))
+
+
+init : Schema -> Value -> Model
+init schema v =
+    case v |> decodeValue sessionDataDecoder of
+        Ok { value, expandedNodes } ->
+            { schema = schema
+            , value = value
+            , expandedNodes = expandedNodes
+            }
+
+        Err _ ->
+            { schema = schema
+            , value =
+                schema
+                    |> Schema.encode
+                    |> decodeValue JsonValue.decoder
+                    |> Result.withDefault JsonValue.NullValue
+            , expandedNodes = [ [] ]
+            }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -132,15 +153,19 @@ update msg model =
                 { model | value = value } ! [ value |> JsonValue.encode |> save ]
 
         ExpandNode path ->
-            { model | expandedNodes = path :: model.expandedNodes } ! []
+            let
+                en =
+                    path :: model.expandedNodes
+            in
+                { model | expandedNodes = en } ! [ expandedNodes en ]
 
         CollapseNode path ->
-            { model
-                | expandedNodes =
+            let
+                en =
                     model.expandedNodes
                         |> List.filter ((/=) path)
-            }
-                ! []
+            in
+                { model | expandedNodes = en } ! [ expandedNodes en ]
 
 
 view : Model -> View
@@ -168,121 +193,165 @@ isBlankSchema =
     Schema.encode >> (Encode.encode 0) >> ((==) "{}")
 
 
+pickOneOf : List Schema -> Value -> Schema
+pickOneOf listSchemas value =
+    let
+        defaultResult =
+            listSchemas
+                |> List.head
+                |> Maybe.withDefault blankSchema
+
+        isValid s =
+            Json.Schema.validateValue value s
+                |> Result.toMaybe
+                |> (/=) Nothing
+    in
+        listSchemas
+            |> List.filter isValid
+            |> List.head
+            |> Maybe.withDefault defaultResult
+
+
+resolve : Schema -> Schema -> Schema
+resolve rootSchema rawSubSchema =
+    let
+        ( _, resolvedSchema ) =
+            (case rawSubSchema of
+                ObjectSchema os ->
+                    os.ref
+                        |> Maybe.andThen (Ref.resolveReference "" Ref.defaultPool rootSchema)
+                        |> Maybe.withDefault (( "", rawSubSchema ))
+
+                _ ->
+                    ( "", rawSubSchema )
+            )
+    in
+        resolvedSchema
+
+
+viewProperty : Model -> Path -> String -> Schema -> JsonValue -> View
+viewProperty model path key rawSubSchema value =
+    let
+        deeperLevelPath =
+            path ++ [ key ]
+
+        subSchema =
+            case resolve model.schema rawSubSchema of
+                ObjectSchema os ->
+                    case os.anyOf of
+                        Just schemas ->
+                            value
+                                |> JsonValue.encode
+                                |> pickOneOf schemas
+                                |> resolve model.schema
+
+                        Nothing ->
+                            ObjectSchema os
+
+                x ->
+                    x
+
+        isBlank =
+            isBlankSchema subSchema
+
+        isExpandable =
+            case value of
+                JsonValue.ObjectValue _ ->
+                    isBlank |> not
+
+                JsonValue.ArrayValue _ ->
+                    isBlank |> not
+
+                {-
+                   isBlank
+                       |> not
+                       |> Debug.log (toString deeperLevelPath)
+                -}
+                _ ->
+                    False
+
+        isExpanded =
+            case value of
+                JsonValue.ObjectValue _ ->
+                    isBlank
+                        || List.member
+                            deeperLevelPath
+                            model.expandedNodes
+
+                JsonValue.ArrayValue _ ->
+                    isBlank
+                        || List.member
+                            deeperLevelPath
+                            model.expandedNodes
+
+                --List.member deeperLevelPath model.expandedNodes
+                _ ->
+                    True
+    in
+        column None
+            [ spacing 10 ]
+            [ row None
+                [ verticalCenter, spacing 5 ]
+                [ (if isExpandable then
+                    (if isExpanded then
+                        Icons.chevronDown
+                     else
+                        Icons.chevronRight
+                    )
+                        |> Icons.withSize 18
+                        |> Icons.withStrokeWidth 1
+                        |> Icons.toHtml []
+                        |> Element.html
+                        |> el None
+                            [ width <| px 18
+                            , height <| px 18
+                            , inlineStyle [ ( "cursor", "pointer" ) ]
+                            , if isExpanded then
+                                onClick <| CollapseNode deeperLevelPath
+                              else
+                                onClick <| ExpandNode deeperLevelPath
+                            ]
+                   else
+                    Icons.chevronDown
+                        |> Icons.withSize 18
+                        |> Icons.withStrokeWidth 1
+                        |> Icons.toHtml []
+                        |> Element.html
+                        |> el None
+                            [ width <| px 18
+                            , height <| px 18
+                            , inlineStyle [ ( "color", "lightgrey" ) ]
+                            ]
+                  )
+                , text key
+                , delete deeperLevelPath
+                ]
+              --, displayDescription subSchema
+            , if isExpanded then
+                row None
+                    []
+                    [ viewValue model subSchema value deeperLevelPath
+                    ]
+              else
+                empty
+            ]
+
+
 viewObject : Model -> Schema -> List ( String, JsonValue ) -> Bool -> Path -> List View
 viewObject model schema props isArray path =
     let
-        viewProperty key rawSubSchema value =
-            let
-                deeperLevelPath =
-                    path ++ [ key ]
-
-                ( _, subSchema ) =
-                    case rawSubSchema of
-                        ObjectSchema os ->
-                            os.ref
-                                |> Maybe.andThen (Ref.resolveReference "" Ref.defaultPool model.schema)
-                                |> Maybe.withDefault (( "", rawSubSchema ))
-
-                        _ ->
-                            ( "", rawSubSchema )
-
-                isBlank =
-                    isBlankSchema subSchema
-
-                isExpandable =
-                    case value of
-                        JsonValue.ObjectValue _ ->
-                            isBlank |> not
-
-                        JsonValue.ArrayValue _ ->
-                            isBlank |> not
-
-                        {-
-                           isBlank
-                               |> not
-                               |> Debug.log (toString deeperLevelPath)
-                        -}
-                        _ ->
-                            False
-
-                isExpanded =
-                    case value of
-                        JsonValue.ObjectValue _ ->
-                            isBlank
-                                || List.member
-                                    deeperLevelPath
-                                    model.expandedNodes
-
-                        JsonValue.ArrayValue _ ->
-                            isBlank
-                                || List.member
-                                    deeperLevelPath
-                                    model.expandedNodes
-
-                        --List.member deeperLevelPath model.expandedNodes
-                        _ ->
-                            True
-            in
-                column None
-                    []
-                    [ row None
-                        [ verticalCenter, spacing 5 ]
-                        [ (if isExpandable then
-                            (if isExpanded then
-                                Icons.chevronDown
-                             else
-                                Icons.chevronRight
-                            )
-                                |> Icons.withSize 18
-                                |> Icons.withStrokeWidth 1
-                                |> Icons.toHtml []
-                                |> Element.html
-                                |> el None
-                                    [ width <| px 18
-                                    , height <| px 18
-                                    , inlineStyle [ ( "cursor", "pointer" ) ]
-                                    , if isExpanded then
-                                        onClick <| CollapseNode deeperLevelPath
-                                      else
-                                        onClick <| ExpandNode deeperLevelPath
-                                    ]
-                           else
-                            Icons.chevronDown
-                                |> Icons.withSize 18
-                                |> Icons.withStrokeWidth 1
-                                |> Icons.toHtml []
-                                |> Element.html
-                                |> el None
-                                    [ width <| px 18
-                                    , height <| px 18
-                                    , inlineStyle [ ( "color", "lightgrey" ) ]
-                                    ]
-                          )
-                        , text key
-                        , delete deeperLevelPath
-                        ]
-                      --, displayDescription subSchema
-                    , if isExpanded then
-                        row None
-                            []
-                            [ viewValue model subSchema value deeperLevelPath
-                            ]
-                      else
-                        empty
-                    ]
-
         iterateOverSchemata propsDict required (Schemata schemata) =
             schemata
                 |> List.map
                     (\( propName, subSchema ) ->
                         propsDict
                             |> Dict.get propName
-                            |> Maybe.map (viewProperty propName subSchema)
+                            |> Maybe.map (viewProperty model path propName subSchema)
                             |> Maybe.withDefault
                                 (case required of
                                     Just names ->
                                         if List.member propName names then
-                                            viewProperty propName subSchema JsonValue.NullValue
+                                            viewProperty model path propName subSchema JsonValue.NullValue
                                         else
                                             empty
 
@@ -293,7 +362,7 @@ viewObject model schema props isArray path =
 
         iterateOverProps list schema =
             list
-                |> List.map (\( key, value ) -> viewProperty key schema value)
+                |> List.map (\( key, value ) -> viewProperty model path key schema value)
     in
         case schema of
             BooleanSchema True ->
@@ -407,4 +476,4 @@ viewValue model schema value path =
         _ ->
             [ text "something else" ]
     )
-        |> column None [ paddingLeft 20, spacing 5, width <| fill 1 ]
+        |> column None [ paddingLeft 20, spacing 10, width <| fill 1 ]
