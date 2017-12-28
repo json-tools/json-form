@@ -21,6 +21,10 @@ if (elm.ports && elm.ports.download) {
     elm.ports.download.subscribe(x => download(x));
 }
 
+elm.ports.save.subscribe(x => {
+    localStorage.editMe = JSON.stringify(x, null, '    ');
+});
+
 function download(value) {
     const a = document.createElement('a');
     const blob = new Blob([JSON.stringify(value, null, '    ')], { type: 'application/json' });

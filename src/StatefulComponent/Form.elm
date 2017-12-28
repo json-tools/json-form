@@ -1,5 +1,6 @@
 module StatefulComponent.Form exposing (Model, Msg, init, update, view)
 
+import Ports exposing (save)
 import Dict
 import Ref
 import Json.Decode as Decode exposing (decodeValue)
@@ -9,6 +10,7 @@ import Json.Schema.Definitions as Schema
     exposing
         ( Schemata(Schemata)
         , Schema(ObjectSchema, BooleanSchema)
+        , Items(NoItems, ItemDefinition, ArrayOfItems)
         , blankSchema
         , blankSubSchema
         )
@@ -54,6 +56,7 @@ type alias Path =
 
 type Msg
     = NoOp
+    | ValueInput Path String
     | StringInput Path String
     | DeletePath Path
     | ExpandNode Path
@@ -76,7 +79,12 @@ init schema value =
                 decodeValue JsonValue.decoder
             |> Result.withDefault JsonValue.NullValue
     , schema = schema
-    , expandedNodes = [ [] ]
+    , expandedNodes =
+        [ []
+        , [ "definitions" ]
+        , [ "definitions", "simpleTypes" ]
+        , [ "definitions", "simpleTypes", "enum" ]
+        ]
     }
 
 
@@ -85,6 +93,28 @@ update msg model =
     case msg of
         NoOp ->
             model ! []
+
+        ValueInput path str ->
+            { model
+                | value =
+                    str
+                        |> Decode.decodeString JsonValue.decoder
+                        |> Result.andThen
+                            (\v ->
+                                model.value
+                                    |> JsonValue.setIn path v
+                                    --  TODO display setIn error
+                                    |>
+                                        Result.mapError (Debug.log "ValueInput.setIn")
+                            )
+                        --  TODO display parse error
+                        |>
+                            Result.mapError (Debug.log "ValueInput.parse")
+                        --  TODO display validation error
+                        |>
+                            Result.withDefault model.value
+            }
+                ! []
 
         StringInput path str ->
             { model
@@ -97,14 +127,14 @@ update msg model =
                 ! []
 
         DeletePath path ->
-            { model
-                | value =
+            let
+                value =
                     model.value
                         |> JsonValue.deleteIn path
                         |> Result.mapError (Debug.log "DeletePath")
                         |> Result.withDefault model.value
-            }
-                ! []
+            in
+                { model | value = value } ! [ value |> JsonValue.encode |> save ]
 
         ExpandNode path ->
             { model | expandedNodes = path :: model.expandedNodes } ! []
@@ -138,17 +168,12 @@ delete path =
 
 
 isBlankSchema : Schema -> Bool
-isBlankSchema s =
-    case s of
-        ObjectSchema os ->
-            Encode.encode 0 os.source == "{}"
-
-        _ ->
-            False
+isBlankSchema =
+    Schema.encode >> (Encode.encode 0) >> ((==) "{}")
 
 
-viewObject : Model -> Schema -> List ( String, JsonValue ) -> Path -> View
-viewObject model schema props path =
+viewObject : Model -> Schema -> List ( String, JsonValue ) -> Bool -> Path -> View
+viewObject model schema props isArray path =
     let
         viewProperty key rawSubSchema value =
             let
@@ -176,19 +201,27 @@ viewObject model schema props path =
                         JsonValue.ArrayValue _ ->
                             isBlank |> not
 
+                        {-
+                           isBlank
+                               |> not
+                               |> Debug.log (toString deeperLevelPath)
+                        -}
                         _ ->
                             False
 
                 isExpanded =
                     case value of
                         JsonValue.ObjectValue _ ->
-                            isBlankSchema subSchema
+                            isBlank
                                 || List.member
                                     deeperLevelPath
                                     model.expandedNodes
 
                         JsonValue.ArrayValue _ ->
-                            True
+                            isBlank
+                                || List.member
+                                    deeperLevelPath
+                                    model.expandedNodes
 
                         --List.member deeperLevelPath model.expandedNodes
                         _ ->
@@ -286,24 +319,39 @@ viewObject model schema props path =
                                 )
                 in
                     if isBlankSchema schema then
-                        "{}"
+                        (ObjectValue props)
+                            |> JsonValue.encode
+                            |> Encode.encode 4
                             |> text
                             |> el SourceCode [ paddingLeft 10 ]
                     else
-                        [ os.properties
-                            |> Maybe.map (iterateOverSchemata (Dict.fromList props) os.required)
-                            |> Maybe.withDefault []
-                        , case os.additionalProperties of
-                            Just (ObjectSchema os) ->
-                                iterateOverProps extraProps (ObjectSchema os)
+                        (if isArray then
+                            case os.items of
+                                NoItems ->
+                                    iterateOverProps props blankSchema
 
-                            Just (BooleanSchema False) ->
-                                iterateOverProps extraProps disallowEverythingSchema
+                                ItemDefinition s ->
+                                    iterateOverProps props s
 
-                            _ ->
-                                iterateOverProps extraProps blankSchema
-                        ]
-                            |> List.concat
+                                -- TODO: hande arrayOfItems
+                                _ ->
+                                    iterateOverProps props disallowEverythingSchema
+                         else
+                            [ os.properties
+                                |> Maybe.map (iterateOverSchemata (Dict.fromList props) os.required)
+                                |> Maybe.withDefault []
+                            , case os.additionalProperties of
+                                Just (ObjectSchema os) ->
+                                    iterateOverProps extraProps (ObjectSchema os)
+
+                                Just (BooleanSchema False) ->
+                                    iterateOverProps extraProps disallowEverythingSchema
+
+                                _ ->
+                                    iterateOverProps extraProps blankSchema
+                            ]
+                                |> List.concat
+                        )
                             |> column None [ paddingLeft 10 ]
 
 
@@ -325,53 +373,31 @@ displayDescription schema =
             empty
 
 
-viewArray : Model -> Schema -> List JsonValue -> Path -> View
-viewArray model schema list path =
-    list
-        |> List.indexedMap
-            (\index value ->
-                let
-                    deeperLevelPath =
-                        path ++ [ toString index ]
-
-                    -- TODO use subschema for property
-                    schema =
-                        model.schema
-                in
-                    column None
-                        []
-                        [ row None
-                            [ verticalCenter, spacing 5, width <| px 200 ]
-                            [ text <| toString index
-                            , delete deeperLevelPath
-                            ]
-                        , displayDescription schema
-                        , row None
-                            [ verticalCenter, spacing 5, width <| fill 1 ]
-                            [ viewValue model schema value deeperLevelPath
-                            ]
-                        ]
-            )
-        |> column None [ paddingLeft 10 ]
-
-
 viewString : Model -> Schema -> String -> Path -> View
 viewString model schema stringValue path =
-    row None
-        []
-        [ stringValue
-            |> Element.inputText TextInput [ onInput <| StringInput path ]
-        ]
+    if isBlankSchema schema then
+        row None
+            []
+            [ stringValue
+                |> toString
+                |> Element.textArea TextInput [ onInput <| ValueInput path ]
+            ]
+    else
+        row None
+            []
+            [ stringValue
+                |> Element.inputText TextInput [ onInput <| StringInput path ]
+            ]
 
 
 viewValue : Model -> Schema -> JsonValue -> Path -> View
 viewValue model schema value path =
     case value of
         JsonValue.ObjectValue ov ->
-            viewObject model schema ov path
+            viewObject model schema ov False path
 
         JsonValue.ArrayValue av ->
-            viewArray model schema av path
+            viewObject model schema (av |> List.indexedMap (\index val -> ( toString index, val ))) True path
 
         JsonValue.StringValue sv ->
             viewString model schema sv path
