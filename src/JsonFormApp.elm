@@ -156,23 +156,28 @@ update msg model =
                     ! [ fc |> Cmd.map SchemaFormMsg, xx "schema" exMsg ]
 
         ValueFormMsg m ->
-            let
-                ( ( fm, fc ), exMsg ) =
-                    Form.update m model.schemaForm
+            case model.valueForm of
+                Nothing ->
+                    model ! []
 
-                value =
-                    case exMsg of
-                        UpdateValue v ->
-                            Just v
+                Just valueForm ->
+                    let
+                        ( ( fm, fc ), exMsg ) =
+                            Form.update m valueForm
 
-                        _ ->
-                            model.value
-            in
-                { model
-                    | valueForm = Just fm
-                    , value = value
-                }
-                    ! [ fc |> Cmd.map ValueFormMsg, xx "value" exMsg ]
+                        value =
+                            case exMsg of
+                                UpdateValue v ->
+                                    Just v
+
+                                _ ->
+                                    model.value
+                    in
+                        { model
+                            | valueForm = Just fm
+                            , value = value
+                        }
+                            ! [ fc |> Cmd.map ValueFormMsg, xx "value" exMsg ]
 
 
 subscriptions : Model -> Sub Msg

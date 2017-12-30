@@ -480,19 +480,44 @@ displayDescription schema =
 
 viewString : Model -> Schema -> String -> Path -> View
 viewString model schema stringValue path =
-    if isBlankSchema schema then
-        row None
-            []
-            [ stringValue
-                |> toString
-                |> Element.textArea TextInput [ onInput <| ValueInput path, width <| fill 1 ]
-            ]
-    else
-        row None
-            []
-            [ stringValue
-                |> Element.inputText TextInput [ onInput <| StringInput path, width <| fill 1 ]
-            ]
+    let
+        listId =
+            String.join "/" path
+    in
+        if isBlankSchema schema then
+            row None
+                []
+                [ stringValue
+                    |> toString
+                    |> Element.textArea TextInput [ onInput <| ValueInput path, width <| fill 1 ]
+                ]
+        else
+            row None
+                []
+                [ stringValue
+                    |> Element.inputText TextInput [ onInput <| StringInput path, Attributes.list listId, width <| fill 1 ]
+                , case schema of
+                    ObjectSchema os ->
+                        os.enum
+                            |> Maybe.map
+                                (\enum ->
+                                    enum
+                                        |> List.map
+                                            (\v ->
+                                                let
+                                                    strValue =
+                                                        v |> decodeValue Decode.string |> Result.withDefault ""
+                                                in
+                                                    Element.node "option" <| text strValue
+                                            )
+                                        |> row None [ inlineStyle [ ( "display", "none" ) ], Attributes.id listId ]
+                                        |> Element.node "datalist"
+                                )
+                            |> Maybe.withDefault empty
+
+                    _ ->
+                        empty
+                ]
 
 
 viewValue : Model -> Schema -> JsonValue -> Path -> View
