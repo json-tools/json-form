@@ -1,6 +1,5 @@
-module StatefulComponent.Form exposing (Model, Msg, init, update, view)
+module StatefulComponent.Form exposing (Model, Msg, ExternalMsg(UpdateValue, SaveExpandedNodes), init, update, view)
 
-import Ports exposing (save, expandedNodes)
 import Dict
 import Ref
 import Json.Decode as Decode exposing (Decoder, decodeValue)
@@ -59,14 +58,19 @@ type alias Path =
 
 
 type Msg
-    = NoOp
-    | ValueInput Path String
+    = ValueInput Path String
     | StringInput Path String
     | DeletePath Path
     | ExpandNode Path
     | CollapseNode Path
     | OpenMenu Path
     | CloseMenu
+
+
+type ExternalMsg
+    = NoOp
+    | UpdateValue Value
+    | SaveExpandedNodes (List Path)
 
 
 type alias Model =
@@ -77,53 +81,28 @@ type alias Model =
     }
 
 
-type alias SessionData =
-    { value : JsonValue
-    , expandedNodes : List Path
-    }
-
-
-sessionDataDecoder : Decoder SessionData
-sessionDataDecoder =
-    Decode.map2 SessionData
-        (Decode.field "value" JsonValue.decoder)
-        (Decode.field "expandedNodes" (Decode.list (Decode.list Decode.string)))
-
-
-init : Schema -> Value -> Model
-init schema v =
+init : Schema -> List Path -> Value -> Model
+init schema expandedNodes v =
     let
         blankModel =
             { schema = schema
             , value =
-                schema
-                    |> Schema.encode
+                v
                     |> decodeValue JsonValue.decoder
                     |> Result.withDefault JsonValue.NullValue
-            , expandedNodes = [ [] ]
+            , expandedNodes = expandedNodes
             , menu = Nothing
             }
     in
-        case v |> decodeValue sessionDataDecoder of
-            Ok { value, expandedNodes } ->
-                { blankModel
-                    | value = value
-                    , expandedNodes = expandedNodes
-                }
-
-            Err _ ->
-                blankModel
+        blankModel
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )
 update msg model =
     case msg of
-        NoOp ->
-            model ! []
-
         ValueInput path str ->
-            { model
-                | value =
+            let
+                updatedValue =
                     str
                         |> Decode.decodeString JsonValue.decoder
                         |> Result.andThen
@@ -140,18 +119,22 @@ update msg model =
                         --  TODO display validation error
                         |>
                             Result.withDefault model.value
-            }
-                ! []
+            in
+                { model | value = updatedValue }
+                    ! []
+                    => UpdateValue (updatedValue |> JsonValue.encode)
 
         StringInput path str ->
-            { model
-                | value =
+            let
+                updatedValue =
                     model.value
                         |> JsonValue.setIn path (JsonValue.StringValue str)
                         |> Result.mapError (Debug.log "StringInput")
                         |> Result.withDefault model.value
-            }
-                ! []
+            in
+                { model | value = updatedValue }
+                    ! []
+                    => UpdateValue (updatedValue |> JsonValue.encode)
 
         DeletePath path ->
             let
@@ -161,14 +144,14 @@ update msg model =
                         |> Result.mapError (Debug.log "DeletePath")
                         |> Result.withDefault model.value
             in
-                { model | value = value } ! [ value |> JsonValue.encode |> save ]
+                { model | value = value } ! [] => UpdateValue (value |> JsonValue.encode)
 
         ExpandNode path ->
             let
                 en =
                     path :: model.expandedNodes
             in
-                { model | expandedNodes = en } ! [ expandedNodes en ]
+                { model | expandedNodes = en } ! [] => SaveExpandedNodes en
 
         CollapseNode path ->
             let
@@ -176,18 +159,18 @@ update msg model =
                     model.expandedNodes
                         |> List.filter ((/=) path)
             in
-                { model | expandedNodes = en } ! [ expandedNodes en ]
+                { model | expandedNodes = en } ! [] => SaveExpandedNodes en
 
         OpenMenu path ->
-            { model | menu = Just path } ! []
+            { model | menu = Just path } ! [] => NoOp
 
         CloseMenu ->
-            { model | menu = Nothing } ! []
+            { model | menu = Nothing } ! [] => NoOp
 
 
 view : Model -> View
 view model =
-    el None [ inlineStyle [ ( "font-family", "Menlo, monospace" ), ( "font-size", "12px" ), ( "line-height", "1.4" ) ], width <| percent 50 ] <|
+    el None [ inlineStyle [ ( "font-family", "Menlo, monospace" ), ( "font-size", "12px" ), ( "line-height", "1.4" ) ], width <| percent 90 ] <|
         viewValue model model.schema model.value []
 
 
@@ -524,7 +507,12 @@ viewValue model schema value path =
         JsonValue.StringValue sv ->
             [ viewString model schema sv path ]
 
-        _ ->
-            [ text "something else" ]
+        x ->
+            [ text ("something else (" ++ (toString x) ++ ")") ]
     )
         |> column None [ paddingLeft 20, spacing 10, width <| fill 1 ]
+
+
+(=>) : a -> b -> ( a, b )
+(=>) a b =
+    ( a, b )

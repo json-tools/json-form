@@ -14,6 +14,58 @@
     <script>
 let editMe = null;
 
+localStorage.editMe = JSON.stringify( {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "enum": [
+                        "mr",
+                        "miss",
+                        "ms",
+                        "mrs"
+                    ]
+                },
+                "firstName": {
+                    "type": "string",
+                    "description": "First name(s) or given name(s), as specified in passport or travel document.",
+                    "example": "Bob"
+                },
+                "middleName": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Middle name, if applicable.<br/>This will only be used on websites which provide separate entry for middle names, otherwise it will be ignored.<br/>If middle name is essential for placing order, consider appending it to <code>firstName</code>."
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "Last name or surname, as specified in passport or travel document.",
+                    "example": "Smith"
+                },
+                "dateOfBirth": {
+                    "type": "string",
+                    "description": "Passenger's date of birth in YYYY-MM-DD format.",
+                    "format": "date",
+                    "example": "1976-01-27"
+                },
+                "addAdditionalLuggage": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 3,
+                    "default": 0
+                },
+                "document": { "$ref": "#/domains/FlightBooking/types/PassengerDocument" }
+            },
+            "required": [
+                "title",
+                "firstName",
+                "lastName",
+                "dateOfBirth",
+                "addAdditionalLuggage"
+            ],
+            "additionalProperties": false
+        }
+        , null, '    ');
+
 try {
     editMe = localStorage.editMe ? JSON.parse(localStorage.editMe) : {}
 } catch(e) {
@@ -38,8 +90,9 @@ elm.ports.save.subscribe(x => {
     localStorage.editMe = JSON.stringify(x, null, '    ');
 });
 
-elm.ports.expandedNodes.subscribe(x => {
-    localStorage.expandedNodes = JSON.stringify(x, null, '    ');
+elm.ports.expandedNodes.subscribe(([name, x]) => {
+    expandedNodes[name] = x;
+    localStorage.expandedNodes = JSON.stringify(expandedNodes, null, '    ');
 });
 
 function download(value) {
