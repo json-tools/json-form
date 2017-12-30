@@ -84,10 +84,15 @@ type alias Model =
 init : Schema -> List Path -> Value -> Model
 init schema expandedNodes v =
     let
+        validatedValue =
+            Json.Schema.validateValue { applyDefaults = True } v schema
+                |> Result.mapError (Debug.log "smth is not right")
+                |> Result.withDefault v
+
         blankModel =
             { schema = schema
             , value =
-                v
+                validatedValue
                     |> decodeValue JsonValue.decoder
                     |> Result.withDefault JsonValue.NullValue
             , expandedNodes = expandedNodes
@@ -204,7 +209,7 @@ pickOneOf listSchemas value =
                 |> Maybe.withDefault blankSchema
 
         isValid s =
-            Json.Schema.validateValue value s
+            Json.Schema.validateValue { applyDefaults = True } value s
                 |> Result.toMaybe
                 |> (/=) Nothing
     in
