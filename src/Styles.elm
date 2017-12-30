@@ -137,11 +137,12 @@ stylesheet =
             ]
         , style MenuItem
             [ Style.paddingHint 5
-            , Style.prop "color" "royalblue"
-            , Style.prop "background " "inherit"
+            , Style.prop "color" "black"
+            , Style.prop "background " "white"
             , Style.cursor "pointer"
+            , Border.rounded 2
               --, Style.prop "transition" "all .5s ease"
-            , Style.variation Active
+            , Style.hover
                 [ Color.text Color.white
                 , Style.prop "background " "#117bce"
                 , Style.prop "text-decoration" "none"

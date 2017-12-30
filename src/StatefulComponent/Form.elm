@@ -15,7 +15,7 @@ import Json.Schema.Definitions as Schema
         , blankSchema
         , blankSubSchema
         )
-import Element.Events as Events exposing (onInput, onClick)
+import Element.Events as Events exposing (onInput, onClick, onFocus, onBlur)
 import FeatherIcons as Icons
 import Element.Attributes as Attributes
     exposing
@@ -32,6 +32,8 @@ import Element.Attributes as Attributes
         , fill
         , px
         , percent
+        , class
+        , tabindex
         )
 import Element exposing (Element, el, row, text, column, paragraph, empty)
 import Styles
@@ -41,6 +43,7 @@ import Styles
             , Main
             , SourceCode
             , TextInput
+            , MenuItem
             )
         , Variations
         , stylesheet
@@ -62,18 +65,21 @@ type Msg
     | DeletePath Path
     | ExpandNode Path
     | CollapseNode Path
+    | OpenMenu Path
+    | CloseMenu
 
 
 type alias Model =
     { value : JsonValue
     , schema : Schema
-    , expandedNodes : List (List String)
+    , expandedNodes : List Path
+    , menu : Maybe Path
     }
 
 
 type alias SessionData =
     { value : JsonValue
-    , expandedNodes : List (List String)
+    , expandedNodes : List Path
     }
 
 
@@ -86,14 +92,8 @@ sessionDataDecoder =
 
 init : Schema -> Value -> Model
 init schema v =
-    case v |> decodeValue sessionDataDecoder of
-        Ok { value, expandedNodes } ->
-            { schema = schema
-            , value = value
-            , expandedNodes = expandedNodes
-            }
-
-        Err _ ->
+    let
+        blankModel =
             { schema = schema
             , value =
                 schema
@@ -101,7 +101,18 @@ init schema v =
                     |> decodeValue JsonValue.decoder
                     |> Result.withDefault JsonValue.NullValue
             , expandedNodes = [ [] ]
+            , menu = Nothing
             }
+    in
+        case v |> decodeValue sessionDataDecoder of
+            Ok { value, expandedNodes } ->
+                { blankModel
+                    | value = value
+                    , expandedNodes = expandedNodes
+                }
+
+            Err _ ->
+                blankModel
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -167,6 +178,12 @@ update msg model =
             in
                 { model | expandedNodes = en } ! [ expandedNodes en ]
 
+        OpenMenu path ->
+            { model | menu = Just path } ! []
+
+        CloseMenu ->
+            { model | menu = Nothing } ! []
+
 
 view : Model -> View
 view model =
@@ -185,6 +202,8 @@ delete path =
             [ onClick <| DeletePath path
             , width <| px 18
             , height <| px 18
+            , class "action"
+            , inlineStyle [ ( "cursor", "pointer" ) ]
             ]
 
 
@@ -291,7 +310,7 @@ viewProperty model path key rawSubSchema value =
         column None
             [ spacing 10 ]
             [ row None
-                [ verticalCenter, spacing 5 ]
+                [ verticalCenter, spacing 5, class "key-container" ]
                 [ (if isExpandable then
                     (if isExpanded then
                         Icons.chevronDown
@@ -324,6 +343,38 @@ viewProperty model path key rawSubSchema value =
                             ]
                   )
                 , text key
+                , Icons.moreVertical
+                    |> Icons.withSize 18
+                    |> Icons.withStrokeWidth 1
+                    |> Icons.toHtml []
+                    |> Element.html
+                    |> el None
+                        [ class "action"
+                        , inlineStyle [ ( "cursor", "pointer" ), ( "outline", "none" ) ]
+                        , width <| px 18
+                        , height <| px 18
+                        , tabindex 2
+                        , onFocus <| OpenMenu deeperLevelPath
+                        , onBlur <| CloseMenu
+                        ]
+                    |> Element.below
+                        [ if Just deeperLevelPath == model.menu then
+                            [ text "Edit as JSON" |> el MenuItem []
+                            , text "Add property" |> el MenuItem []
+                            ]
+                                |> column None
+                                    [ inlineStyle
+                                        [ ( "z-index", "2" )
+                                        , ( "background", "white" )
+                                        , ( "min-width", "200px" )
+                                        , ( "border-radius", "2px" )
+                                        , ( "box-shadow", "0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12)" )
+                                        ]
+                                    , padding 2
+                                    ]
+                          else
+                            empty
+                        ]
                 , delete deeperLevelPath
                 ]
               --, displayDescription subSchema
