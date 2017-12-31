@@ -4,11 +4,13 @@ import Dict
 import Ref
 import Json.Decode as Decode exposing (Decoder, decodeValue)
 import Json.Encode as Encode exposing (Value)
-import JsonValue exposing (JsonValue(..))
+import JsonValue exposing (JsonValue(..), getIn)
 import Json.Schema
 import Json.Schema.Definitions as Schema
     exposing
         ( Schemata(Schemata)
+        , Type(SingleType)
+        , SingleType(StringType, IntegerType)
         , Schema(ObjectSchema, BooleanSchema)
         , Items(NoItems, ItemDefinition, ArrayOfItems)
         , blankSchema
@@ -43,8 +45,9 @@ import Styles
             , SourceCode
             , TextInput
             , MenuItem
+            , PropertyName
             )
-        , Variations
+        , Variations(Active)
         , stylesheet
         )
 
@@ -60,11 +63,14 @@ type alias Path =
 type Msg
     = ValueInput Path String
     | StringInput Path String
+    | NumericInput Path String
     | DeletePath Path
     | ExpandNode Path
     | CollapseNode Path
     | OpenMenu Path
     | CloseMenu
+    | FocusInput Path Schema
+    | BlurInput Path
 
 
 type ExternalMsg
@@ -78,6 +84,9 @@ type alias Model =
     , schema : Schema
     , expandedNodes : List Path
     , menu : Maybe Path
+    , focusInput : Path
+    , editingNow : String
+    , editingSchema : Maybe Schema
     }
 
 
@@ -97,6 +106,9 @@ init schema expandedNodes v =
                     |> Result.withDefault JsonValue.NullValue
             , expandedNodes = expandedNodes
             , menu = Nothing
+            , focusInput = []
+            , editingNow = ""
+            , editingSchema = Nothing
             }
     in
         blankModel
@@ -137,7 +149,20 @@ update msg model =
                         |> Result.mapError (Debug.log "StringInput")
                         |> Result.withDefault model.value
             in
-                { model | value = updatedValue }
+                { model | value = updatedValue, editingNow = str }
+                    ! []
+                    => UpdateValue (updatedValue |> JsonValue.encode)
+
+        NumericInput path str ->
+            let
+                updatedValue =
+                    str
+                        |> String.toFloat
+                        |> Result.andThen (\v -> JsonValue.setIn path (NumericValue v) model.value)
+                        |> Result.mapError (Debug.log "NumericInput")
+                        |> Result.withDefault model.value
+            in
+                { model | value = updatedValue, editingNow = str }
                     ! []
                     => UpdateValue (updatedValue |> JsonValue.encode)
 
@@ -171,6 +196,30 @@ update msg model =
 
         CloseMenu ->
             { model | menu = Nothing } ! [] => NoOp
+
+        FocusInput path schema ->
+            { model
+                | focusInput = path
+                , editingSchema = Just schema
+                , editingNow =
+                    case model.value |> getIn path of
+                        Ok (StringValue s) ->
+                            s
+
+                        Ok (NumericValue s) ->
+                            s |> toString
+
+                        _ ->
+                            ""
+            }
+                ! []
+                => NoOp
+
+        BlurInput path ->
+            if path == model.focusInput then
+                { model | focusInput = [], editingSchema = Nothing } ! [] => NoOp
+            else
+                model ! [] => NoOp
 
 
 view : Model -> View
@@ -258,6 +307,14 @@ viewProperty model path key rawSubSchema value =
                 x ->
                     x
 
+        objectSchema =
+            case subSchema of
+                ObjectSchema os ->
+                    Just os
+
+                _ ->
+                    Nothing
+
         isBlank =
             isBlankSchema subSchema
 
@@ -330,7 +387,17 @@ viewProperty model path key rawSubSchema value =
                             , inlineStyle [ ( "color", "lightgrey" ) ]
                             ]
                   )
-                , text key
+                , key
+                    |> text
+                    |> el PropertyName
+                        [ vary Active <| deeperLevelPath == model.focusInput
+                        ]
+                  {-
+                     , objectSchema
+                         |> Maybe.andThen .title
+                         |> Maybe.withDefault key
+                         |> text
+                  -}
                 , Icons.moreVertical
                     |> Icons.withSize 18
                     |> Icons.withStrokeWidth 1
@@ -483,6 +550,26 @@ displayDescription schema =
             empty
 
 
+viewNumber : Model -> Schema -> Float -> Path -> View
+viewNumber model schema numValue path =
+    row None
+        []
+        [ (if path == model.focusInput then
+            model.editingNow
+           else
+            numValue |> toString
+          )
+            |> Element.inputText TextInput
+                [ onInput <| NumericInput path
+                , onFocus <| FocusInput path schema
+                , onBlur <| BlurInput path
+                , Attributes.type_ "number"
+                  --, Attributes.step "1"
+                , width <| fill 1
+                ]
+        ]
+
+
 viewString : Model -> Schema -> String -> Path -> View
 viewString model schema stringValue path =
     let
@@ -499,8 +586,18 @@ viewString model schema stringValue path =
         else
             row None
                 []
-                [ stringValue
-                    |> Element.inputText TextInput [ onInput <| StringInput path, Attributes.list listId, width <| fill 1 ]
+                [ (if path == model.focusInput then
+                    model.editingNow
+                   else
+                    stringValue
+                  )
+                    |> Element.inputText TextInput
+                        [ onFocus <| FocusInput path schema
+                        , onBlur <| BlurInput path
+                        , onInput <| StringInput path
+                        , Attributes.list listId
+                        , width <| fill 1
+                        ]
                 , case schema of
                     ObjectSchema os ->
                         os.enum
@@ -536,6 +633,35 @@ viewValue model schema value path =
 
         JsonValue.StringValue sv ->
             [ viewString model schema sv path ]
+
+        JsonValue.NumericValue nv ->
+            [ viewNumber model schema nv path ]
+
+        JsonValue.NullValue ->
+            case schema of
+                ObjectSchema os ->
+                    case os.type_ of
+                        SingleType StringType ->
+                            [ viewString model schema "" path ]
+
+                        SingleType IntegerType ->
+                            [ viewNumber model schema 0 path ]
+
+                        _ ->
+                            [ row None
+                                []
+                                [ "null"
+                                    |> Element.textArea TextInput [ onInput <| ValueInput path, width <| fill 1 ]
+                                ]
+                            ]
+
+                _ ->
+                    [ row None
+                        []
+                        [ "null"
+                            |> Element.textArea TextInput [ onInput <| ValueInput path, width <| fill 1 ]
+                        ]
+                    ]
 
         x ->
             [ text ("something else (" ++ (toString x) ++ ")") ]

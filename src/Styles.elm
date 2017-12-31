@@ -34,6 +34,11 @@ type Variations
     = Active
 
 
+sansSerifFont : Style.Property class variation
+sansSerifFont =
+    Style.prop "font-family" "'Libre Franklin', sans-serif"
+
+
 fancyBlue : Color.Color
 fancyBlue =
     Color.rgb 17 123 206
@@ -48,7 +53,7 @@ stylesheet =
         , style Main
             [ Color.text Color.darkCharcoal
             , Color.background Color.white
-            , Style.prop "font-family" "helvetica, arial, sans-serif"
+            , sansSerifFont
             , Font.size 14
             , Font.lineHeight 1.5
               -- line height, given as a ratio of current font size.
@@ -94,8 +99,15 @@ stylesheet =
               --, Style.paddingLeftHint 5
             ]
         , style PropertyName
-            [ Style.prop "color" "#c80000"
+            [ Color.text Color.darkCharcoal
+              --[ Style.prop "color" "#c80000"
             , Style.prop "outline" "none"
+            , sansSerifFont
+            , Font.size 14
+            , Style.variation Active
+                [ Color.text Color.lightBlue
+                  --, Font.weight 700
+                ]
             ]
         , style ItemIndex
             [ Color.text <| Color.rgb 160 160 160
