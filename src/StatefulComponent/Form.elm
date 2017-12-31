@@ -1,11 +1,12 @@
 module StatefulComponent.Form exposing (Model, Msg, ExternalMsg(UpdateValue, SaveExpandedNodes), init, update, view)
 
-import Dict
+import Dict exposing (Dict)
 import Ref
 import Json.Decode as Decode exposing (Decoder, decodeValue)
 import Json.Encode as Encode exposing (Value)
 import JsonValue exposing (JsonValue(..), getIn)
 import Json.Schema
+import Json.Schema.Validation exposing (Error, ValidationError)
 import Json.Schema.Definitions as Schema
     exposing
         ( Schemata(Schemata)
@@ -83,6 +84,7 @@ type ExternalMsg
 type alias Model =
     { value : JsonValue
     , schema : Schema
+    , validationErrors : Dict Path (List ValidationError)
     , expandedNodes : List Path
     , menu : Maybe Path
     , focusInput : Path
@@ -91,20 +93,48 @@ type alias Model =
     }
 
 
+dictFromListErrors : List Error -> Dict Path (List ValidationError)
+dictFromListErrors list =
+    list
+        |> List.foldl
+            (\error dict ->
+                dict
+                    |> Dict.update error.jsonPointer.path
+                        (\listDetails ->
+                            (case listDetails of
+                                Just l ->
+                                    l ++ [ error.details ]
+
+                                Nothing ->
+                                    [ error.details ]
+                            )
+                                |> Just
+                        )
+            )
+            Dict.empty
+
+
 init : Schema -> List Path -> Value -> Model
 init schema expandedNodes v =
     let
-        validatedValue =
-            Json.Schema.validateValue { applyDefaults = True } v schema
-                |> Result.mapError (Debug.log "smth is not right")
-                |> Result.withDefault v
+        validationResult =
+            Json.Schema.validateValue { applyDefaults = False } v schema
+
+        ( value, validationErrors ) =
+            case validationResult of
+                Ok validValue ->
+                    ( validValue, Dict.empty )
+
+                Err list ->
+                    ( v, list |> dictFromListErrors )
 
         blankModel =
             { schema = schema
             , value =
-                validatedValue
+                value
                     |> decodeValue JsonValue.decoder
                     |> Result.withDefault JsonValue.NullValue
+            , validationErrors = validationErrors
             , expandedNodes = expandedNodes
             , menu = Nothing
             , focusInput = []
@@ -149,10 +179,24 @@ update msg model =
                         |> JsonValue.setIn path (JsonValue.StringValue str)
                         |> Result.mapError (Debug.log "StringInput")
                         |> Result.withDefault model.value
+
+                encodedValue =
+                    updatedValue |> JsonValue.encode
+
+                validationResult =
+                    Json.Schema.validateValue { applyDefaults = False } encodedValue model.schema
+
+                ( value, validationErrors ) =
+                    case validationResult of
+                        Ok validValue ->
+                            ( validValue |> decodeValue JsonValue.decoder |> Result.withDefault NullValue, Dict.empty )
+
+                        Err list ->
+                            ( updatedValue, list |> dictFromListErrors )
             in
-                { model | value = updatedValue, editingNow = str }
+                { model | value = updatedValue, editingNow = str, validationErrors = validationErrors }
                     ! []
-                    => UpdateValue (updatedValue |> JsonValue.encode)
+                    => UpdateValue (value |> JsonValue.encode)
 
         NumericInput path str ->
             let
@@ -162,10 +206,24 @@ update msg model =
                         |> Result.andThen (\v -> JsonValue.setIn path (NumericValue v) model.value)
                         |> Result.mapError (Debug.log "NumericInput")
                         |> Result.withDefault model.value
+
+                encodedValue =
+                    updatedValue |> JsonValue.encode
+
+                validationResult =
+                    Json.Schema.validateValue { applyDefaults = False } encodedValue model.schema
+
+                ( value, validationErrors ) =
+                    case validationResult of
+                        Ok validValue ->
+                            ( validValue |> decodeValue JsonValue.decoder |> Result.withDefault NullValue, Dict.empty )
+
+                        Err list ->
+                            ( updatedValue, list |> dictFromListErrors )
             in
-                { model | value = updatedValue, editingNow = str }
+                { model | value = value, editingNow = str, validationErrors = validationErrors }
                     ! []
-                    => UpdateValue (updatedValue |> JsonValue.encode)
+                    => UpdateValue (value |> JsonValue.encode)
 
         BoolInput path bool ->
             let
@@ -563,14 +621,14 @@ displayDescription schema =
             empty
 
 
-viewNumber : Model -> Schema -> Float -> Path -> View
+viewNumber : Model -> Schema -> Maybe Float -> Path -> View
 viewNumber model schema numValue path =
     row None
         []
         [ (if path == model.focusInput then
             model.editingNow
            else
-            numValue |> toString
+            numValue |> Maybe.map toString |> Maybe.withDefault ""
           )
             |> Element.inputText TextInput
                 [ onInput <| NumericInput path
@@ -588,9 +646,9 @@ viewBool model schema boolValue path =
     let
         ( icon, label, color ) =
             if boolValue then
-                ( Icons.toggleRight, "true", "royalblue" )
+                ( Icons.toggleRight, "true", "darkgreen" )
             else
-                ( Icons.toggleLeft, "false", "grey" )
+                ( Icons.toggleLeft, "false", "darkred" )
     in
         row None
             [ onClick <| BoolInput path <| not boolValue
@@ -673,7 +731,7 @@ viewValue model schema value path =
             [ viewString model schema sv path ]
 
         JsonValue.NumericValue nv ->
-            [ viewNumber model schema nv path ]
+            [ viewNumber model schema (Just nv) path ]
 
         JsonValue.BoolValue bv ->
             [ viewBool model schema bv path ]
@@ -686,7 +744,7 @@ viewValue model schema value path =
                             [ viewString model schema "" path ]
 
                         SingleType IntegerType ->
-                            [ viewNumber model schema 0 path ]
+                            [ viewNumber model schema Nothing path ]
 
                         _ ->
                             [ row None
@@ -704,6 +762,13 @@ viewValue model schema value path =
                         ]
                     ]
     )
+        |> (\col ->
+                model.validationErrors
+                    |> Debug.log "hello"
+                    |> Dict.get path
+                    |> Maybe.map (\errors -> col ++ [ toString errors |> text ])
+                    |> Maybe.withDefault col
+           )
         |> column None [ paddingLeft 20, spacing 10, width <| fill 1 ]
 
 
