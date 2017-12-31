@@ -1,5 +1,6 @@
 module StatefulComponent.Form exposing (Model, Msg, ExternalMsg(UpdateValue, SaveExpandedNodes), init, update, view)
 
+import ErrorMessages exposing (stringifyError)
 import Dict exposing (Dict)
 import Ref
 import Json.Decode as Decode exposing (Decoder, decodeValue)
@@ -47,6 +48,7 @@ import Styles
             , TextInput
             , MenuItem
             , PropertyName
+            , InlineError
             )
         , Variations(Active)
         , stylesheet
@@ -84,7 +86,7 @@ type ExternalMsg
 type alias Model =
     { value : JsonValue
     , schema : Schema
-    , validationErrors : Dict Path (List ValidationError)
+    , validationErrors : Dict Path (List String)
     , expandedNodes : List Path
     , menu : Maybe Path
     , focusInput : Path
@@ -93,7 +95,7 @@ type alias Model =
     }
 
 
-dictFromListErrors : List Error -> Dict Path (List ValidationError)
+dictFromListErrors : List Error -> Dict Path (List String)
 dictFromListErrors list =
     list
         |> List.foldl
@@ -103,10 +105,10 @@ dictFromListErrors list =
                         (\listDetails ->
                             (case listDetails of
                                 Just l ->
-                                    l ++ [ error.details ]
+                                    l ++ [ error.details |> stringifyError ]
 
                                 Nothing ->
-                                    [ error.details ]
+                                    [ error.details |> stringifyError ]
                             )
                                 |> Just
                         )
@@ -764,9 +766,8 @@ viewValue model schema value path =
     )
         |> (\col ->
                 model.validationErrors
-                    |> Debug.log "hello"
                     |> Dict.get path
-                    |> Maybe.map (\errors -> col ++ [ toString errors |> text ])
+                    |> Maybe.map (\errors -> col ++ (errors |> List.filter ((/=) "") |> List.map (text >> (el InlineError []))))
                     |> Maybe.withDefault col
            )
         |> column None [ paddingLeft 20, spacing 10, width <| fill 1 ]
