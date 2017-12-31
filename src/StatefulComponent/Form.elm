@@ -64,6 +64,7 @@ type Msg
     = ValueInput Path String
     | StringInput Path String
     | NumericInput Path String
+    | BoolInput Path Bool
     | DeletePath Path
     | ExpandNode Path
     | CollapseNode Path
@@ -163,6 +164,18 @@ update msg model =
                         |> Result.withDefault model.value
             in
                 { model | value = updatedValue, editingNow = str }
+                    ! []
+                    => UpdateValue (updatedValue |> JsonValue.encode)
+
+        BoolInput path bool ->
+            let
+                updatedValue =
+                    model.value
+                        |> JsonValue.setIn path (BoolValue bool)
+                        |> Result.mapError (Debug.log "BoolInput")
+                        |> Result.withDefault model.value
+            in
+                { model | value = updatedValue }
                     ! []
                     => UpdateValue (updatedValue |> JsonValue.encode)
 
@@ -570,6 +583,31 @@ viewNumber model schema numValue path =
         ]
 
 
+viewBool : Model -> Schema -> Bool -> Path -> View
+viewBool model schema boolValue path =
+    let
+        ( icon, label, color ) =
+            if boolValue then
+                ( Icons.toggleRight, "true", "royalblue" )
+            else
+                ( Icons.toggleLeft, "false", "grey" )
+    in
+        row None
+            [ onClick <| BoolInput path <| not boolValue
+            , verticalCenter
+            , spacing 5
+            , inlineStyle [ ( "cursor", "pointer" ), ( "color", color ) ]
+            ]
+            [ icon
+                |> Icons.withSize 18
+                |> Icons.toHtml []
+                |> Element.html
+                |> el None
+                    [ width <| px 18, height <| px 18 ]
+            , label |> text
+            ]
+
+
 viewString : Model -> Schema -> String -> Path -> View
 viewString model schema stringValue path =
     let
@@ -637,6 +675,9 @@ viewValue model schema value path =
         JsonValue.NumericValue nv ->
             [ viewNumber model schema nv path ]
 
+        JsonValue.BoolValue bv ->
+            [ viewBool model schema bv path ]
+
         JsonValue.NullValue ->
             case schema of
                 ObjectSchema os ->
@@ -662,9 +703,6 @@ viewValue model schema value path =
                             |> Element.textArea TextInput [ onInput <| ValueInput path, width <| fill 1 ]
                         ]
                     ]
-
-        x ->
-            [ text ("something else (" ++ (toString x) ++ ")") ]
     )
         |> column None [ paddingLeft 20, spacing 10, width <| fill 1 ]
 
