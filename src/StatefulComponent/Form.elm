@@ -381,8 +381,8 @@ resolve rootSchema rawSubSchema =
         resolvedSchema
 
 
-viewProperty : Model -> Path -> String -> Schema -> JsonValue -> View
-viewProperty model path key rawSubSchema value =
+viewProperty : Model -> Bool -> Path -> String -> Schema -> JsonValue -> View
+viewProperty model deletionAllowed path key rawSubSchema value =
     let
         deeperLevelPath =
             path ++ [ key ]
@@ -526,7 +526,10 @@ viewProperty model path key rawSubSchema value =
                           else
                             empty
                         ]
-                , delete deeperLevelPath
+                , if deletionAllowed then
+                    delete deeperLevelPath
+                  else
+                    empty
                 ]
               --, displayDescription subSchema
             , if isExpanded then
@@ -560,18 +563,18 @@ viewObject model schema props isArray path =
                     (\( propName, subSchema ) ->
                         case propsDict |> Dict.get propName of
                             Just value ->
-                                viewProperty model path propName subSchema value
+                                viewProperty model False path propName subSchema value
 
                             Nothing ->
                                 if shouldRenderDefault required propName then
-                                    viewProperty model path propName subSchema JsonValue.NullValue
+                                    viewProperty model False path propName subSchema JsonValue.NullValue
                                 else
                                     empty
                     )
 
         iterateOverProps list schema =
             list
-                |> List.map (\( key, value ) -> viewProperty model path key schema value)
+                |> List.map (\( key, value ) -> viewProperty model True path key schema value)
     in
         case schema of
             BooleanSchema True ->
