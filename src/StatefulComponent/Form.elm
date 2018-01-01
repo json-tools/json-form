@@ -542,24 +542,31 @@ viewProperty model path key rawSubSchema value =
 viewObject : Model -> Schema -> List ( String, JsonValue ) -> Bool -> Path -> List View
 viewObject model schema props isArray path =
     let
+        shouldRenderDefault required propName =
+            if model.options.showEmptyOptionalProps then
+                True
+            else
+                (case required of
+                    Just names ->
+                        List.member propName names
+
+                    Nothing ->
+                        False
+                )
+
         iterateOverSchemata propsDict required (Schemata schemata) =
             schemata
                 |> List.map
                     (\( propName, subSchema ) ->
-                        propsDict
-                            |> Dict.get propName
-                            |> Maybe.map (viewProperty model path propName subSchema)
-                            |> Maybe.withDefault
-                                (case required of
-                                    Just names ->
-                                        if List.member propName names then
-                                            viewProperty model path propName subSchema JsonValue.NullValue
-                                        else
-                                            empty
+                        case propsDict |> Dict.get propName of
+                            Just value ->
+                                viewProperty model path propName subSchema value
 
-                                    Nothing ->
-                                        empty
-                                )
+                            Nothing ->
+                                if shouldRenderDefault required propName then
+                                    viewProperty model path propName subSchema JsonValue.NullValue
+                                else
+                                    empty
                     )
 
         iterateOverProps list schema =
