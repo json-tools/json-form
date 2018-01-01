@@ -808,7 +808,7 @@ displayDescription schema =
 
 makeId : Path -> String
 makeId path =
-    String.join "/" path
+    String.join "/" path ++ ":value"
 
 
 viewNumber : Model -> Schema -> Maybe Float -> Path -> View
@@ -866,7 +866,7 @@ viewString : Model -> Schema -> String -> Path -> View
 viewString model schema stringValue path =
     let
         listId =
-            String.join "/" path
+            String.join "/" path ++ ":list"
 
         isFocused =
             path == model.focusInput
@@ -901,6 +901,7 @@ viewString model schema stringValue path =
                         , Attributes.list listId
                         , width <| fill 1
                         , Attributes.id <| makeId path
+                        , Attributes.autocomplete False
                         ]
                 , case schema of
                     ObjectSchema os ->
