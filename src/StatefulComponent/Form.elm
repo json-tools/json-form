@@ -1,4 +1,4 @@
-module StatefulComponent.Form exposing (Model, Msg, ExternalMsg(UpdateValue, SaveExpandedNodes), init, update, view)
+module StatefulComponent.Form exposing (Model, Msg, ExternalMsg(UpdateValue, SaveExpandedNodes), init, update, view, defaultOptions, FormOptions)
 
 import ErrorMessages exposing (stringifyError)
 import Dict exposing (Dict)
@@ -89,11 +89,26 @@ type alias Model =
     { value : JsonValue
     , schema : Schema
     , validationErrors : Dict Path (List String)
-    , expandedNodes : List Path
+    , options : FormOptions
     , menu : Maybe Path
     , focusInput : Path
     , editingNow : String
     , editingSchema : Maybe Schema
+    }
+
+
+type alias FormOptions =
+    { expandedNodes : List Path
+    , applyDefaults : Bool
+    , showEmptyOptionalProps : Bool
+    }
+
+
+defaultOptions : FormOptions
+defaultOptions =
+    { expandedNodes = [ [] ]
+    , applyDefaults = False
+    , showEmptyOptionalProps = False
     }
 
 
@@ -118,8 +133,8 @@ dictFromListErrors list =
             Dict.empty
 
 
-init : Schema -> List Path -> Value -> Model
-init schema expandedNodes v =
+init : Schema -> FormOptions -> Value -> Model
+init schema formOptions v =
     let
         validationResult =
             Json.Schema.validateValue { applyDefaults = False } v schema
@@ -139,7 +154,7 @@ init schema expandedNodes v =
                     |> decodeValue JsonValue.decoder
                     |> Result.withDefault JsonValue.NullValue
             , validationErrors = validationErrors
-            , expandedNodes = expandedNodes
+            , options = formOptions
             , menu = Nothing
             , focusInput = []
             , editingNow = ""
@@ -253,18 +268,24 @@ update msg model =
 
         ExpandNode path ->
             let
+                options =
+                    model.options
+
                 en =
-                    path :: model.expandedNodes
+                    path :: options.expandedNodes
             in
-                { model | expandedNodes = en } ! [] => SaveExpandedNodes en
+                { model | options = { options | expandedNodes = en } } ! [] => SaveExpandedNodes en
 
         CollapseNode path ->
             let
+                options =
+                    model.options
+
                 en =
-                    model.expandedNodes
+                    options.expandedNodes
                         |> List.filter ((/=) path)
             in
-                { model | expandedNodes = en } ! [] => SaveExpandedNodes en
+                { model | options = { options | expandedNodes = en } } ! [] => SaveExpandedNodes en
 
         OpenMenu path ->
             { model | menu = Just path } ! [] => NoOp
@@ -415,13 +436,13 @@ viewProperty model path key rawSubSchema value =
                     isBlank
                         || List.member
                             deeperLevelPath
-                            model.expandedNodes
+                            model.options.expandedNodes
 
                 JsonValue.ArrayValue _ ->
                     isBlank
                         || List.member
                             deeperLevelPath
-                            model.expandedNodes
+                            model.options.expandedNodes
 
                 --List.member deeperLevelPath model.expandedNodes
                 _ ->

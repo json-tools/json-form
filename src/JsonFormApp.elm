@@ -76,21 +76,25 @@ init v =
         |> Result.mapError (Debug.log "hello")
         |> Result.withDefault { value = Encode.null, expandedNodes = Dict.empty }
         |> \{ value, expandedNodes } ->
-            { schemaForm = Form.init Schemata.draft6 (getExpandedNodes "schema" expandedNodes) value
-            , expandedNodes = expandedNodes
-            , schema =
-                value
-                    |> decodeValue Json.Schema.Definitions.decoder
-                    |> Result.toMaybe
-            , valueForm =
-                value
-                    |> decodeValue Json.Schema.Definitions.decoder
-                    |> Result.mapError (Debug.log "LoadingSchemaError")
-                    |> Result.toMaybe
-                    |> Maybe.map (\s -> Form.init s (getExpandedNodes "value" expandedNodes) defaultValue)
-            , value = Just defaultValue
-            }
-                ! []
+            let
+                options =
+                    Form.defaultOptions
+            in
+                { schemaForm = Form.init Schemata.draft6 { options | expandedNodes = getExpandedNodes "schema" expandedNodes } value
+                , expandedNodes = expandedNodes
+                , schema =
+                    value
+                        |> decodeValue Json.Schema.Definitions.decoder
+                        |> Result.toMaybe
+                , valueForm =
+                    value
+                        |> decodeValue Json.Schema.Definitions.decoder
+                        |> Result.mapError (Debug.log "LoadingSchemaError")
+                        |> Result.toMaybe
+                        |> Maybe.map (\s -> Form.init s { options | expandedNodes = getExpandedNodes "schema" expandedNodes, applyDefaults = True, showEmptyOptionalProps = True } defaultValue)
+                , value = Just defaultValue
+                }
+                    ! []
 
 
 view : Model -> Html Msg
@@ -132,6 +136,9 @@ update msg model =
                     case exMsg of
                         UpdateValue v ->
                             let
+                                options =
+                                    Form.defaultOptions
+
                                 maybeSchema =
                                     v
                                         |> decodeValue Json.Schema.Definitions.decoder
@@ -141,7 +148,7 @@ update msg model =
                                 , maybeSchema
                                     |> Maybe.map
                                         (\s ->
-                                            Form.init s (getExpandedNodes "value" model.expandedNodes) (model.value |> Maybe.withDefault Encode.null)
+                                            Form.init s { options | expandedNodes = getExpandedNodes "value" model.expandedNodes, applyDefaults = True, showEmptyOptionalProps = True } (model.value |> Maybe.withDefault Encode.null)
                                         )
                                 )
 
