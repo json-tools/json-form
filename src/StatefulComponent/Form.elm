@@ -94,6 +94,7 @@ type alias Model =
     , focusInput : Path
     , editingNow : String
     , editingSchema : Maybe Schema
+    , edited : Dict Path Bool
     }
 
 
@@ -101,6 +102,7 @@ type alias FormOptions =
     { expandedNodes : List Path
     , applyDefaults : Bool
     , showEmptyOptionalProps : Bool
+    , showInitialValidationErrors : Bool
     }
 
 
@@ -109,6 +111,7 @@ defaultOptions =
     { expandedNodes = [ [] ]
     , applyDefaults = False
     , showEmptyOptionalProps = False
+    , showInitialValidationErrors = False
     }
 
 
@@ -159,6 +162,7 @@ init schema formOptions v =
             , focusInput = []
             , editingNow = ""
             , editingSchema = Nothing
+            , edited = Dict.empty
             }
     in
         blankModel
@@ -186,6 +190,9 @@ update msg model =
                         --  TODO display validation error
                         |>
                             Result.withDefault model.value
+
+                encodedValue =
+                    updatedValue |> JsonValue.encode
             in
                 { model | value = updatedValue }
                     ! []
@@ -313,7 +320,13 @@ update msg model =
 
         BlurInput path ->
             if path == model.focusInput then
-                { model | focusInput = [], editingSchema = Nothing } ! [] => NoOp
+                { model
+                    | focusInput = []
+                    , editingSchema = Nothing
+                    , edited = model.edited |> Dict.insert path True
+                }
+                    ! []
+                    => NoOp
             else
                 model ! [] => NoOp
 
@@ -815,7 +828,13 @@ viewValue model schema value path =
         |> (\col ->
                 model.validationErrors
                     |> Dict.get path
-                    |> Maybe.map (\errors -> col ++ (errors |> List.filter ((/=) "") |> List.map (text >> (el InlineError []))))
+                    |> Maybe.map
+                        (\errors ->
+                            if model.options.showInitialValidationErrors || (model.edited |> Dict.member path) then
+                                col ++ (errors |> List.filter ((/=) "") |> List.map (text >> (el InlineError [])))
+                            else
+                                col
+                        )
                     |> Maybe.withDefault col
            )
         |> column None [ paddingLeft 20, spacing 0, width <| fill 1 ]
