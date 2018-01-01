@@ -956,18 +956,28 @@ viewValue model schema value path =
                             [ viewNumber model schema Nothing path ]
 
                         _ ->
-                            [ row None
-                                []
+                            [ row InputRow
+                                [ vary Active <| model.focusInput == path ]
                                 [ "null"
-                                    |> Element.textArea TextInput [ onInput <| ValueInput path, width <| fill 1 ]
+                                    |> Element.textArea TextInput
+                                        [ onInput <| ValueInput path
+                                        , width <| fill 1
+                                        , onFocus <| FocusInput path schema
+                                        , onBlur <| BlurInput path
+                                        ]
                                 ]
                             ]
 
                 _ ->
-                    [ row None
-                        []
+                    [ row InputRow
+                        [ vary Active <| model.focusInput == path ]
                         [ "null"
-                            |> Element.textArea TextInput [ onInput <| ValueInput path, width <| fill 1 ]
+                            |> Element.textArea TextInput
+                                [ onInput <| ValueInput path
+                                , width <| fill 1
+                                , onFocus <| FocusInput path schema
+                                , onBlur <| BlurInput path
+                                ]
                         ]
                     ]
     )
