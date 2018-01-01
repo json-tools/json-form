@@ -1,5 +1,7 @@
 module StatefulComponent.Form exposing (Model, Msg, ExternalMsg(UpdateValue, SaveExpandedNodes), init, update, view, defaultOptions, FormOptions)
 
+import Task
+import Dom
 import ErrorMessages exposing (stringifyError)
 import Dict exposing (Dict)
 import Ref
@@ -66,11 +68,14 @@ type alias Path =
 
 
 type Msg
-    = ValueInput Path String
+    = NoMsg
+    | ValueInput Path String
     | StringInput Path String
     | NumericInput Path String
     | BoolInput Path Bool
     | DeletePath Path
+    | AddItem Path
+    | AddProperty Path
     | ExpandNode Path
     | CollapseNode Path
     | OpenMenu Path
@@ -171,6 +176,9 @@ init schema formOptions v =
 update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )
 update msg model =
     case msg of
+        NoMsg ->
+            model ! [] => NoOp
+
         ValueInput path str ->
             let
                 updatedValue =
@@ -296,6 +304,35 @@ update msg model =
                         |> Result.withDefault model.value
             in
                 { model | value = value } ! [] => UpdateValue (value |> JsonValue.encode)
+
+        AddItem path ->
+            let
+                nextIndex =
+                    model.value
+                        |> JsonValue.getIn path
+                        |> Result.withDefault (ArrayValue [])
+                        |> (\x ->
+                                case x of
+                                    ArrayValue l ->
+                                        List.length l |> toString
+
+                                    _ ->
+                                        "0"
+                           )
+
+                itemPath =
+                    path ++ [ nextIndex ]
+
+                value =
+                    model.value
+                        |> JsonValue.setIn itemPath NullValue
+                        |> Result.mapError (Debug.log "AddItem")
+                        |> Result.withDefault model.value
+            in
+                { model | value = value } ! [ Dom.focus (makeId itemPath) |> Task.attempt (\_ -> NoMsg) ] => UpdateValue (value |> JsonValue.encode)
+
+        AddProperty path ->
+            model ! [] => NoOp
 
         ExpandNode path ->
             let
@@ -440,13 +477,26 @@ viewProperty model deletionAllowed path key rawSubSchema value =
                 x ->
                     x
 
-        objectSchema =
+        ( objectSchema, isArray, isDictionary ) =
             case subSchema of
                 ObjectSchema os ->
-                    Just os
+                    ( Just os
+                    , os.items /= NoItems
+                    , case os.additionalProperties of
+                        Just (BooleanSchema False) ->
+                            False
+
+                        _ ->
+                            case value of
+                                ObjectValue _ ->
+                                    True
+
+                                _ ->
+                                    False
+                    )
 
                 _ ->
-                    Nothing
+                    ( Nothing, False, False )
 
         isBlank =
             isBlankSchema subSchema
@@ -548,7 +598,12 @@ viewProperty model deletionAllowed path key rawSubSchema value =
                     |> Element.below
                         [ if Just deeperLevelPath == model.menu then
                             [ text "Edit as JSON" |> el MenuItem []
-                            , text "Add property" |> el MenuItem []
+                            , if isArray then
+                                text "Add item" |> el MenuItem [ onClick <| AddItem deeperLevelPath ]
+                              else if isDictionary then
+                                text "Add property" |> el MenuItem [ onClick <| AddProperty deeperLevelPath ]
+                              else
+                                empty
                             ]
                                 |> column None
                                     [ inlineStyle
@@ -701,6 +756,11 @@ displayDescription schema =
             empty
 
 
+makeId : Path -> String
+makeId path =
+    String.join "/" path
+
+
 viewNumber : Model -> Schema -> Maybe Float -> Path -> View
 viewNumber model schema numValue path =
     let
@@ -722,6 +782,7 @@ viewNumber model schema numValue path =
                     , Attributes.type_ "number"
                       --, Attributes.step "1"
                     , width <| fill 1
+                    , Attributes.id <| makeId path
                     ]
             ]
 
@@ -771,6 +832,7 @@ viewString model schema stringValue path =
                         , onFocus <| FocusInput path schema
                         , onBlur <| BlurInput path
                         , width <| fill 1
+                        , Attributes.id <| makeId path
                         ]
                 ]
         else
@@ -788,6 +850,7 @@ viewString model schema stringValue path =
                         , onInput <| StringInput path
                         , Attributes.list listId
                         , width <| fill 1
+                        , Attributes.id <| makeId path
                         ]
                 , case schema of
                     ObjectSchema os ->
