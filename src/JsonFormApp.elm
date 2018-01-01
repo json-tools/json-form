@@ -42,7 +42,7 @@ type alias Model =
 
 defaultValue : Value
 defaultValue =
-    Encode.object [ ( "title", Encode.string "mr" ) ]
+    Encode.object [ ( "hello", Encode.string "mr" ), ( "world", Encode.string "mr" ) ]
 
 
 type alias SessionData =

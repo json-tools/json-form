@@ -79,10 +79,16 @@ stringifyError e =
         Required missingPropertyNames ->
             ""
 
-        AdditionalPropertiesDisallowed extraPropertyNames ->
-            "Additional properties are not allowed here, but I see "
-                ++ (extraPropertyNames |> List.map toString |> String.join ", ")
+        AdditionalPropertyDisallowed ->
+            "This is an additional property and it is not allowed"
 
+        AdditionalPropertiesDisallowed extraPropertyNames ->
+            ""
+
+        {-
+           "Additional properties are not allowed here, but I see "
+               ++ (extraPropertyNames |> List.map toString |> String.join ", ")
+        -}
         InvalidPropertyName invalidPropertyNames ->
             "Some property names are not passing validation: "
                 ++ (invalidPropertyNames |> List.map toString |> String.join ", ")

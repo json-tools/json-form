@@ -28,6 +28,7 @@ import Element.Attributes as Attributes
         , inlineStyle
         , spacing
         , padding
+        , paddingTop
         , paddingLeft
         , height
         , minWidth
@@ -46,6 +47,7 @@ import Styles
             , Main
             , SourceCode
             , TextInput
+            , InputRow
             , MenuItem
             , PropertyName
             , InlineError
@@ -426,7 +428,7 @@ viewProperty model path key rawSubSchema value =
                     True
     in
         column None
-            [ spacing 10 ]
+            [ paddingTop 10 ]
             [ row None
                 [ verticalCenter, spacing 5, class "key-container" ]
                 [ (if isExpandable then
@@ -673,6 +675,9 @@ viewString model schema stringValue path =
     let
         listId =
             String.join "/" path
+
+        isFocused =
+            path == model.focusInput
     in
         if isBlankSchema schema then
             row None
@@ -682,9 +687,10 @@ viewString model schema stringValue path =
                     |> Element.textArea TextInput [ onInput <| ValueInput path, width <| fill 1 ]
                 ]
         else
-            row None
-                []
-                [ (if path == model.focusInput then
+            row
+                InputRow
+                [ vary Active isFocused ]
+                [ (if isFocused then
                     model.editingNow
                    else
                     stringValue
@@ -770,7 +776,7 @@ viewValue model schema value path =
                     |> Maybe.map (\errors -> col ++ (errors |> List.filter ((/=) "") |> List.map (text >> (el InlineError []))))
                     |> Maybe.withDefault col
            )
-        |> column None [ paddingLeft 20, spacing 10, width <| fill 1 ]
+        |> column None [ paddingLeft 20, spacing 0, width <| fill 1 ]
 
 
 (=>) : a -> b -> ( a, b )

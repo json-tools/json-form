@@ -28,6 +28,8 @@ type Styles
     | TextInput
     | InlineError
     | DataRowHint
+    | InputRow
+    | FocusedInputRow
 
 
 type Variations
@@ -91,7 +93,7 @@ stylesheet =
             --[ Style.prop "border" "1px solid rgba(255,0,0,.5)"
             [ Style.prop "z-index" "1"
               --, Style.prop "background" "white"
-            , Style.paddingHint 10
+            , Style.paddingHint 0
             , Color.text Color.red
             , sansSerifFont
               --, Style.prop "box-shadow" "0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2)"
@@ -178,13 +180,47 @@ stylesheet =
             , Font.size 11
             , Style.paddingHint 10
             ]
+        , style FocusedInputRow
+            [ Style.pseudo ":before"
+                [ Style.prop "content" "''"
+                , Style.prop "border-bottom" "2px solid black"
+                , Style.prop "position" "absolute"
+                , Style.prop "left" "0"
+                , Style.prop "bottom" "0"
+                , Style.prop "z-index" "20"
+                , Style.prop "height" "2px"
+                , Style.prop "width" "100%"
+                , Style.prop "visibility" "visible"
+                ]
+            ]
+        , style InputRow
+            [ Style.pseudo ":before"
+                [ Style.prop "content" "''"
+                , Style.prop "border-bottom" "2px solid black"
+                , Style.prop "position" "absolute"
+                , Style.prop "left" "45%"
+                , Style.prop "bottom" "0"
+                , Style.prop "z-index" "20"
+                , Style.prop "height" "2px"
+                , Style.prop "width" "20px"
+                , Style.prop "transition-duration" "0.2s"
+                , Style.prop "visibility" "hidden"
+                ]
+            , Style.variation Active
+                [ Style.pseudo ":before"
+                    [ Style.prop "width" "100%"
+                    , Style.prop "left" "0"
+                    , Style.prop "visibility" "visible"
+                    ]
+                ]
+            ]
         , style TextInput
             [ Style.prop "font-family" "Menlo, monospace"
-            , Border.bottom 2
+            , Border.bottom 1
             , Style.prop "outline" "none"
             , Color.border Color.darkGrey
             , Style.paddingHint 3
-            , Style.prop "transition" "border-color 0.2s linear"
+              --, Style.prop "transition" "border-color 0.2s linear"
             , Style.pseudo "focus"
                 [ Color.border Color.lightBlue
                 ]
