@@ -582,6 +582,14 @@ viewProperty model deletionAllowed path key rawSubSchema value =
 viewObject : Model -> Schema -> List ( String, JsonValue ) -> Bool -> Path -> List View
 viewObject model schema props isArray path =
     let
+        isOptional key required =
+            case required of
+                Just list ->
+                    List.member key list |> not
+
+                Nothing ->
+                    True
+
         shouldRenderDefault required propName =
             if model.options.showEmptyOptionalProps then
                 True
@@ -600,11 +608,11 @@ viewObject model schema props isArray path =
                     (\( propName, subSchema ) ->
                         case propsDict |> Dict.get propName of
                             Just value ->
-                                viewProperty model False path propName subSchema value
+                                viewProperty model (isOptional propName required && (not model.options.showEmptyOptionalProps)) path propName subSchema value
 
                             Nothing ->
                                 if shouldRenderDefault required propName then
-                                    viewProperty model False path propName subSchema JsonValue.NullValue
+                                    viewProperty model (isOptional propName required && (not model.options.showEmptyOptionalProps)) path propName subSchema JsonValue.NullValue
                                 else
                                     empty
                     )
