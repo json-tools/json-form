@@ -76,6 +76,9 @@ type Msg
     | DeletePath Path
     | AddItem Path
     | AddProperty Path
+    | SetEditPropertyName Path Int
+    | EditPropertyName String
+    | StopEditingPropertyName
     | ExpandNode Path
     | CollapseNode Path
     | OpenMenu Path
@@ -100,6 +103,8 @@ type alias Model =
     , editingNow : String
     , editingSchema : Maybe Schema
     , edited : Dict Path Bool
+    , editPropPath : Path
+    , editPropIndex : Maybe Int
     }
 
 
@@ -168,6 +173,8 @@ init schema formOptions v =
             , editingNow = ""
             , editingSchema = Nothing
             , edited = Dict.empty
+            , editPropPath = []
+            , editPropIndex = Nothing
             }
     in
         blankModel
@@ -329,10 +336,36 @@ update msg model =
                         |> Result.mapError (Debug.log "AddItem")
                         |> Result.withDefault model.value
             in
-                { model | value = value } ! [ Dom.focus (makeId itemPath) |> Task.attempt (\_ -> NoMsg) ] => UpdateValue (value |> JsonValue.encode)
+                { model | value = value } ! [ makeId itemPath |> Dom.focus |> Task.attempt (\_ -> NoMsg) ] => UpdateValue (value |> JsonValue.encode)
 
         AddProperty path ->
             model ! [] => NoOp
+
+        SetEditPropertyName path index ->
+            { model
+                | editPropPath = path
+                , editPropIndex = Just index
+            }
+                ! []
+                => NoOp
+
+        EditPropertyName str ->
+            { model
+                | value =
+                    model.value
+                        |> JsonValue.setPropertyName ( model.editPropPath, model.editPropIndex |> Maybe.withDefault 0 ) str
+                        |> Result.withDefault model.value
+            }
+                ! []
+                => NoOp
+
+        StopEditingPropertyName ->
+            { model
+                | editPropPath = []
+                , editPropIndex = Nothing
+            }
+                ! []
+                => UpdateValue (model.value |> JsonValue.encode)
 
         ExpandNode path ->
             let
@@ -455,8 +488,8 @@ resolve rootSchema rawSubSchema =
         resolvedSchema
 
 
-viewProperty : Model -> Bool -> Path -> String -> Schema -> JsonValue -> View
-viewProperty model deletionAllowed path key rawSubSchema value =
+viewProperty : Model -> Bool -> Maybe Int -> Path -> String -> Schema -> JsonValue -> View
+viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
     let
         deeperLevelPath =
             path ++ [ key ]
@@ -570,11 +603,22 @@ viewProperty model deletionAllowed path key rawSubSchema value =
                             , inlineStyle [ ( "color", "lightgrey" ) ]
                             ]
                   )
-                , key
-                    |> text
-                    |> el PropertyName
-                        [ vary Active <| deeperLevelPath == model.focusInput
+                , if indexInObject /= Nothing && indexInObject == model.editPropIndex && path == model.editPropPath then
+                    row InputRow
+                        [ vary Active True ]
+                        [ key
+                            |> Element.inputText TextInput
+                                [ Attributes.autofocus True
+                                , onInput EditPropertyName
+                                , onBlur <| StopEditingPropertyName
+                                ]
                         ]
+                  else
+                    key
+                        |> text
+                        |> el PropertyName
+                            [ vary Active <| deeperLevelPath == model.focusInput
+                            ]
                   {-
                      , objectSchema
                          |> Maybe.andThen .title
@@ -598,6 +642,12 @@ viewProperty model deletionAllowed path key rawSubSchema value =
                     |> Element.below
                         [ if Just deeperLevelPath == model.menu then
                             [ text "Edit as JSON" |> el MenuItem []
+                            , case indexInObject of
+                                Just index ->
+                                    text "Edit property name" |> el MenuItem [ onClick <| SetEditPropertyName path index ]
+
+                                _ ->
+                                    empty
                             , if isArray then
                                 text "Add item" |> el MenuItem [ onClick <| AddItem deeperLevelPath ]
                               else if isDictionary then
@@ -663,18 +713,18 @@ viewObject model schema props isArray path =
                     (\( propName, subSchema ) ->
                         case propsDict |> Dict.get propName of
                             Just value ->
-                                viewProperty model (isOptional propName required && (not model.options.showEmptyOptionalProps)) path propName subSchema value
+                                viewProperty model (isOptional propName required && (not model.options.showEmptyOptionalProps)) Nothing path propName subSchema value
 
                             Nothing ->
                                 if shouldRenderDefault required propName then
-                                    viewProperty model (isOptional propName required && (not model.options.showEmptyOptionalProps)) path propName subSchema JsonValue.NullValue
+                                    viewProperty model (isOptional propName required && (not model.options.showEmptyOptionalProps)) Nothing path propName subSchema JsonValue.NullValue
                                 else
                                     empty
                     )
 
         iterateOverProps list schema =
             list
-                |> List.map (\( key, value ) -> viewProperty model True path key schema value)
+                |> List.indexedMap (\index ( key, value ) -> viewProperty model True (Just index) path key schema value)
     in
         case schema of
             BooleanSchema True ->
