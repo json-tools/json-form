@@ -109,8 +109,7 @@ stylesheet =
             , sansSerifFont
             , Font.size 14
             , Style.variation Active
-                [ Color.text Color.lightBlue
-                  --, Font.weight 700
+                [ Font.weight 700
                 ]
             ]
         , style ItemIndex
