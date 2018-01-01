@@ -196,7 +196,7 @@ stylesheet =
         , style InputRow
             [ Style.pseudo ":before"
                 [ Style.prop "content" "''"
-                , Style.prop "border-bottom" "2px solid black"
+                , Style.prop "border-bottom" "2px solid #111"
                 , Style.prop "position" "absolute"
                 , Style.prop "left" "45%"
                 , Style.prop "bottom" "0"

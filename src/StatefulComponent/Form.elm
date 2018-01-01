@@ -627,22 +627,27 @@ displayDescription schema =
 
 viewNumber : Model -> Schema -> Maybe Float -> Path -> View
 viewNumber model schema numValue path =
-    row None
-        []
-        [ (if path == model.focusInput then
-            model.editingNow
-           else
-            numValue |> Maybe.map toString |> Maybe.withDefault ""
-          )
-            |> Element.inputText TextInput
-                [ onInput <| NumericInput path
-                , onFocus <| FocusInput path schema
-                , onBlur <| BlurInput path
-                , Attributes.type_ "number"
-                  --, Attributes.step "1"
-                , width <| fill 1
-                ]
-        ]
+    let
+        isFocused =
+            path == model.focusInput
+    in
+        row
+            InputRow
+            [ vary Active isFocused ]
+            [ (if isFocused then
+                model.editingNow
+               else
+                numValue |> Maybe.map toString |> Maybe.withDefault ""
+              )
+                |> Element.inputText TextInput
+                    [ onInput <| NumericInput path
+                    , onFocus <| FocusInput path schema
+                    , onBlur <| BlurInput path
+                    , Attributes.type_ "number"
+                      --, Attributes.step "1"
+                    , width <| fill 1
+                    ]
+            ]
 
 
 viewBool : Model -> Schema -> Bool -> Path -> View
@@ -680,11 +685,17 @@ viewString model schema stringValue path =
             path == model.focusInput
     in
         if isBlankSchema schema then
-            row None
-                []
+            row
+                InputRow
+                [ vary Active isFocused ]
                 [ stringValue
                     |> toString
-                    |> Element.textArea TextInput [ onInput <| ValueInput path, width <| fill 1 ]
+                    |> Element.textArea TextInput
+                        [ onInput <| ValueInput path
+                        , onFocus <| FocusInput path schema
+                        , onBlur <| BlurInput path
+                        , width <| fill 1
+                        ]
                 ]
         else
             row
