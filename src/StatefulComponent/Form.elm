@@ -140,7 +140,7 @@ init : Schema -> FormOptions -> Value -> Model
 init schema formOptions v =
     let
         validationResult =
-            Json.Schema.validateValue { applyDefaults = False } v schema
+            Json.Schema.validateValue { applyDefaults = formOptions.applyDefaults } v schema
 
         ( value, validationErrors ) =
             case validationResult of
@@ -187,16 +187,30 @@ update msg model =
                         --  TODO display parse error
                         |>
                             Result.mapError (Debug.log "ValueInput.parse")
-                        --  TODO display validation error
-                        |>
-                            Result.withDefault model.value
+                        |> Result.withDefault model.value
 
                 encodedValue =
                     updatedValue |> JsonValue.encode
+
+                validationResult =
+                    Json.Schema.validateValue { applyDefaults = model.options.applyDefaults } encodedValue model.schema
+
+                ( value, validationErrors ) =
+                    case validationResult of
+                        Ok validValue ->
+                            ( validValue |> decodeValue JsonValue.decoder |> Result.withDefault NullValue, Dict.empty )
+
+                        Err list ->
+                            ( updatedValue, list |> dictFromListErrors )
             in
-                { model | value = updatedValue }
+                { model
+                    | value = updatedValue
+                    , editingNow = str
+                    , validationErrors = validationErrors
+                    , edited = model.edited |> Dict.insert path True
+                }
                     ! []
-                    => UpdateValue (updatedValue |> JsonValue.encode)
+                    => UpdateValue (value |> JsonValue.encode)
 
         StringInput path str ->
             let
@@ -210,7 +224,7 @@ update msg model =
                     updatedValue |> JsonValue.encode
 
                 validationResult =
-                    Json.Schema.validateValue { applyDefaults = False } encodedValue model.schema
+                    Json.Schema.validateValue { applyDefaults = model.options.applyDefaults } encodedValue model.schema
 
                 ( value, validationErrors ) =
                     case validationResult of
@@ -220,7 +234,12 @@ update msg model =
                         Err list ->
                             ( updatedValue, list |> dictFromListErrors )
             in
-                { model | value = updatedValue, editingNow = str, validationErrors = validationErrors }
+                { model
+                    | value = updatedValue
+                    , editingNow = str
+                    , validationErrors = validationErrors
+                    , edited = model.edited |> Dict.insert path True
+                }
                     ! []
                     => UpdateValue (value |> JsonValue.encode)
 
@@ -237,7 +256,7 @@ update msg model =
                     updatedValue |> JsonValue.encode
 
                 validationResult =
-                    Json.Schema.validateValue { applyDefaults = False } encodedValue model.schema
+                    Json.Schema.validateValue { applyDefaults = model.options.applyDefaults } encodedValue model.schema
 
                 ( value, validationErrors ) =
                     case validationResult of
@@ -247,7 +266,12 @@ update msg model =
                         Err list ->
                             ( updatedValue, list |> dictFromListErrors )
             in
-                { model | value = value, editingNow = str, validationErrors = validationErrors }
+                { model
+                    | value = value
+                    , editingNow = str
+                    , validationErrors = validationErrors
+                    , edited = model.edited |> Dict.insert path True
+                }
                     ! []
                     => UpdateValue (value |> JsonValue.encode)
 
@@ -340,7 +364,7 @@ view model =
 delete : Path -> View
 delete path =
     Icons.xCircle
-        |> Icons.withStrokeWidth 1
+        |> Icons.withStrokeWidth 2
         |> Icons.withSize 18
         |> Icons.toHtml []
         |> Element.html
@@ -472,7 +496,7 @@ viewProperty model deletionAllowed path key rawSubSchema value =
                         Icons.chevronRight
                     )
                         |> Icons.withSize 18
-                        |> Icons.withStrokeWidth 1
+                        |> Icons.withStrokeWidth 2
                         |> Icons.toHtml []
                         |> Element.html
                         |> el None
@@ -487,7 +511,7 @@ viewProperty model deletionAllowed path key rawSubSchema value =
                    else
                     Icons.chevronDown
                         |> Icons.withSize 18
-                        |> Icons.withStrokeWidth 1
+                        |> Icons.withStrokeWidth 2
                         |> Icons.toHtml []
                         |> Element.html
                         |> el None
@@ -509,7 +533,7 @@ viewProperty model deletionAllowed path key rawSubSchema value =
                   -}
                 , Icons.moreVertical
                     |> Icons.withSize 18
-                    |> Icons.withStrokeWidth 1
+                    |> Icons.withStrokeWidth 2
                     |> Icons.toHtml []
                     |> Element.html
                     |> el None
