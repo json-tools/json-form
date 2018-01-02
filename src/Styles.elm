@@ -56,7 +56,7 @@ stylesheet =
             [ Color.text Color.darkCharcoal
             , Color.background Color.white
             , sansSerifFont
-            , Font.size 14
+            , Font.size 12
             , Font.lineHeight 1.5
               -- line height, given as a ratio of current font size.
             ]
@@ -107,7 +107,7 @@ stylesheet =
               --[ Style.prop "color" "#c80000"
             , Style.prop "outline" "none"
             , sansSerifFont
-            , Font.size 14
+            , Font.size 12
             , Style.variation Active
                 [ Font.weight 700
                 ]
@@ -214,11 +214,12 @@ stylesheet =
                 ]
             ]
         , style TextInput
-            [ Style.prop "font-family" "Menlo, monospace"
+            [ sansSerifFont
             , Border.bottom 1
             , Style.prop "outline" "none"
+            , Font.size 14
             , Color.border Color.darkGrey
-            , Style.paddingHint 3
+            , Style.paddingHint 5
               --, Style.prop "transition" "border-color 0.2s linear"
             , Style.pseudo "focus"
                 [ Color.border Color.lightBlue
