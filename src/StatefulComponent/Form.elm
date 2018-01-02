@@ -363,23 +363,50 @@ update msg model =
                         |> JsonValue.setIn propPath NullValue
                         |> Result.mapError (Debug.log "AddItem")
                         |> Result.withDefault model.value
+
+                options =
+                    model.options
+
+                en =
+                    path :: options.expandedNodes
             in
                 { model
                     | value = value
                     , editPropPath = path
-                    , editPropIndex = Just nextIndex |> Debug.log "prop index"
+                    , editPropIndex = Just nextIndex |> Debug.log "index"
                     , editPropName = ""
+                    , options = { options | expandedNodes = en }
+                    , focusInput = []
                 }
-                    ! []
-                    => NoOp
+                    ! [ path
+                            |> String.join "/"
+                            |> (\x -> x ++ ":propname")
+                            |> Debug.log "will focus"
+                            |> Dom.focus
+                            |> Task.attempt
+                                (\x ->
+                                    let
+                                        a =
+                                            Debug.log "focus" x
+                                    in
+                                        NoMsg
+                                )
+                      ]
+                    => SaveExpandedNodes en
 
         SetEditPropertyName propName path index ->
             { model
                 | editPropPath = path
                 , editPropIndex = Just index
                 , editPropName = propName
+                , focusInput = []
             }
-                ! []
+                ! [ path
+                        |> String.join "/"
+                        |> (\x -> x ++ ":propname")
+                        |> Dom.focus
+                        |> Task.attempt (\x -> NoMsg)
+                  ]
                 => NoOp
 
         EditPropertyName str ->
@@ -645,9 +672,16 @@ viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
                         [ vary Active True ]
                         [ model.editPropName
                             |> Element.inputText TextInput
-                                [ Attributes.autofocus True
-                                , onInput EditPropertyName
+                                [ onInput EditPropertyName
                                 , onBlur <| StopEditingPropertyName
+                                , path
+                                    |> String.join "/"
+                                    |> (\x -> x ++ ":propname")
+                                    |> Attributes.id
+                                , path
+                                    |> String.join "/"
+                                    |> (\x -> x ++ ":props")
+                                    |> Attributes.list
                                 ]
                         ]
                   else
@@ -718,6 +752,44 @@ viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
                 row None
                     []
                     [ viewValue model subSchema value deeperLevelPath
+                    , case subSchema of
+                        ObjectSchema os ->
+                            case os.properties of
+                                Just (Schemata list) ->
+                                    let
+                                        existingProps =
+                                            case value of
+                                                ObjectValue x ->
+                                                    x |> List.map (\( name, _ ) -> name)
+
+                                                _ ->
+                                                    []
+                                    in
+                                        list
+                                            |> List.filterMap
+                                                (\( propName, _ ) ->
+                                                    if List.member propName existingProps then
+                                                        Nothing
+                                                    else
+                                                        text propName
+                                                            |> Element.node "option"
+                                                            |> Just
+                                                )
+                                            |> row None
+                                                [ inlineStyle [ ( "display", "none" ) ]
+                                                , Attributes.id
+                                                    (deeperLevelPath
+                                                        |> String.join "/"
+                                                        |> (\x -> x ++ ":props")
+                                                    )
+                                                ]
+                                            |> Element.node "datalist"
+
+                                Nothing ->
+                                    empty
+
+                        _ ->
+                            empty
                     ]
               else
                 empty
