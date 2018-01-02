@@ -837,26 +837,31 @@ viewObject model schema props isArray path =
         iterateOverProps isObject list schema =
             list
                 |> List.indexedMap
-                    (\index ( key, value ) ->
-                        viewProperty model
-                            True
-                            (if isObject then
-                                Just index
-                             else
-                                Nothing
-                            )
-                            path
-                            key
-                            schema
-                            value
+                    (\index prop ->
+                        case prop of
+                            Just ( key, value ) ->
+                                viewProperty model
+                                    True
+                                    (if isObject then
+                                        Just index
+                                     else
+                                        Nothing
+                                    )
+                                    path
+                                    key
+                                    schema
+                                    value
+
+                            Nothing ->
+                                empty
                     )
     in
         case schema of
             BooleanSchema True ->
-                iterateOverProps True props blankSchema
+                iterateOverProps True (props |> List.map Just) blankSchema
 
             BooleanSchema False ->
-                iterateOverProps True props disallowEverythingSchema
+                iterateOverProps True (props |> List.map Just) disallowEverythingSchema
 
             ObjectSchema os ->
                 let
@@ -869,11 +874,18 @@ viewObject model schema props isArray path =
                             _ ->
                                 []
 
+                    justProps =
+                        props
+                            |> List.map Just
+
                     extraProps =
                         props
-                            |> List.filter
-                                (\( name, _ ) ->
-                                    List.member name knownProperties |> not
+                            |> List.map
+                                (\( name, v ) ->
+                                    if List.member name knownProperties then
+                                        Nothing
+                                    else
+                                        Just ( name, v )
                                 )
                 in
                     if isBlankSchema schema then
@@ -887,14 +899,14 @@ viewObject model schema props isArray path =
                         (if isArray then
                             case os.items of
                                 NoItems ->
-                                    iterateOverProps False props blankSchema
+                                    iterateOverProps False justProps blankSchema
 
                                 ItemDefinition s ->
-                                    iterateOverProps False props s
+                                    iterateOverProps False justProps s
 
                                 -- TODO: hande arrayOfItems
                                 _ ->
-                                    iterateOverProps False props disallowEverythingSchema
+                                    iterateOverProps False justProps disallowEverythingSchema
                          else
                             [ os.properties
                                 |> Maybe.map (iterateOverSchemata (Dict.fromList props) os.required)
