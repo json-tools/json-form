@@ -76,7 +76,7 @@ type Msg
     | DeletePath Path
     | AddItem Path
     | AddProperty Path
-    | SetEditPropertyName Path Int
+    | SetEditPropertyName String Path Int
     | EditPropertyName String
     | StopEditingPropertyName
     | ExpandNode Path
@@ -105,6 +105,7 @@ type alias Model =
     , edited : Dict Path Bool
     , editPropPath : Path
     , editPropIndex : Maybe Int
+    , editPropName : String
     }
 
 
@@ -175,6 +176,7 @@ init schema formOptions v =
             , edited = Dict.empty
             , editPropPath = []
             , editPropIndex = Nothing
+            , editPropName = ""
             }
     in
         blankModel
@@ -339,33 +341,68 @@ update msg model =
                 { model | value = value } ! [ makeId itemPath |> Dom.focus |> Task.attempt (\_ -> NoMsg) ] => UpdateValue (value |> JsonValue.encode)
 
         AddProperty path ->
-            model ! [] => NoOp
+            let
+                nextIndex =
+                    model.value
+                        |> JsonValue.getIn path
+                        |> Result.withDefault (ArrayValue [])
+                        |> (\x ->
+                                case x of
+                                    ObjectValue l ->
+                                        List.length l
 
-        SetEditPropertyName path index ->
+                                    _ ->
+                                        0
+                           )
+
+                propPath =
+                    path ++ [ "" ]
+
+                value =
+                    model.value
+                        |> JsonValue.setIn propPath NullValue
+                        |> Result.mapError (Debug.log "AddItem")
+                        |> Result.withDefault model.value
+            in
+                { model
+                    | value = value
+                    , editPropPath = path
+                    , editPropIndex = Just nextIndex |> Debug.log "prop index"
+                    , editPropName = ""
+                }
+                    ! []
+                    => NoOp
+
+        SetEditPropertyName propName path index ->
             { model
                 | editPropPath = path
                 , editPropIndex = Just index
+                , editPropName = propName
             }
                 ! []
                 => NoOp
 
         EditPropertyName str ->
-            { model
-                | value =
-                    model.value
-                        |> JsonValue.setPropertyName ( model.editPropPath, model.editPropIndex |> Maybe.withDefault 0 ) str
-                        |> Result.withDefault model.value
-            }
-                ! []
-                => NoOp
+            { model | editPropName = str } ! [] => NoOp
 
         StopEditingPropertyName ->
-            { model
-                | editPropPath = []
-                , editPropIndex = Nothing
-            }
-                ! []
-                => UpdateValue (model.value |> JsonValue.encode)
+            let
+                updatedValue =
+                    model.value
+                        |> JsonValue.setPropertyName
+                            ( model.editPropPath
+                            , model.editPropIndex |> Maybe.withDefault 0
+                            )
+                            model.editPropName
+                        |> Result.withDefault model.value
+            in
+                { model
+                    | editPropPath = []
+                    , editPropIndex = Nothing
+                    , value = updatedValue
+                }
+                    ! []
+                    => UpdateValue (updatedValue |> JsonValue.encode)
 
         ExpandNode path ->
             let
@@ -606,7 +643,7 @@ viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
                 , if indexInObject /= Nothing && indexInObject == model.editPropIndex && path == model.editPropPath then
                     row InputRow
                         [ vary Active True ]
-                        [ key
+                        [ model.editPropName
                             |> Element.inputText TextInput
                                 [ Attributes.autofocus True
                                 , onInput EditPropertyName
@@ -644,7 +681,10 @@ viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
                             [ text "Edit as JSON" |> el MenuItem []
                             , case indexInObject of
                                 Just index ->
-                                    text "Edit property name" |> el MenuItem [ onClick <| SetEditPropertyName path index ]
+                                    text "Edit property name"
+                                        |> el MenuItem
+                                            [ onClick <| SetEditPropertyName key path index
+                                            ]
 
                                 _ ->
                                     empty
@@ -722,16 +762,29 @@ viewObject model schema props isArray path =
                                     empty
                     )
 
-        iterateOverProps list schema =
+        iterateOverProps isObject list schema =
             list
-                |> List.indexedMap (\index ( key, value ) -> viewProperty model True (Just index) path key schema value)
+                |> List.indexedMap
+                    (\index ( key, value ) ->
+                        viewProperty model
+                            True
+                            (if isObject then
+                                Just index
+                             else
+                                Nothing
+                            )
+                            path
+                            key
+                            schema
+                            value
+                    )
     in
         case schema of
             BooleanSchema True ->
-                iterateOverProps props blankSchema
+                iterateOverProps True props blankSchema
 
             BooleanSchema False ->
-                iterateOverProps props disallowEverythingSchema
+                iterateOverProps True props disallowEverythingSchema
 
             ObjectSchema os ->
                 let
@@ -762,27 +815,27 @@ viewObject model schema props isArray path =
                         (if isArray then
                             case os.items of
                                 NoItems ->
-                                    iterateOverProps props blankSchema
+                                    iterateOverProps False props blankSchema
 
                                 ItemDefinition s ->
-                                    iterateOverProps props s
+                                    iterateOverProps False props s
 
                                 -- TODO: hande arrayOfItems
                                 _ ->
-                                    iterateOverProps props disallowEverythingSchema
+                                    iterateOverProps False props disallowEverythingSchema
                          else
                             [ os.properties
                                 |> Maybe.map (iterateOverSchemata (Dict.fromList props) os.required)
                                 |> Maybe.withDefault []
                             , case os.additionalProperties of
                                 Just (ObjectSchema os) ->
-                                    iterateOverProps extraProps (ObjectSchema os)
+                                    iterateOverProps True extraProps (ObjectSchema os)
 
                                 Just (BooleanSchema False) ->
-                                    iterateOverProps extraProps disallowEverythingSchema
+                                    iterateOverProps True extraProps disallowEverythingSchema
 
                                 _ ->
-                                    iterateOverProps extraProps blankSchema
+                                    iterateOverProps True extraProps blankSchema
                             ]
                                 |> List.concat
                         )
