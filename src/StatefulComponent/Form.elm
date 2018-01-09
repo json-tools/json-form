@@ -110,7 +110,8 @@ type alias Model =
 
 
 type alias FormOptions =
-    { expandedNodes : List Path
+    { schema : Schema
+    , expandedNodes : List Path
     , applyDefaults : Bool
     , showEmptyOptionalProps : Bool
     , showInitialValidationErrors : Bool
@@ -119,7 +120,8 @@ type alias FormOptions =
 
 defaultOptions : FormOptions
 defaultOptions =
-    { expandedNodes = [ [] ]
+    { schema = blankSchema
+    , expandedNodes = [ [] ]
     , applyDefaults = False
     , showEmptyOptionalProps = False
     , showInitialValidationErrors = False
@@ -147,11 +149,11 @@ dictFromListErrors list =
             Dict.empty
 
 
-init : Schema -> FormOptions -> Value -> Model
-init schema formOptions v =
+init : FormOptions -> Value -> Model
+init formOptions v =
     let
         validationResult =
-            Json.Schema.validateValue { applyDefaults = formOptions.applyDefaults } v schema
+            Json.Schema.validateValue { applyDefaults = formOptions.applyDefaults } v formOptions.schema
 
         ( value, validationErrors ) =
             case validationResult of
@@ -162,7 +164,7 @@ init schema formOptions v =
                     ( v, list |> dictFromListErrors )
 
         blankModel =
-            { schema = schema
+            { schema = formOptions.schema
             , value =
                 value
                     |> decodeValue JsonValue.decoder

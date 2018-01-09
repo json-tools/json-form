@@ -80,7 +80,13 @@ init v =
                 options =
                     Form.defaultOptions
             in
-                { schemaForm = Form.init Schemata.draft6 { options | expandedNodes = getExpandedNodes "schema" expandedNodes } value
+                { schemaForm =
+                    Form.init
+                        { options
+                            | schema = Schemata.draft6
+                            , expandedNodes = getExpandedNodes "schema" expandedNodes
+                        }
+                        value
                 , expandedNodes = expandedNodes
                 , schema =
                     value
@@ -91,7 +97,7 @@ init v =
                         |> decodeValue Json.Schema.Definitions.decoder
                         |> Result.mapError (Debug.log "LoadingSchemaError")
                         |> Result.toMaybe
-                        |> Maybe.map (\s -> Form.init s { options | expandedNodes = getExpandedNodes "schema" expandedNodes, applyDefaults = True, showEmptyOptionalProps = True } defaultValue)
+                        |> Maybe.map (\s -> Form.init { options | schema = s, expandedNodes = getExpandedNodes "schema" expandedNodes, applyDefaults = True, showEmptyOptionalProps = True } defaultValue)
                 , value = Just defaultValue
                 }
                     ! []
@@ -148,7 +154,15 @@ update msg model =
                                 , maybeSchema
                                     |> Maybe.map
                                         (\s ->
-                                            Form.init s { options | expandedNodes = getExpandedNodes "value" model.expandedNodes, applyDefaults = True, showEmptyOptionalProps = True } (model.value |> Maybe.withDefault Encode.null)
+                                            model.value
+                                                |> Maybe.withDefault Encode.null
+                                                |> Form.init
+                                                    { options
+                                                        | schema = s
+                                                        , expandedNodes = getExpandedNodes "value" model.expandedNodes
+                                                        , applyDefaults = True
+                                                        , showEmptyOptionalProps = True
+                                                    }
                                         )
                                 )
 
