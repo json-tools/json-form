@@ -42,7 +42,7 @@ type alias Model =
 
 defaultValue : Value
 defaultValue =
-    Encode.object [ ( "hello", Encode.string "mr" ), ( "world", Encode.string "mr" ) ]
+    Encode.object [ ( "document", Encode.object [] ) ]
 
 
 type alias SessionData =
@@ -105,6 +105,7 @@ init v =
                                         , expandedNodes = getExpandedNodes "schema" expandedNodes
                                         , applyDefaults = True
                                         , showEmptyOptionalProps = True
+                                        , useTitleAsLabel = True
                                     }
                                     defaultValue
                             )

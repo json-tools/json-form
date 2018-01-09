@@ -19,6 +19,7 @@ localStorage.editMe = JSON.stringify( {
             "type": "object",
             "properties": {
                 "title": {
+                    "title": "Title",
                     "type": "string",
                     "enum": [
                         "mr",
@@ -28,34 +29,78 @@ localStorage.editMe = JSON.stringify( {
                     ]
                 },
                 "firstName": {
+                    "title": "First name",
                     "type": "string",
                     "description": "First name(s) or given name(s), as specified in passport or travel document.",
                     "example": "Bob"
                 },
                 "middleName": {
+                    "title": "Middle name",
                     "type": "string",
                     "default": "",
                     "description": "Middle name, if applicable.<br/>This will only be used on websites which provide separate entry for middle names, otherwise it will be ignored.<br/>If middle name is essential for placing order, consider appending it to <code>firstName</code>."
                 },
                 "lastName": {
+                    "title": "Last name",
                     "type": "string",
                     "description": "Last name or surname, as specified in passport or travel document.",
                     "example": "Smith"
                 },
                 "dateOfBirth": {
+                    "title": "Date of birth",
                     "type": "string",
                     "description": "Passenger's date of birth in YYYY-MM-DD format.",
                     "format": "date",
                     "example": "1976-01-27"
                 },
                 "addAdditionalLuggage": {
+                    "title": "Additional luggage (items count)",
                     "type": "integer",
                     "description": "Add additional luggage",
                     "minimum": 0,
                     "maximum": 3,
                     "default": 0
                 },
-                "document": { "$ref": "#/domains/FlightBooking/types/PassengerDocument" }
+                "document": {
+                  "title": "Travel document",
+                  "type": "object",
+                  "description": "Passenger ID (passport or other travel document). Automation may fail if this information is required by website, but not provided by Client.",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "description": "Document type.",
+                      "enum": [
+                        "passport"
+                      ]
+                    },
+                    "number": {
+                      "type": "string",
+                      "description": "Document number.",
+                      "example": "75 127001"
+                    },
+                    "issueDate": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2008-01-01"
+                    },
+                    "expirationDate": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "2028-01-01"
+                    },
+                    "issueCountryCode": {
+                      "$ref": "#/domains/Generic/types/CountryCode",
+                      "description": "Code of country where the document was issued."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "number",
+                    "expirationDate",
+                    "issueCountryCode"
+                  ],
+                  "additionalProperties": false
+                }
             },
             "required": [
                 "title",

@@ -127,6 +127,7 @@ type alias FormOptions =
     , applyDefaults : Bool
     , showEmptyOptionalProps : Bool
     , showInitialValidationErrors : Bool
+    , useTitleAsLabel : Bool
     }
 
 
@@ -137,6 +138,7 @@ defaultOptions =
     , applyDefaults = False
     , showEmptyOptionalProps = False
     , showInitialValidationErrors = False
+    , useTitleAsLabel = False
     }
 
 
@@ -714,7 +716,13 @@ viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
                                 ]
                         ]
                   else
-                    key
+                    (if model.options.useTitleAsLabel then
+                        objectSchema
+                            |> Maybe.andThen .title
+                            |> Maybe.withDefault key
+                     else
+                        key
+                    )
                         |> text
                         |> el PropertyName
                             [ vary Active <| deeperLevelPath == model.focusInput
