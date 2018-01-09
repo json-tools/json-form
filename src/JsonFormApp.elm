@@ -79,6 +79,12 @@ init v =
             let
                 options =
                     Form.defaultOptions
+
+                maybeSchema =
+                    value
+                        |> decodeValue Json.Schema.Definitions.decoder
+                        |> Result.mapError (Debug.log "LoadingSchemaError")
+                        |> Result.toMaybe
             in
                 { schemaForm =
                     Form.init
@@ -88,16 +94,20 @@ init v =
                         }
                         value
                 , expandedNodes = expandedNodes
-                , schema =
-                    value
-                        |> decodeValue Json.Schema.Definitions.decoder
-                        |> Result.toMaybe
+                , schema = maybeSchema
                 , valueForm =
-                    value
-                        |> decodeValue Json.Schema.Definitions.decoder
-                        |> Result.mapError (Debug.log "LoadingSchemaError")
-                        |> Result.toMaybe
-                        |> Maybe.map (\s -> Form.init { options | schema = s, expandedNodes = getExpandedNodes "schema" expandedNodes, applyDefaults = True, showEmptyOptionalProps = True } defaultValue)
+                    maybeSchema
+                        |> Maybe.map
+                            (\s ->
+                                Form.init
+                                    { options
+                                        | schema = s
+                                        , expandedNodes = getExpandedNodes "schema" expandedNodes
+                                        , applyDefaults = True
+                                        , showEmptyOptionalProps = True
+                                    }
+                                    defaultValue
+                            )
                 , value = Just defaultValue
                 }
                     ! []
@@ -151,19 +161,7 @@ update msg model =
                                         |> Result.toMaybe
                             in
                                 ( maybeSchema
-                                , maybeSchema
-                                    |> Maybe.map
-                                        (\s ->
-                                            model.value
-                                                |> Maybe.withDefault Encode.null
-                                                |> Form.init
-                                                    { options
-                                                        | schema = s
-                                                        , expandedNodes = getExpandedNodes "value" model.expandedNodes
-                                                        , applyDefaults = True
-                                                        , showEmptyOptionalProps = True
-                                                    }
-                                        )
+                                , Maybe.map2 Form.updateSchema maybeSchema model.valueForm
                                 )
 
                         _ ->

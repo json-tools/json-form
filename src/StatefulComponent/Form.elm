@@ -1,4 +1,16 @@
-module StatefulComponent.Form exposing (Model, Msg, ExternalMsg(UpdateValue, SaveExpandedNodes), init, update, view, defaultOptions, FormOptions)
+module StatefulComponent.Form
+    exposing
+        ( Model
+        , Msg
+        , ExternalMsg(UpdateValue, SaveExpandedNodes)
+        , init
+        , update
+        , updateValue
+        , updateSchema
+        , view
+        , defaultOptions
+        , FormOptions
+        )
 
 import Task
 import Dom
@@ -182,6 +194,21 @@ init formOptions v =
             }
     in
         blankModel
+
+
+updateValue : Value -> Model -> Model
+updateValue v m =
+    { m
+        | value =
+            v
+                |> decodeValue JsonValue.decoder
+                |> Result.withDefault JsonValue.NullValue
+    }
+
+
+updateSchema : Schema -> Model -> Model
+updateSchema s m =
+    { m | schema = s }
 
 
 update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )
