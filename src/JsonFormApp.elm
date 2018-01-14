@@ -107,6 +107,7 @@ init v =
                                         , applyDefaults = True
                                         , showEmptyOptionalProps = True
                                         , useTitleAsLabel = True
+                                        , allowExpandingNodes = True
                                     }
                                     defaultValue
                             )

@@ -26,7 +26,7 @@ import Json.Schema.Definitions as Schema
     exposing
         ( Schemata(Schemata)
         , Type(SingleType)
-        , SingleType(StringType, IntegerType)
+        , SingleType(StringType, IntegerType, NumberType)
         , Schema(ObjectSchema, BooleanSchema)
         , Items(NoItems, ItemDefinition, ArrayOfItems)
         , blankSchema
@@ -128,6 +128,9 @@ type alias FormOptions =
     , showEmptyOptionalProps : Bool
     , showInitialValidationErrors : Bool
     , useTitleAsLabel : Bool
+    , allowExpandingNodes :
+        Bool
+        --, monospaceTitle : Bool
     }
 
 
@@ -139,6 +142,9 @@ defaultOptions =
     , showEmptyOptionalProps = False
     , showInitialValidationErrors = False
     , useTitleAsLabel = False
+    , allowExpandingNodes =
+        True
+        --, monospaceTitle = AlwaysMonospace | MonospaceWhenKeyUsedAsLabel | NeverMonospace
     }
 
 
@@ -630,38 +636,84 @@ viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
             isBlankSchema subSchema
 
         isExpandable =
-            case value of
-                JsonValue.ObjectValue _ ->
-                    isBlank |> not
+            if model.options.allowExpandingNodes then
+                case value of
+                    JsonValue.ObjectValue _ ->
+                        isBlank |> not
 
-                JsonValue.ArrayValue _ ->
-                    isBlank |> not
+                    JsonValue.ArrayValue _ ->
+                        isBlank |> not
 
-                {-
-                   isBlank
-                       |> not
-                       |> Debug.log (toString deeperLevelPath)
-                -}
-                _ ->
-                    False
+                    {-
+                       isBlank
+                           |> not
+                           |> Debug.log (toString deeperLevelPath)
+                    -}
+                    _ ->
+                        False
+            else
+                False
 
         isExpanded =
-            case value of
-                JsonValue.ObjectValue _ ->
-                    isBlank
-                        || List.member
-                            deeperLevelPath
-                            model.options.expandedNodes
+            if model.options.allowExpandingNodes then
+                case value of
+                    JsonValue.ObjectValue _ ->
+                        isBlank
+                            || List.member
+                                deeperLevelPath
+                                model.options.expandedNodes
 
-                JsonValue.ArrayValue _ ->
-                    isBlank
-                        || List.member
-                            deeperLevelPath
-                            model.options.expandedNodes
+                    JsonValue.ArrayValue _ ->
+                        isBlank
+                            || List.member
+                                deeperLevelPath
+                                model.options.expandedNodes
 
-                --List.member deeperLevelPath model.expandedNodes
+                    --List.member deeperLevelPath model.expandedNodes
+                    _ ->
+                        True
+            else
+                True
+
+        propertyNamesAutocomplete =
+            case subSchema of
+                ObjectSchema os ->
+                    case os.properties of
+                        Just (Schemata list) ->
+                            let
+                                existingProps =
+                                    case value of
+                                        ObjectValue x ->
+                                            x |> List.map (\( name, _ ) -> name)
+
+                                        _ ->
+                                            []
+                            in
+                                list
+                                    |> List.filterMap
+                                        (\( propName, _ ) ->
+                                            if List.member propName existingProps then
+                                                Nothing
+                                            else
+                                                text propName
+                                                    |> Element.node "option"
+                                                    |> Just
+                                        )
+                                    |> row None
+                                        [ inlineStyle [ ( "display", "none" ) ]
+                                        , Attributes.id
+                                            (deeperLevelPath
+                                                |> String.join "/"
+                                                |> (\x -> x ++ ":props")
+                                            )
+                                        ]
+                                    |> Element.node "datalist"
+
+                        Nothing ->
+                            empty
+
                 _ ->
-                    True
+                    empty
     in
         column None
             [ paddingTop 10 ]
@@ -695,7 +747,7 @@ viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
                         |> el None
                             [ width <| px 18
                             , height <| px 18
-                            , inlineStyle [ ( "color", "lightgrey" ) ]
+                            , inlineStyle [ ( "visibility", "hidden" ) ]
                             ]
                   )
                 , if indexInObject /= Nothing && indexInObject == model.editPropIndex && path == model.editPropPath then
@@ -718,12 +770,25 @@ viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
                   else
                     (if model.options.useTitleAsLabel then
                         objectSchema
-                            |> Maybe.andThen .title
-                            |> Maybe.withDefault key
+                            |> Maybe.map
+                                (\os ->
+                                    case os.type_ of
+                                        SingleType StringType ->
+                                            empty
+
+                                        SingleType IntegerType ->
+                                            empty
+
+                                        SingleType NumberType ->
+                                            empty
+
+                                        _ ->
+                                            key |> text
+                                )
+                            |> Maybe.withDefault (key |> text)
                      else
-                        key
+                        key |> text
                     )
-                        |> text
                         |> el PropertyName
                             [ vary Active <| deeperLevelPath == model.focusInput
                             ]
@@ -789,44 +854,7 @@ viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
                 row None
                     []
                     [ viewValue model subSchema value deeperLevelPath
-                    , case subSchema of
-                        ObjectSchema os ->
-                            case os.properties of
-                                Just (Schemata list) ->
-                                    let
-                                        existingProps =
-                                            case value of
-                                                ObjectValue x ->
-                                                    x |> List.map (\( name, _ ) -> name)
-
-                                                _ ->
-                                                    []
-                                    in
-                                        list
-                                            |> List.filterMap
-                                                (\( propName, _ ) ->
-                                                    if List.member propName existingProps then
-                                                        Nothing
-                                                    else
-                                                        text propName
-                                                            |> Element.node "option"
-                                                            |> Just
-                                                )
-                                            |> row None
-                                                [ inlineStyle [ ( "display", "none" ) ]
-                                                , Attributes.id
-                                                    (deeperLevelPath
-                                                        |> String.join "/"
-                                                        |> (\x -> x ++ ":props")
-                                                    )
-                                                ]
-                                            |> Element.node "datalist"
-
-                                Nothing ->
-                                    empty
-
-                        _ ->
-                            empty
+                    , propertyNamesAutocomplete
                     ]
               else
                 empty
@@ -1004,7 +1032,6 @@ viewNumber model schema numValue path =
                     , onFocus <| FocusInput path schema
                     , onBlur <| BlurInput path
                     , Attributes.type_ "number"
-                      --, Attributes.step "1"
                     , width <| fill 1
                     , Attributes.id <| makeId path
                     ]
@@ -1036,14 +1063,52 @@ viewBool model schema boolValue path =
             ]
 
 
-viewString : Model -> Schema -> String -> Path -> View
-viewString model schema stringValue path =
+labeledInput : Model -> (Path -> String -> Msg) -> Schema -> String -> Path -> View
+labeledInput model inputHandler schema stringValue path =
     let
         listId =
             String.join "/" path ++ ":list"
 
         isFocused =
             path == model.focusInput
+
+        objectSchema =
+            case schema of
+                ObjectSchema os ->
+                    Just os
+
+                _ ->
+                    Nothing
+
+        autocompleteOptions =
+            objectSchema
+                |> Maybe.andThen .enum
+                |> Maybe.map
+                    (\enum ->
+                        enum
+                            |> List.map
+                                (\v ->
+                                    let
+                                        strValue =
+                                            v |> decodeValue Decode.string |> Result.withDefault ""
+                                    in
+                                        Element.node "option" <| text strValue
+                                )
+                            |> row None [ inlineStyle [ ( "display", "none" ) ], Attributes.id listId ]
+                            |> Element.node "datalist"
+                    )
+                |> Maybe.withDefault empty
+
+        inputId =
+            makeId path
+
+        hasValue =
+            (if isFocused then
+                model.editingNow
+             else
+                stringValue
+            )
+                /= ""
     in
         if isBlankSchema schema then
             row
@@ -1060,7 +1125,7 @@ viewString model schema stringValue path =
                         ]
                 ]
         else
-            row
+            column
                 InputRow
                 [ vary Active isFocused ]
                 [ (if isFocused then
@@ -1071,34 +1136,48 @@ viewString model schema stringValue path =
                     |> Element.inputText TextInput
                         [ onFocus <| FocusInput path schema
                         , onBlur <| BlurInput path
-                        , onInput <| StringInput path
+                        , onInput <| inputHandler path
                         , Attributes.list listId
                         , width <| fill 1
-                        , Attributes.id <| makeId path
+                        , Attributes.id inputId
                         , Attributes.autocomplete False
+                        , Attributes.paddingBottom 4
                         ]
-                , case schema of
-                    ObjectSchema os ->
-                        os.enum
-                            |> Maybe.map
-                                (\enum ->
-                                    enum
-                                        |> List.map
-                                            (\v ->
-                                                let
-                                                    strValue =
-                                                        v |> decodeValue Decode.string |> Result.withDefault ""
-                                                in
-                                                    Element.node "option" <| text strValue
-                                            )
-                                        |> row None [ inlineStyle [ ( "display", "none" ) ], Attributes.id listId ]
-                                        |> Element.node "datalist"
-                                )
-                            |> Maybe.withDefault empty
-
-                    _ ->
-                        empty
+                , autocompleteOptions
                 ]
+                |> Element.above
+                    [ (if model.options.useTitleAsLabel then
+                        objectSchema
+                            |> Maybe.andThen .title
+                            |> (\x ->
+                                    case x of
+                                        Just t ->
+                                            Just t
+
+                                        Nothing ->
+                                            path |> List.reverse |> List.head
+                               )
+                            |> Maybe.map text
+                            |> Maybe.withDefault empty
+                       else
+                        empty
+                      )
+                        |> el None
+                            [ inlineStyle
+                                [ ( "transform-origin", "left top" )
+                                , if isFocused || hasValue then
+                                    ( "transform", "translateY(-100%) scale(0.75, 0.75)" )
+                                  else
+                                    ( "cursor", "text" )
+                                , ( "transform-origin", "left top" )
+                                , ( "font-size", "14px" )
+                                , ( "transition", "transform 180ms cubic-bezier(0.4, 0, 0.2, 1)" )
+                                ]
+                            , Attributes.for inputId
+                            , Attributes.moveDown 20
+                            ]
+                        |> Element.node "label"
+                    ]
 
 
 viewValue : Model -> Schema -> JsonValue -> Path -> View
@@ -1111,10 +1190,10 @@ viewValue model schema value path =
             viewObject model schema (av |> List.indexedMap (\index val -> ( toString index, val ))) True path
 
         JsonValue.StringValue sv ->
-            [ viewString model schema sv path ]
+            [ labeledInput model StringInput schema sv path ]
 
         JsonValue.NumericValue nv ->
-            [ viewNumber model schema (Just nv) path ]
+            [ labeledInput model NumericInput schema (toString nv) path ]
 
         JsonValue.BoolValue bv ->
             [ viewBool model schema bv path ]
@@ -1124,7 +1203,7 @@ viewValue model schema value path =
                 ObjectSchema os ->
                     case os.type_ of
                         SingleType StringType ->
-                            [ viewString model schema "" path ]
+                            [ labeledInput model StringInput schema "" path ]
 
                         SingleType IntegerType ->
                             [ viewNumber model schema Nothing path ]
@@ -1156,16 +1235,25 @@ viewValue model schema value path =
                     ]
     )
         |> (\col ->
-                model.validationErrors
-                    |> Dict.get path
-                    |> Maybe.map
-                        (\errors ->
-                            if model.options.showInitialValidationErrors || (model.edited |> Dict.member path) then
-                                col ++ (errors |> List.filter ((/=) "") |> List.map (text >> (el InlineError [])))
-                            else
+                case model.validationErrors |> Dict.get path of
+                    Just errors ->
+                        if model.options.showInitialValidationErrors || (model.edited |> Dict.member path) then
+                            col ++ (errors |> List.filter ((/=) "") |> List.map (((++) "Error: ") >> text >> (el InlineError [])))
+                        else
+                            col
+
+                    Nothing ->
+                        case schema of
+                            ObjectSchema os ->
+                                case os.description of
+                                    Just d ->
+                                        col ++ [ text d |> el None [ inlineStyle [ ( "font-size", "10px" ), ( "margin-top", "4px" ) ] ] ]
+
+                                    Nothing ->
+                                        col
+
+                            _ ->
                                 col
-                        )
-                    |> Maybe.withDefault col
            )
         |> column None [ paddingLeft 20, spacing 0, width <| fill 1 ]
 

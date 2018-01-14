@@ -218,11 +218,14 @@ stylesheet =
             , Border.bottom 1
             , Style.prop "outline" "none"
             , Font.size 14
-            , Color.border Color.darkGrey
-            , Style.paddingHint 5
+            , Color.border Color.lightCharcoal
+              --, Style.paddingHint 5
               --, Style.prop "transition" "border-color 0.2s linear"
             , Style.pseudo "focus"
                 [ Color.border Color.lightBlue
+                ]
+            , Style.hover
+                [ Color.border Color.darkCharcoal
                 ]
             ]
         ]
