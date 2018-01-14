@@ -79,17 +79,20 @@ localStorage.editMe = JSON.stringify( {
                       "example": "75 127001"
                     },
                     "issueDate": {
+                      "title": "Issue date",
                       "type": "string",
                       "format": "date",
                       "example": "2008-01-01"
                     },
                     "expirationDate": {
+                      "title": "Expiration date",
                       "type": "string",
                       "format": "date",
                       "example": "2028-01-01"
                     },
                     "issueCountryCode": {
                       "$ref": "#/domains/Generic/types/CountryCode",
+                      "title": "Issuing country",
                       "description": "Code of country where the document was issued."
                     }
                   },

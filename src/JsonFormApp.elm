@@ -91,6 +91,7 @@ init v =
                         { options
                             | schema = Schemata.draft6
                             , expandedNodes = getExpandedNodes "schema" expandedNodes
+                            , useTitleAsLabel = True
                         }
                         value
                 , expandedNodes = expandedNodes
