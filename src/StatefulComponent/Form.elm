@@ -44,6 +44,8 @@ import Element.Attributes as Attributes
         , padding
         , paddingTop
         , paddingLeft
+        , paddingRight
+        , paddingBottom
         , height
         , minWidth
         , width
@@ -716,7 +718,7 @@ viewProperty model deletionAllowed indexInObject path key rawSubSchema value =
                     empty
     in
         column None
-            [ paddingTop 10 ]
+            [ paddingTop 0 ]
             [ row None
                 [ verticalCenter, spacing 5, class "key-container" ]
                 [ (if isExpandable then
@@ -1127,7 +1129,11 @@ labeledInput model inputHandler schema stringValue path =
         else
             column
                 InputRow
-                [ vary Active isFocused ]
+                [ vary Active isFocused
+                , paddingLeft 16
+                , paddingRight 16
+                , inlineStyle [ ( "background", "transparent" ), ( "height", "56px" ), ( "position", "relative" ) ]
+                ]
                 [ (if isFocused then
                     model.editingNow
                    else
@@ -1138,124 +1144,141 @@ labeledInput model inputHandler schema stringValue path =
                         , onBlur <| BlurInput path
                         , onInput <| inputHandler path
                         , Attributes.list listId
-                        , width <| fill 1
                         , Attributes.id inputId
                         , Attributes.autocomplete False
-                        , Attributes.paddingBottom 4
+                        , inlineStyle
+                            [ ( "position", "absolute" )
+                            , ( "bottom", "8px" )
+                            , ( "left", "16px" )
+                            , ( "right", "16px" )
+                            , ( "width", "calc(100% - 32px)" )
+                            , ( "top", "auto" )
+                            ]
                         ]
                 , autocompleteOptions
-                ]
-                |> Element.above
-                    [ (if model.options.useTitleAsLabel then
-                        objectSchema
-                            |> Maybe.andThen .title
-                            |> (\x ->
-                                    case x of
-                                        Just t ->
-                                            Just t
+                , (if model.options.useTitleAsLabel then
+                    objectSchema
+                        |> Maybe.andThen .title
+                        |> (\x ->
+                                case x of
+                                    Just t ->
+                                        Just t
 
-                                        Nothing ->
-                                            path |> List.reverse |> List.head
-                               )
-                            |> Maybe.map text
-                            |> Maybe.withDefault empty
-                       else
-                        empty
-                      )
-                        |> el None
-                            [ inlineStyle
-                                [ ( "transform-origin", "left top" )
-                                , if isFocused || hasValue then
-                                    ( "transform", "translateY(-100%) scale(0.75, 0.75)" )
-                                  else
-                                    ( "cursor", "text" )
-                                , ( "transform-origin", "left top" )
-                                , ( "font-size", "14px" )
-                                , ( "transition", "transform 180ms cubic-bezier(0.4, 0, 0.2, 1)" )
-                                ]
-                            , Attributes.for inputId
-                            , Attributes.moveDown 20
+                                    Nothing ->
+                                        path |> List.reverse |> List.head
+                           )
+                        |> Maybe.map text
+                        |> Maybe.withDefault empty
+                   else
+                    empty
+                  )
+                    |> el None
+                        [ inlineStyle
+                            [ ( "transform-origin", "left top" )
+                            , if isFocused || hasValue then
+                                ( "transform", "translateY(-100%) scale(0.75, 0.75)" )
+                              else
+                                ( "cursor", "text" )
+                            , ( "transform-origin", "left top" )
+                            , ( "left", "16px" )
+                            , ( "position", "absolute" )
+                            , ( "bottom", "8px" )
+                            , ( "top", "auto" )
+                            , ( "font-size", "14px" )
+                            , ( "transition", "transform 180ms cubic-bezier(0.4, 0, 0.2, 1)" )
                             ]
-                        |> Element.node "label"
-                    ]
+                        , Attributes.for inputId
+                        ]
+                    |> Element.node "label"
+                ]
 
 
 viewValue : Model -> Schema -> JsonValue -> Path -> View
 viewValue model schema value path =
-    (case value of
-        JsonValue.ObjectValue ov ->
-            viewObject model schema ov False path
+    let
+        isFocused =
+            model.focusInput == path
+    in
+        (case value of
+            JsonValue.ObjectValue ov ->
+                viewObject model schema ov False path
 
-        JsonValue.ArrayValue av ->
-            viewObject model schema (av |> List.indexedMap (\index val -> ( toString index, val ))) True path
+            JsonValue.ArrayValue av ->
+                viewObject model schema (av |> List.indexedMap (\index val -> ( toString index, val ))) True path
 
-        JsonValue.StringValue sv ->
-            [ labeledInput model StringInput schema sv path ]
+            JsonValue.StringValue sv ->
+                [ labeledInput model StringInput schema sv path ]
 
-        JsonValue.NumericValue nv ->
-            [ labeledInput model NumericInput schema (toString nv) path ]
+            JsonValue.NumericValue nv ->
+                [ labeledInput model NumericInput schema (toString nv) path ]
 
-        JsonValue.BoolValue bv ->
-            [ viewBool model schema bv path ]
+            JsonValue.BoolValue bv ->
+                [ viewBool model schema bv path ]
 
-        JsonValue.NullValue ->
-            case schema of
-                ObjectSchema os ->
-                    case os.type_ of
-                        SingleType StringType ->
-                            [ labeledInput model StringInput schema "" path ]
+            JsonValue.NullValue ->
+                case schema of
+                    ObjectSchema os ->
+                        case os.type_ of
+                            SingleType StringType ->
+                                [ labeledInput model StringInput schema "" path ]
 
-                        SingleType IntegerType ->
-                            [ viewNumber model schema Nothing path ]
+                            SingleType IntegerType ->
+                                [ viewNumber model schema Nothing path ]
 
-                        _ ->
-                            [ row InputRow
-                                [ vary Active <| model.focusInput == path ]
-                                [ "null"
-                                    |> Element.textArea TextInput
-                                        [ onInput <| ValueInput path
-                                        , width <| fill 1
-                                        , onFocus <| FocusInput path schema
-                                        , onBlur <| BlurInput path
-                                        ]
+                            _ ->
+                                [ row InputRow
+                                    [ vary Active <| isFocused ]
+                                    [ "null"
+                                        |> Element.textArea TextInput
+                                            [ onInput <| ValueInput path
+                                            , width <| fill 1
+                                            , onFocus <| FocusInput path schema
+                                            , onBlur <| BlurInput path
+                                            ]
+                                    ]
                                 ]
+
+                    _ ->
+                        [ row InputRow
+                            [ vary Active <| model.focusInput == path ]
+                            [ "null"
+                                |> Element.textArea TextInput
+                                    [ onInput <| ValueInput path
+                                    , width <| fill 1
+                                    , onFocus <| FocusInput path schema
+                                    , onBlur <| BlurInput path
+                                    ]
                             ]
-
-                _ ->
-                    [ row InputRow
-                        [ vary Active <| model.focusInput == path ]
-                        [ "null"
-                            |> Element.textArea TextInput
-                                [ onInput <| ValueInput path
-                                , width <| fill 1
-                                , onFocus <| FocusInput path schema
-                                , onBlur <| BlurInput path
-                                ]
                         ]
-                    ]
-    )
-        |> (\col ->
-                case model.validationErrors |> Dict.get path of
+        )
+            |> column None [ spacing 0, width <| fill 1 ]
+            |> Element.below
+                [ case model.validationErrors |> Dict.get path of
                     Just errors ->
                         if model.options.showInitialValidationErrors || (model.edited |> Dict.member path) then
-                            col ++ (errors |> List.filter ((/=) "") |> List.map (((++) "Error: ") >> text >> (el InlineError [])))
+                            errors
+                                |> List.filter ((/=) "")
+                                |> List.map (((++) "Error: ") >> text >> (el InlineError []))
+                                |> column None [ paddingLeft 16, paddingTop 8 ]
                         else
-                            col
+                            empty
 
                     Nothing ->
                         case schema of
                             ObjectSchema os ->
                                 case os.description of
                                     Just d ->
-                                        col ++ [ text d |> el None [ inlineStyle [ ( "font-size", "10px" ), ( "margin-top", "4px" ) ] ] ]
+                                        if isFocused then
+                                            text d |> el None [ paddingLeft 16, paddingTop 8, inlineStyle [ ( "font-size", "10px" ) ] ]
+                                        else
+                                            empty
 
                                     Nothing ->
-                                        col
+                                        empty
 
                             _ ->
-                                col
-           )
-        |> column None [ paddingLeft 20, spacing 0, width <| fill 1 ]
+                                empty
+                ]
 
 
 (=>) : a -> b -> ( a, b )

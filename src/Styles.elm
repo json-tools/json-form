@@ -179,31 +179,19 @@ stylesheet =
             , Font.size 11
             , Style.paddingHint 10
             ]
-        , style FocusedInputRow
-            [ Style.pseudo ":before"
-                [ Style.prop "content" "''"
-                , Style.prop "border-bottom" "2px solid black"
-                , Style.prop "position" "absolute"
-                , Style.prop "left" "0"
-                , Style.prop "bottom" "0"
-                , Style.prop "z-index" "20"
-                , Style.prop "height" "2px"
-                , Style.prop "width" "100%"
-                , Style.prop "visibility" "visible"
-                ]
-            ]
         , style InputRow
             [ Style.pseudo ":before"
                 [ Style.prop "content" "''"
                 , Style.prop "border-bottom" "2px solid #111"
                 , Style.prop "position" "absolute"
                 , Style.prop "left" "45%"
-                , Style.prop "bottom" "0"
+                , Style.prop "bottom" "-1px"
                 , Style.prop "z-index" "20"
                 , Style.prop "height" "2px"
                 , Style.prop "width" "20px"
                 , Style.prop "transition-duration" "0.2s"
                 , Style.prop "visibility" "hidden"
+                , Border.rounded 2
                 ]
             , Style.variation Active
                 [ Style.pseudo ":before"
@@ -211,13 +199,17 @@ stylesheet =
                     , Style.prop "left" "0"
                     , Style.prop "visibility" "visible"
                     ]
+                , Border.rounded 2
                 ]
+            , Style.prop "border-bottom" "1px solid #111"
+            , Border.rounded 1
             ]
         , style TextInput
             [ sansSerifFont
-            , Border.bottom 1
+              --, Border.bottom 1
             , Style.prop "outline" "none"
             , Font.size 14
+            , Style.prop "background" "transparent"
             , Color.border Color.lightCharcoal
               --, Style.paddingHint 5
               --, Style.prop "transition" "border-color 0.2s linear"
