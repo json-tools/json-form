@@ -1111,6 +1111,16 @@ labeledInput model inputHandler schema stringValue path =
                 stringValue
             )
                 /= ""
+
+        hasError =
+            model.validationErrors
+                |> Dict.get path
+                |> Maybe.withDefault []
+                |> List.isEmpty
+                |> not
+
+        highlightAsError =
+            hasError && (model.options.showInitialValidationErrors || (model.edited |> Dict.member path))
     in
         if isBlankSchema schema then
             row
@@ -1186,6 +1196,12 @@ labeledInput model inputHandler schema stringValue path =
                             , ( "top", "auto" )
                             , ( "font-size", "14px" )
                             , ( "transition", "transform 180ms cubic-bezier(0.4, 0, 0.2, 1)" )
+                            , ( "color"
+                              , if highlightAsError then
+                                    "red"
+                                else
+                                    "black"
+                              )
                             ]
                         , Attributes.for inputId
                         ]

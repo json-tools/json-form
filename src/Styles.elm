@@ -191,7 +191,7 @@ stylesheet =
                 , Style.prop "width" "20px"
                 , Style.prop "transition-duration" "0.2s"
                 , Style.prop "visibility" "hidden"
-                , Border.rounded 2
+                  --, Border.rounded 2
                 ]
             , Style.variation Active
                 [ Style.pseudo ":before"
@@ -199,10 +199,13 @@ stylesheet =
                     , Style.prop "left" "0"
                     , Style.prop "visibility" "visible"
                     ]
-                , Border.rounded 2
+                  --, Border.rounded 2
                 ]
-            , Style.prop "border-bottom" "1px solid #111"
-            , Border.rounded 1
+            , Style.prop "border-bottom" "1px solid #aaa"
+            , Style.hover
+                [ Style.prop "border-bottom" "1px solid #111"
+                ]
+              --, Border.rounded 1
             ]
         , style TextInput
             [ sansSerifFont
