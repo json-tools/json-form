@@ -262,8 +262,9 @@ update msg model =
                 { model
                     | value = updatedValue
                     , editingNow = str
-                    , validationErrors = validationErrors
-                    , edited = model.edited |> Dict.insert path True
+                    , validationErrors =
+                        validationErrors
+                        --, edited = model.edited |> Dict.insert path True
                 }
                     ! []
                     => UpdateValue (value |> JsonValue.encode)
@@ -293,8 +294,9 @@ update msg model =
                 { model
                     | value = updatedValue
                     , editingNow = str
-                    , validationErrors = validationErrors
-                    , edited = model.edited |> Dict.insert path True
+                    , validationErrors =
+                        validationErrors
+                        --, edited = model.edited |> Dict.insert path True
                 }
                     ! []
                     => UpdateValue (value |> JsonValue.encode)
@@ -325,8 +327,9 @@ update msg model =
                 { model
                     | value = value
                     , editingNow = str
-                    , validationErrors = validationErrors
-                    , edited = model.edited |> Dict.insert path True
+                    , validationErrors =
+                        validationErrors
+                        --, edited = model.edited |> Dict.insert path True
                 }
                     ! []
                     => UpdateValue (value |> JsonValue.encode)
