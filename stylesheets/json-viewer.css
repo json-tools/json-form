@@ -1,0 +1,46 @@
+.json-viewer {
+  font-family: var(--font-family--mono);
+  line-height: 1.6;
+}
+
+.json-viewer--collapsed {
+  color: grey;
+  cursor: pointer;
+  background-color: var(--color-blue--100);
+}
+
+.json-viewer__object-property {
+  margin-left: 4ch;
+}
+
+.json-viewer__array-item {
+  margin-left: 4ch;
+}
+
+.json-viewer__key--object {
+  color: var(--color-mono--700);
+}
+
+.json-viewer__key:after {
+  content: ': ';
+}
+
+.json-viewer__key--array {
+  color: royalblue;
+}
+
+.json-viewer--string {
+  color: var(--color-yellow--700);
+}
+
+.json-viewer--number {
+  color: var(--color-blue--700);
+}
+
+.json-viewer--null {
+  color: var(--color-red--700);
+}
+
+.json-viewer--bool {
+  color: var(--color-brand-blue--600);
+}

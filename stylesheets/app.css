@@ -1,0 +1,9 @@
+.app-topbar {
+  background-color: var(--color-mono--700);
+  color: var(--color-mono--300);
+  font-size: 14px;
+}
+
+.app-content {
+  padding: 16px;
+}

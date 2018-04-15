@@ -1,0 +1,10 @@
+.tab {
+  border-bottom: 3px solid transparent;
+  display: inline-block;
+  min-width: 100px;
+  padding: 7px;
+}
+
+.tab--active {
+  border-bottom: 3px solid var(--color-red--500);
+}
