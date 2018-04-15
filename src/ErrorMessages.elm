@@ -41,9 +41,9 @@ stringifyError e =
                 ++ (pluralize actual "character")
 
         MinLength expected actual ->
-            "Expected string not shorter than "
+            "Expected string to be at least "
                 ++ (pluralize expected "character")
-                ++ " but actual length is "
+                ++ " long but its length is "
                 ++ (pluralize actual "character")
 
         Pattern pattern string ->
