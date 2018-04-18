@@ -15,7 +15,7 @@ import Json.Schema.Definitions exposing (..)
 import Json.Schema
 import Json.Schema.Validation exposing (Error)
 import JsonValue exposing (JsonValue(..))
-import Json.Decode exposing (decodeValue)
+import Json.Decode as Decode exposing (decodeValue)
 import ErrorMessages exposing (stringifyError)
 import Dict exposing (Dict)
 
@@ -36,6 +36,7 @@ type EditingMode
     = TextField
     | NumberField
     | Switch
+    | Checkbox
     | JsonEditor
     | Object
 
@@ -82,6 +83,9 @@ viewNode model schema path =
         Switch ->
             viewSwitch model schema path
 
+        Checkbox ->
+            viewCheckbox model schema path
+
         Object ->
             viewObject model schema path
 
@@ -101,7 +105,7 @@ editingMode model schema =
                     TextField
 
                 SingleType BooleanType ->
-                    Switch
+                    getBooleanUiWidget schema
 
                 SingleType ObjectType ->
                     Object
@@ -111,6 +115,28 @@ editingMode model schema =
 
         _ ->
             JsonEditor
+
+
+getBooleanUiWidget : Schema -> EditingMode
+getBooleanUiWidget schema =
+    schema
+        |> getCustomKeywordValue "ui"
+        |> Maybe.andThen
+            (\settings ->
+                settings
+                    |> Decode.decodeValue
+                        (Decode.field "booleanWidget" Decode.string
+                            |> Decode.map
+                                (\widget ->
+                                    if widget == "switch" then
+                                        Switch
+                                    else
+                                        Checkbox
+                                )
+                        )
+                    |> Result.toMaybe
+            )
+        |> Maybe.withDefault Checkbox
 
 
 viewSwitch : Model -> Schema -> Path -> Html Msg
@@ -148,6 +174,45 @@ viewSwitch model schema path =
             , div [ class "jf-switch__track" ] []
             , div [ class "jf-switch__thumb" ] []
             , div [ class "jf-switch__helper-text" ] [ helperText ]
+            ]
+
+
+viewCheckbox : Model -> Schema -> Path -> Html Msg
+viewCheckbox model schema path =
+    let
+        isChecked =
+            case model.value |> Maybe.andThen (JsonValue.getIn path >> Result.toMaybe) of
+                Just (BoolValue x) ->
+                    x
+
+                _ ->
+                    False
+
+        ( hasError, helperText ) =
+            renderHelper model schema path
+    in
+        label
+            [ classList
+                [ ( "jf-checkbox", True )
+                , ( "jf-checkbox--on", isChecked )
+                , ( "jf-checkbox--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
+                , ( "jf-checkbox--invalid", hasError )
+                ]
+            ]
+            [ input
+                [ type_ "checkbox"
+                , class "jf-checkbox__input"
+                , checked isChecked
+                , onFocus <| FocusInput (Just path)
+                , onBlur <| FocusInput Nothing
+                , onCheck <| (JsonValue.BoolValue >> EditValue path)
+                ]
+                []
+            , span [ class "jf-checkbox__label" ] [ schema |> getTitle |> text ]
+            , div [ class "jf-checkbox__box-outline" ]
+                [ div [ class "jf-checkbox__tick-outline" ] []
+                ]
+            , div [ class "jf-checkbox__helper-text" ] [ helperText ]
             ]
 
 
