@@ -1,14 +1,24 @@
-module Snippets exposing (Snippet(..), getSnippet, getSnippetTitle)
+module Snippets exposing (Snippet(..), index, getSnippet, getSnippetTitle)
 
 import Json.Schema.Definitions exposing (Schema(..), blankSchema, blankSubSchema, Type(..), SingleType(..))
 import Json.Schema.Builder exposing (..)
-import Json.Encode exposing (string)
+import Json.Encode as Encode exposing (string)
 
 
 type Snippet
     = SimpleField
     | FlatObject
+    | LoginForm
     | FlightBooking
+
+
+index : List Snippet
+index =
+    [ SimpleField
+    , FlatObject
+    , LoginForm
+    , FlightBooking
+    ]
 
 
 getSnippetTitle : Snippet -> String
@@ -19,6 +29,9 @@ getSnippetTitle ds =
 
         FlatObject ->
             "Flat Object"
+
+        LoginForm ->
+            "Login Form"
 
         FlightBooking ->
             "Flight Booking"
@@ -62,6 +75,35 @@ getSnippet ds =
                 |> toSchema
                 |> Result.withDefault blankSchema
 
+        LoginForm ->
+            buildSchema
+                |> withType "object"
+                |> withProperties
+                    [ ( "email"
+                      , buildSchema
+                            |> withType "string"
+                            |> withTitle "Email"
+                            |> withMinLength 2
+                      )
+                    , ( "password"
+                      , buildSchema
+                            |> withType "string"
+                            |> withTitle "Password"
+                            |> withDescription "Must contain enough various symbols"
+                            |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "password" ) ])
+                      )
+                    , ( "remember"
+                      , buildSchema
+                            |> withType "boolean"
+                            |> withTitle "remember me"
+                            |> withDescription "This will keep you logged in for another 2 weeks"
+                            |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "checkbox" ) ])
+                      )
+                    ]
+                |> withAdditionalProperties (boolSchema False)
+                |> toSchema
+                |> Result.withDefault blankSchema
+
         FlightBooking ->
             buildSchema
                 |> withType "object"
@@ -87,6 +129,7 @@ getSnippet ds =
                             |> withType "boolean"
                             |> withTitle "Return"
                             |> withDescription "One way or return flight"
+                            |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
                       )
                     , ( "flightType"
                       , buildSchema

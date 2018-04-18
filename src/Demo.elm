@@ -21,7 +21,7 @@ type alias Model =
 
 initialShowcase : Snippet
 initialShowcase =
-    FlightBooking
+    LoginForm
 
 
 init : ( Model, Cmd Msg )
@@ -82,10 +82,7 @@ view model =
 
 topbar : Model -> Html Msg
 topbar model =
-    [ SimpleField
-    , FlatObject
-    , FlightBooking
-    ]
+    Snippets.index
         |> List.map (snippetTab model.showcase)
         |> div [ class "app-topbar" ]
 

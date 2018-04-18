@@ -125,7 +125,7 @@ getBooleanUiWidget schema =
             (\settings ->
                 settings
                     |> Decode.decodeValue
-                        (Decode.field "booleanWidget" Decode.string
+                        (Decode.field "widget" Decode.string
                             |> Decode.map
                                 (\widget ->
                                     if widget == "switch" then
@@ -241,6 +241,20 @@ viewTextField model schema path =
 
         ( hasError, helperText ) =
             renderHelper model schema path
+
+        isPassword =
+            schema
+                |> getCustomKeywordValue "ui"
+                |> Maybe.andThen
+                    (\settings ->
+                        settings
+                            |> Decode.decodeValue
+                                (Decode.field "widget" Decode.string
+                                    |> Decode.map (\widget -> widget == "password")
+                                )
+                            |> Result.toMaybe
+                    )
+                |> Maybe.withDefault False
     in
         div
             [ classList
@@ -256,6 +270,10 @@ viewTextField model schema path =
                 , onBlur <| FocusInput Nothing
                 , onInput <| (\str -> EditValue path (JsonValue.StringValue str))
                 , value <| editedValue
+                , if isPassword then
+                    type_ "password"
+                  else
+                    type_ "text"
                 ]
                 []
             , label [ class "jf-textfield__label" ] [ schema |> getTitle |> text ]
