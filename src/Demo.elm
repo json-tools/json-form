@@ -19,10 +19,15 @@ type alias Model =
     }
 
 
+initialShowcase : Snippet
+initialShowcase =
+    FlightBooking
+
+
 init : ( Model, Cmd Msg )
 init =
-    { showcase = FlatObject
-    , form = Json.Form.init (getSnippet FlatObject)
+    { showcase = initialShowcase
+    , form = Json.Form.init (getSnippet initialShowcase)
     , editedValue = Nothing
     , expandedNodes = [ [] ]
     }
@@ -79,6 +84,7 @@ topbar : Model -> Html Msg
 topbar model =
     [ SimpleField
     , FlatObject
+    , FlightBooking
     ]
         |> List.map (snippetTab model.showcase)
         |> div [ class "app-topbar" ]
@@ -104,7 +110,7 @@ content model =
     div [ class "app-content" ]
         [ h3 [ style [ ( "padding", "8px" ), ( "border-bottom", "1px solid #e8e8e8" ) ] ] [ text <| "Showcase: " ++ (getSnippetTitle model.showcase) ]
         , div [ style [ ( "display", "flex" ) ] ]
-            [ div [ style [ ( "min-width", "50%" ) ] ]
+            [ div [ style [ ( "min-width", "50%" ), ( "overflow", "auto" ) ] ]
                 [ h4 [] [ text <| "Json Schema" ]
                 , pre [ style [ ( "line-height", "1.3" ) ] ] [ getSnippet model.showcase |> Json.Schema.Definitions.encode |> Json.Encode.encode 4 |> text ]
                 ]
