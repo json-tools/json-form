@@ -22,6 +22,7 @@ Development progress:
 
 Next steps will be some of those (not necessarily in this order):
 
+- [ ] radiogroup widget for enum
 - [ ] required and optional field
 - [ ] dealing with `undefined` (erase property)
 - [ ] multiline editing
