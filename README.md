@@ -17,6 +17,8 @@ Development progress:
 - [x] material design styles
 - [x] demo for two use-cases: text editing, flat object editing
 - [x] editing of number and boolean
+- [x] customizable widgets
+- [x] password field
 
 Next steps will be some of those (not necessarily in this order):
 
