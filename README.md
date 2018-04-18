@@ -16,10 +16,12 @@ Development progress:
 - [x] validation (inline errors only, so far)
 - [x] material design styles
 - [x] demo for two use-cases: text editing, flat object editing
+- [x] editing of number and boolean
 
 Next steps will be some of those (not necessarily in this order):
 
-- [ ] editing of number and boolean
+- [ ] required and optional field
+- [ ] dealing with `undefined` (erase property)
 - [ ] multiline editing
 - [ ] editing as json
 - [ ] form layout customisation
