@@ -1,7 +1,7 @@
 module Json.Form
     exposing
         ( Model
-        , Msg(..)
+        , Msg
         , ExternalMsg(..)
         , init
         , update
@@ -11,6 +11,7 @@ module Json.Form
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Json.Form.Definitions as Definitions exposing (Path, EditingMode(..), Msg(..))
 import Json.Schema.Definitions exposing (..)
 import Json.Schema
 import Json.Schema.Validation exposing (Error)
@@ -18,13 +19,9 @@ import JsonValue exposing (JsonValue(..))
 import Json.Decode as Decode exposing (decodeValue)
 import ErrorMessages exposing (stringifyError)
 import Dict exposing (Dict)
-
-
-type Msg
-    = FocusInput (Maybe Path)
-    | FocusNumericInput (Maybe Path)
-    | EditValue Path JsonValue
-    | EditNumber String
+import Json.Form.TextField as TextField
+import Json.Form.Helper as Helper
+import Util exposing (..)
 
 
 type ExternalMsg
@@ -32,38 +29,17 @@ type ExternalMsg
     | UpdateValue (Maybe JsonValue)
 
 
-type EditingMode
-    = TextField
-    | NumberField
-    | Switch
-    | Checkbox
-    | JsonEditor
-    | Object
-
-
 type alias Model =
-    { schema : Schema
-    , focused : Maybe Path
-    , value : Maybe JsonValue
-    , errors : Dict Path (List String)
-    , beingEdited : List Path
-    , editedNumber : String
-    }
+    Definitions.Model
 
 
-type alias Path =
-    List String
+type alias Msg =
+    Definitions.Msg
 
 
 init : Schema -> Model
-init s =
-    { schema = s
-    , focused = Nothing
-    , value = Nothing
-    , errors = Dict.empty
-    , beingEdited = []
-    , editedNumber = ""
-    }
+init =
+    Definitions.init
 
 
 view : Model -> Html Msg
@@ -75,7 +51,7 @@ viewNode : Model -> Schema -> Path -> Html Msg
 viewNode model schema path =
     case editingMode model schema of
         TextField ->
-            viewTextField model schema path
+            TextField.view model schema path
 
         NumberField ->
             viewNumericTextField model schema path
@@ -151,7 +127,7 @@ viewSwitch model schema path =
                     False
 
         ( hasError, helperText ) =
-            renderHelper model schema path
+            Helper.view model schema path
     in
         label
             [ classList
@@ -189,7 +165,7 @@ viewCheckbox model schema path =
                     False
 
         ( hasError, helperText ) =
-            renderHelper model schema path
+            Helper.view model schema path
     in
         label
             [ classList
@@ -216,71 +192,6 @@ viewCheckbox model schema path =
             ]
 
 
-jsonValueToString : JsonValue -> String
-jsonValueToString jv =
-    case jv of
-        JsonValue.StringValue s ->
-            s
-
-        JsonValue.NumericValue n ->
-            toString n
-
-        _ ->
-            ""
-
-
-viewTextField : Model -> Schema -> Path -> Html Msg
-viewTextField model schema path =
-    let
-        editedValue =
-            model.value
-                |> Maybe.map (JsonValue.getIn path)
-                |> Maybe.andThen Result.toMaybe
-                |> Maybe.map jsonValueToString
-                |> Maybe.withDefault ""
-
-        ( hasError, helperText ) =
-            renderHelper model schema path
-
-        isPassword =
-            schema
-                |> getCustomKeywordValue "ui"
-                |> Maybe.andThen
-                    (\settings ->
-                        settings
-                            |> Decode.decodeValue
-                                (Decode.field "widget" Decode.string
-                                    |> Decode.map (\widget -> widget == "password")
-                                )
-                            |> Result.toMaybe
-                    )
-                |> Maybe.withDefault False
-    in
-        div
-            [ classList
-                [ ( "jf-textfield", True )
-                , ( "jf-textfield--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
-                , ( "jf-textfield--empty", editedValue == "" )
-                , ( "jf-textfield--invalid", hasError )
-                ]
-            ]
-            [ input
-                [ class "jf-textfield__input"
-                , onFocus <| FocusInput (Just path)
-                , onBlur <| FocusInput Nothing
-                , onInput <| (\str -> EditValue path (JsonValue.StringValue str))
-                , value <| editedValue
-                , if isPassword then
-                    type_ "password"
-                  else
-                    type_ "text"
-                ]
-                []
-            , label [ class "jf-textfield__label" ] [ schema |> getTitle |> text ]
-            , div [ class "jf-textfield__helper-text" ] [ helperText ]
-            ]
-
-
 viewNumericTextField : Model -> Schema -> Path -> Html Msg
 viewNumericTextField model schema path =
     let
@@ -296,11 +207,11 @@ viewNumericTextField model schema path =
                 model.value
                     |> Maybe.map (JsonValue.getIn path)
                     |> Maybe.andThen Result.toMaybe
-                    |> Maybe.map jsonValueToString
+                    |> Maybe.map Util.jsonValueToString
                     |> Maybe.withDefault ""
 
         ( hasError, helperText ) =
-            renderHelper model schema path
+            Helper.view model schema path
     in
         div
             [ classList
@@ -322,30 +233,6 @@ viewNumericTextField model schema path =
             , label [ class "jf-textfield__label" ] [ schema |> getTitle |> text ]
             , div [ class "jf-textfield__helper-text" ] [ helperText ]
             ]
-
-
-renderHelper : Model -> Schema -> Path -> ( Bool, Html msg )
-renderHelper model schema path =
-    let
-        errors =
-            model.errors
-                |> Dict.get path
-
-        hasError =
-            errors /= Nothing && List.member path model.beingEdited
-    in
-        ( hasError
-        , if hasError then
-            errors
-                |> Maybe.withDefault []
-                |> String.join ", "
-                |> (++) "Error: "
-                |> text
-          else
-            schema
-                |> getDescription
-                |> text
-        )
 
 
 viewObject : Model -> Schema -> Path -> Html Msg
@@ -444,7 +331,7 @@ editValue model path val =
 
         validationResult =
             model.schema
-                |> Json.Schema.validateValue { applyDefaults = False } updatedValue
+                |> Json.Schema.validateValue { applyDefaults = True } updatedValue
     in
         (case validationResult of
             Ok v ->
@@ -486,28 +373,6 @@ dictFromListErrors list =
                         )
             )
             Dict.empty
-
-
-getTitle : Schema -> String
-getTitle schema =
-    getTextProp schema .title ""
-
-
-getDescription : Schema -> String
-getDescription schema =
-    getTextProp schema .description ""
-
-
-getTextProp : Schema -> (SubSchema -> Maybe String) -> String -> String
-getTextProp schema prop def =
-    case schema of
-        ObjectSchema os ->
-            os
-                |> prop
-                |> Maybe.withDefault def
-
-        _ ->
-            def
 
 
 (=>) : a -> b -> ( a, b )
