@@ -106,13 +106,13 @@ content : Model -> Html Msg
 content model =
     let
         jsonSchema =
-            div [ style [ ( "width", "50%" ), ( "overflow", "auto" ) ] ]
+            div [ style [ ( "width", "50%" ), ( "vertical-align", "top" ), ( "display", "inline-block" ), ( "min-width", "300px" ), ( "overflow", "auto" ) ] ]
                 [ h4 [] [ text <| "Json Schema" ]
                 , pre [ style [ ( "line-height", "1.3" ) ] ] [ getSnippet model.showcase |> Json.Schema.Definitions.encode |> Json.Encode.encode 4 |> text ]
                 ]
 
         generatedForm =
-            div [ style [ ( "width", "50%" ), ( "min-width", "300px" ) ] ]
+            div [ style [ ( "width", "50%" ), ( "display", "inline-block" ), ( "min-width", "300px" ) ] ]
                 [ model.form
                     |> Json.Form.view
                     |> Html.map JsonFormMsg
@@ -130,7 +130,7 @@ content model =
     in
         div [ class "app-content" ]
             [ h3 [ style [ ( "padding", "8px" ), ( "border-bottom", "1px solid #e8e8e8" ) ] ] [ text <| "Showcase: " ++ (getSnippetTitle model.showcase) ]
-            , div [ style [ ( "display", "flex" ) ] ]
+            , div [ style [] ]
                 [ generatedForm
                 , jsonSchema
                 ]
