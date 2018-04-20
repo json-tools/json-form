@@ -9,8 +9,7 @@ module Json.Form
         )
 
 import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (..)
+import Json.Form.UiSpec as UiSpec
 import Json.Form.Definitions as Definitions exposing (Path, EditingMode(..), Msg(..))
 import Json.Schema.Definitions exposing (..)
 import Json.Schema
@@ -20,7 +19,7 @@ import Json.Decode as Decode exposing (decodeValue)
 import ErrorMessages exposing (stringifyError)
 import Dict exposing (Dict)
 import Json.Form.TextField as TextField
-import Json.Form.Helper as Helper
+import Json.Form.Selection as Selection
 import Util exposing (..)
 
 
@@ -44,26 +43,26 @@ init =
 
 view : Model -> Html Msg
 view model =
-    viewNode model model.schema []
+    viewNode model model.schema False []
 
 
-viewNode : Model -> Schema -> Path -> Html Msg
-viewNode model schema path =
+viewNode : Model -> Schema -> Bool -> Path -> Html Msg
+viewNode model schema isRequired path =
     case editingMode model schema of
         TextField ->
-            TextField.view model schema path
+            TextField.view model schema isRequired path
 
         NumberField ->
-            viewNumericTextField model schema path
+            TextField.viewNumeric model schema isRequired path
 
         Switch ->
-            viewSwitch model schema path
+            Selection.switch model schema isRequired path
 
         Checkbox ->
-            viewCheckbox model schema path
+            Selection.checkbox model schema isRequired path
 
         Object ->
-            viewObject model schema path
+            viewObject model schema isRequired path
 
         _ ->
             text "Not implemented"
@@ -95,154 +94,22 @@ editingMode model schema =
 
 getBooleanUiWidget : Schema -> EditingMode
 getBooleanUiWidget schema =
-    schema
-        |> getCustomKeywordValue "ui"
-        |> Maybe.andThen
-            (\settings ->
-                settings
-                    |> Decode.decodeValue
-                        (Decode.field "widget" Decode.string
-                            |> Decode.map
-                                (\widget ->
-                                    if widget == "switch" then
-                                        Switch
-                                    else
-                                        Checkbox
-                                )
-                        )
-                    |> Result.toMaybe
-            )
-        |> Maybe.withDefault Checkbox
+    case schema |> getUiSpec of
+        UiSpec.Switch ->
+            Switch
+
+        _ ->
+            Checkbox
 
 
-viewSwitch : Model -> Schema -> Path -> Html Msg
-viewSwitch model schema path =
-    let
-        isChecked =
-            case model.value |> Maybe.andThen (JsonValue.getIn path >> Result.toMaybe) of
-                Just (BoolValue x) ->
-                    x
-
-                _ ->
-                    False
-
-        ( hasError, helperText ) =
-            Helper.view model schema path
-    in
-        label
-            [ classList
-                [ ( "jf-switch", True )
-                , ( "jf-switch--on", isChecked )
-                , ( "jf-switch--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
-                , ( "jf-switch--invalid", hasError )
-                ]
-            ]
-            [ input
-                [ type_ "checkbox"
-                , class "jf-switch__input"
-                , checked isChecked
-                , onFocus <| FocusInput (Just path)
-                , onBlur <| FocusInput Nothing
-                , onCheck <| (JsonValue.BoolValue >> EditValue path)
-                ]
-                []
-            , span [ class "jf-switch__label" ] [ schema |> getTitle |> text ]
-            , div [ class "jf-switch__track" ] []
-            , div [ class "jf-switch__thumb" ] []
-            , div [ class "jf-switch__helper-text" ] [ helperText ]
-            ]
-
-
-viewCheckbox : Model -> Schema -> Path -> Html Msg
-viewCheckbox model schema path =
-    let
-        isChecked =
-            case model.value |> Maybe.andThen (JsonValue.getIn path >> Result.toMaybe) of
-                Just (BoolValue x) ->
-                    x
-
-                _ ->
-                    False
-
-        ( hasError, helperText ) =
-            Helper.view model schema path
-    in
-        label
-            [ classList
-                [ ( "jf-checkbox", True )
-                , ( "jf-checkbox--on", isChecked )
-                , ( "jf-checkbox--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
-                , ( "jf-checkbox--invalid", hasError )
-                ]
-            ]
-            [ input
-                [ type_ "checkbox"
-                , class "jf-checkbox__input"
-                , checked isChecked
-                , onFocus <| FocusInput (Just path)
-                , onBlur <| FocusInput Nothing
-                , onCheck <| (JsonValue.BoolValue >> EditValue path)
-                ]
-                []
-            , span [ class "jf-checkbox__label" ] [ schema |> getTitle |> text ]
-            , div [ class "jf-checkbox__box-outline" ]
-                [ div [ class "jf-checkbox__tick-outline" ] []
-                ]
-            , div [ class "jf-checkbox__helper-text" ] [ helperText ]
-            ]
-
-
-viewNumericTextField : Model -> Schema -> Path -> Html Msg
-viewNumericTextField model schema path =
-    let
-        isFocused =
-            model.focused
-                |> Maybe.map ((==) path)
-                |> Maybe.withDefault False
-
-        editedValue =
-            if isFocused then
-                model.editedNumber
-            else
-                model.value
-                    |> Maybe.map (JsonValue.getIn path)
-                    |> Maybe.andThen Result.toMaybe
-                    |> Maybe.map Util.jsonValueToString
-                    |> Maybe.withDefault ""
-
-        ( hasError, helperText ) =
-            Helper.view model schema path
-    in
-        div
-            [ classList
-                [ ( "jf-textfield", True )
-                , ( "jf-textfield--focused", isFocused )
-                , ( "jf-textfield--empty", editedValue == "" )
-                , ( "jf-textfield--invalid", hasError )
-                ]
-            ]
-            [ input
-                [ class "jf-textfield__input"
-                , onFocus <| FocusNumericInput (Just path)
-                , onBlur <| FocusNumericInput Nothing
-                , onInput <| EditNumber
-                , value <| editedValue
-                , type_ "number"
-                ]
-                []
-            , label [ class "jf-textfield__label" ] [ schema |> getTitle |> text ]
-            , div [ class "jf-textfield__helper-text" ] [ helperText ]
-            ]
-
-
-viewObject : Model -> Schema -> Path -> Html Msg
-viewObject model schema path =
+viewObject : Model -> Schema -> Bool -> Path -> Html Msg
+viewObject model schema isRequired path =
     let
         iterateOverSchemata propsDict required (Schemata schemata) =
             schemata
                 |> List.map
                     (\( propName, subSchema ) ->
-                        viewNode model subSchema (path ++ [ propName ])
+                        viewNode model subSchema (required |> Maybe.withDefault [] |> List.member propName) (path ++ [ propName ])
                     )
     in
         case schema of
@@ -373,8 +240,3 @@ dictFromListErrors list =
                         )
             )
             Dict.empty
-
-
-(=>) : a -> b -> ( a, b )
-(=>) a b =
-    ( a, b )

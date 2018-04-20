@@ -107,6 +107,7 @@ getSnippet ds =
         FlightBooking ->
             buildSchema
                 |> withType "object"
+                |> withRequired [ "airlineCode" ]
                 |> withProperties
                     [ ( "pan"
                       , buildSchema

@@ -106,8 +106,8 @@ content : Model -> Html Msg
 content model =
     let
         jsonSchema =
-            div [ style [ ( "width", "50%" ), ( "vertical-align", "top" ), ( "display", "inline-block" ), ( "min-width", "300px" ), ( "overflow", "auto" ) ] ]
-                [ h4 [] [ text <| "Json Schema" ]
+            div [ style [ ( "width", "50%" ), ( "vertical-align", "top" ), ( "display", "inline-block" ), ( "min-width", "300px" ), ( "max-width", "80ch" ), ( "overflow", "auto" ) ] ]
+                [ h4 [] [ text <| "JSON Schema" ]
                 , pre [ style [ ( "line-height", "1.3" ) ] ] [ getSnippet model.showcase |> Json.Schema.Definitions.encode |> Json.Encode.encode 4 |> text ]
                 ]
 

@@ -19,11 +19,12 @@ Development progress:
 - [x] editing of number and boolean
 - [x] customizable widgets
 - [x] password field
+- [x] mark required fields with *
 
 Next steps will be some of those (not necessarily in this order):
 
 - [ ] radiogroup widget for enum
-- [ ] required and optional field
+- [ ] optional field indication (configurable alternative to required)
 - [ ] dealing with `undefined` (erase property)
 - [ ] multiline editing
 - [ ] editing as json
