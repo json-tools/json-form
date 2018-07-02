@@ -13,7 +13,7 @@ var filename = TARGET_ENV == "production" ? "[name]-[hash].js" : "index.js";
 
 var common = {
     entry: {
-        'index.js': "./src/index.js",
+        // 'index': "./src/index",
         'custom-element': './src/custom-element'
     },
     output: {
@@ -60,14 +60,17 @@ var common = {
                     loader: "babel-loader",
                     options: {
                         // env: automatically determines the Babel plugins you need based on your supported environments
-                        presets: ["env"]
+                        presets: [["env", {
+                          "targets": {
+                              "chrome": 52
+                          }}]]
                     }
                 }
             },
             {
                 test: /\.css$/,
                 exclude: [/elm-stuff/, /node_modules/],
-                loaders: ["style-loader", "css-loader"]
+                loaders: ["to-string-loader", "css-loader"]
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

@@ -2,7 +2,7 @@ const Elm = require('./JsonFormCustomElement');
 const css = require('../stylesheets/standalone.css').toString();
 
 
-customElements.define('json-viewer',
+customElements.define('json-form',
     class extends HTMLElement {
 
         static get observedAttributes() {
@@ -23,7 +23,7 @@ customElements.define('json-viewer',
             const json = this.getAttribute('value');
             const schema = JSON.parse(this.getAttribute('schema'));
             const value = JSON.parse(json);
-            const app = Elm.Main.embed(appRoot, { schema, value });
+            const app = Elm.JsonFormCustomElement.embed(appRoot, { schema, value });
             this.app = app;
         }
 
