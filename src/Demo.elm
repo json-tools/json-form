@@ -27,7 +27,7 @@ initialShowcase =
 init : ( Model, Cmd Msg )
 init =
     { showcase = initialShowcase
-    , form = Json.Form.init (getSnippet initialShowcase)
+    , form = Json.Form.init (getSnippet initialShowcase) Nothing
     , editedValue = Nothing
     , expandedNodes = [ [] ]
     }
@@ -69,7 +69,7 @@ update message model =
                 ! []
 
         SetShowcase s ->
-            { model | showcase = s, form = Json.Form.init (getSnippet s), editedValue = Nothing } ! []
+            { model | showcase = s, form = Json.Form.init (getSnippet s) Nothing, editedValue = Nothing } ! []
 
 
 view : Model -> Html Msg

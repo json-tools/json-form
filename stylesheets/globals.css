@@ -1,0 +1,7 @@
+
+:host {
+    --font-family: helvetica, sans-serif;
+    --color-active: #2a79ff;
+    --color-inactive: #8a8a8a;
+    --color-swatch--500: #009688;
+}
