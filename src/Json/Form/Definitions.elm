@@ -15,11 +15,11 @@ type alias Model =
     }
 
 
-init : Schema -> Model
-init s =
+init : Schema -> Maybe JsonValue -> Model
+init s v =
     { schema = s
     , focused = Nothing
-    , value = Nothing
+    , value = v
     , errors = Dict.empty
     , beingEdited = []
     , editedNumber = ""

@@ -36,7 +36,7 @@ type alias Msg =
     Definitions.Msg
 
 
-init : Schema -> Model
+init : Schema -> Maybe JsonValue -> Model
 init =
     Definitions.init
 
