@@ -9,6 +9,26 @@ Renders form based on JSON Schema
 Published in gh-pages: https://1602.github.io/json-form/
 
 
+<!---
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@ubio/css@1.3.11/index.css">
+    <link rel="import" href="json-form.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<json-form
+    schema='{"type":"string","title":"Hello","description":"A brief but helpful description of value","maxLength":5}'
+    value='"world"'
+></json-form>
+```
+
+
 Development progress:
 
 - [x] text editing
