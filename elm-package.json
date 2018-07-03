@@ -1,6 +1,6 @@
 {
-    "version": "1.0.0",
-    "summary": "Form generation showcase",
+    "version": "1.0.6",
+    "summary": "Form generator based on JSON Schema",
     "repository": "https://github.com/1602/json-form.git",
     "license": "BSD3",
     "source-directories": [
