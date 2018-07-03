@@ -14,6 +14,7 @@ import Json.Schema.Definitions
 
 type alias Model =
     { form : Json.Form.Model
+    , schema : Json.Schema.Definitions.Schema
     , editedValue : Maybe JsonValue.JsonValue
     }
 
@@ -21,32 +22,58 @@ type alias Model =
 init : Value -> ( Model, Cmd Msg )
 init v =
     let
-        schema = v
-            |> decodeValue (Json.Decode.at [ "schema" ] Json.Schema.Definitions.decoder)
-            |> Result.withDefault Json.Schema.Definitions.blankSchema
+        schema =
+            v
+                |> decodeValue (Json.Decode.at [ "schema" ] Json.Schema.Definitions.decoder)
+                |> Result.mapError Debug.log
+                |> Result.withDefault Json.Schema.Definitions.blankSchema
 
-        value = v
-            |> decodeValue (Json.Decode.at [ "value" ] JsonValue.decoder)
-            |> Result.toMaybe
+        value =
+            v
+                |> decodeValue (Json.Decode.at [ "value" ] JsonValue.decoder)
+                |> Result.toMaybe
     in
         { form = Json.Form.init schema value
         , editedValue = value
+        , schema = schema
         }
-            ! [ loadSnippet "traveller" ]
+            ! []
 
 
 type Msg
     = JsonFormMsg Json.Form.Msg
     | ChangeValue Value
+    | ChangeSchema Value
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
+        ChangeSchema v ->
+            let
+                schema =
+                    v
+                        |> decodeValue Json.Schema.Definitions.decoder
+                        |> Result.withDefault Json.Schema.Definitions.blankSchema
+            in
+                { model
+                    | schema = schema
+                    , form = Json.Form.init schema model.editedValue
+                }
+                    ! []
+
         ChangeValue v ->
-            { model | editedValue = v |> decodeValue JsonValue.decoder |> Result.toMaybe
-            }
-                ! []
+            let
+                value =
+                    v
+                        |> decodeValue JsonValue.decoder
+                        |> Result.toMaybe
+            in
+                { model
+                    | editedValue = value
+                    , form = Json.Form.init model.schema value
+                }
+                    ! []
 
         JsonFormMsg msg ->
             let
@@ -73,12 +100,15 @@ view model =
         |> Html.map JsonFormMsg
 
 
-port loadSnippet : String -> Cmd msg
-
-
 port valueChange : (Value -> msg) -> Sub msg
+
+
+port schemaChange : (Value -> msg) -> Sub msg
 
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-    valueChange ChangeValue
+    Sub.batch
+        [ valueChange ChangeValue
+        , schemaChange ChangeSchema
+        ]

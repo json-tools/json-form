@@ -64,8 +64,8 @@ viewNode model schema isRequired path =
         Object ->
             viewObject model schema isRequired path
 
-        _ ->
-            text "Not implemented"
+        x ->
+            text (toString x ++ ": not implemented")
 
 
 editingMode : Model -> Schema -> EditingMode

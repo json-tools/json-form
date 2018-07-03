@@ -1,0 +1,17 @@
+{
+  "name": "json-form-custom-element",
+  "description": "JSON Schema based form generator",
+  "main": "build/custom-element.js",
+  "authors": [
+    "Anatoliy <mail@anatoliy.in>"
+  ],
+  "license": "GNU GENERAL PUBLIC LICENSE v3",
+  "homepage": "https://github.com/1602/json-form",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

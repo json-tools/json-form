@@ -6,7 +6,7 @@ customElements.define('json-form',
     class extends HTMLElement {
 
         static get observedAttributes() {
-            return ['value'];
+            return ['value', 'schema'];
         }
 
         constructor() {
@@ -31,6 +31,9 @@ customElements.define('json-form',
             switch (name) {
                 case 'value':
                     this.app.ports.valueChange.send(JSON.parse(newValue));
+                    break;
+                case 'schema':
+                    this.app.ports.schemaChange.send(JSON.parse(newValue));
                     break;
             }
         }
