@@ -1,7 +1,7 @@
 {
   "name": "json-form-custom-element",
   "private": false,
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "JSON Schema based form generator",
   "main": "build/custom-element.js",
   "repository": "git://github.com/1602/json-form.git",
