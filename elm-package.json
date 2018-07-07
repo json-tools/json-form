@@ -1,5 +1,5 @@
 {
-    "version": "1.0.6",
+    "version": "1.0.7",
     "summary": "Form generator based on JSON Schema",
     "repository": "https://github.com/1602/json-form.git",
     "license": "BSD3",
