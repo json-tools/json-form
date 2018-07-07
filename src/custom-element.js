@@ -25,9 +25,22 @@ customElements.define('json-form',
             const value = JSON.parse(json);
             const app = Elm.JsonFormCustomElement.embed(appRoot, { schema, value });
             this.app = app;
+            this.muteAttributeChange = false;
+
+            app.ports.value.subscribe(v => {
+                const event = new CustomEvent('change', { detail: { value: v } });
+                this.muteAttributeChange = true;
+                this.setAttribute('value', JSON.stringify(v));
+                this.muteAttributeChange = false;
+                this.dispatchEvent(event);
+            });
         }
 
         attributeChangedCallback(name, oldValue, newValue) {
+            if (this.muteAttributeChange) {
+                return;
+            }
+
             switch (name) {
                 case 'value':
                     this.app.ports.valueChange.send(JSON.parse(newValue));

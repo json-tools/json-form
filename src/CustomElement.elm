@@ -79,18 +79,20 @@ update message model =
             let
                 ( ( m, cmd ), exMsg ) =
                     Json.Form.update msg model.form
+
+                ( editedValue, exCmd ) =
+                    case exMsg of
+                        Json.Form.UpdateValue v ->
+                            ( v, v |> Maybe.withDefault JsonValue.NullValue |> JsonValue.encode |> value )
+
+                        _ ->
+                            ( model.editedValue, Cmd.none )
             in
                 { model
                     | form = m
-                    , editedValue =
-                        case exMsg of
-                            Json.Form.UpdateValue v ->
-                                v
-
-                            _ ->
-                                model.editedValue
+                    , editedValue = editedValue
                 }
-                    ! [ cmd |> Cmd.map JsonFormMsg ]
+                    ! [ cmd |> Cmd.map JsonFormMsg, exCmd ]
 
 
 view : Model -> Html Msg
@@ -101,6 +103,9 @@ view model =
 
 
 port valueChange : (Value -> msg) -> Sub msg
+
+
+port value : Value -> Cmd msg
 
 
 port schemaChange : (Value -> msg) -> Sub msg
