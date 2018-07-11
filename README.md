@@ -2,7 +2,7 @@
 
 # json-form
 
-Renders form based on JSON Schema
+This module generates form based on JSON Schema, its keywords are documented in this spec: http://json-schema.org/latest/json-schema-validation.html
 
 ![image](https://user-images.githubusercontent.com/184172/38784098-c30536fe-4104-11e8-95bb-58c4f5eca24f.png)
 
