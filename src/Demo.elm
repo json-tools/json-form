@@ -52,7 +52,7 @@ update message model =
                     | form = m
                     , editedValue =
                         case exMsg of
-                            Json.Form.UpdateValue v ->
+                            Json.Form.UpdateValue v _ ->
                                 v
 
                             _ ->

@@ -25,7 +25,7 @@ import Util exposing (..)
 
 type ExternalMsg
     = None
-    | UpdateValue (Maybe JsonValue)
+    | UpdateValue (Maybe JsonValue) Bool
 
 
 type alias Model =
@@ -200,7 +200,7 @@ editValue model path val =
             model.schema
                 |> Json.Schema.validateValue { applyDefaults = True } updatedValue
     in
-        (case validationResult of
+        case validationResult of
             Ok v ->
                 { model
                     | value =
@@ -210,6 +210,7 @@ editValue model path val =
                     , errors = Dict.empty
                 }
                     ! []
+                    => UpdateValue (Just updatedJsonValue) True
 
             Err e ->
                 { model
@@ -217,8 +218,7 @@ editValue model path val =
                     , errors = dictFromListErrors e
                 }
                     ! []
-        )
-            => UpdateValue (Just updatedJsonValue)
+                    => UpdateValue (Just updatedJsonValue) False
 
 
 dictFromListErrors : List Error -> Dict Path (List String)

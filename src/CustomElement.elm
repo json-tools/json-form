@@ -7,6 +7,7 @@ import Html exposing (Html, div, text, h3)
 --import Html.Events exposing (onClick)
 
 import Json.Decode exposing (Value, decodeValue)
+import Json.Encode as Encode
 import JsonValue exposing (decoder)
 import Json.Form
 import Json.Schema.Definitions
@@ -82,8 +83,18 @@ update message model =
 
                 ( editedValue, exCmd ) =
                     case exMsg of
-                        Json.Form.UpdateValue v ->
-                            ( v, v |> Maybe.withDefault JsonValue.NullValue |> JsonValue.encode |> value )
+                        Json.Form.UpdateValue v isValid ->
+                            ( v
+                            , Encode.object
+                                [ ( "value"
+                                  , v
+                                        |> Maybe.withDefault JsonValue.NullValue
+                                        |> JsonValue.encode
+                                  )
+                                , ( "isValid", Encode.bool isValid )
+                                ]
+                                |> value
+                            )
 
                         _ ->
                             ( model.editedValue, Cmd.none )

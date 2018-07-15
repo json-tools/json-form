@@ -27,8 +27,8 @@ customElements.define('json-form',
             this.app = app;
             this.muteAttributeChange = false;
 
-            app.ports.value.subscribe(v => {
-                const event = new CustomEvent('change', { detail: { value: v } });
+            app.ports.value.subscribe(({ value, isValid }) => {
+                const event = new CustomEvent('change', { detail: { value, isValid } });
                 this.muteAttributeChange = true;
                 this.setAttribute('value', JSON.stringify(v));
                 this.muteAttributeChange = false;
