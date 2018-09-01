@@ -4,12 +4,12 @@
     "repository": "https://github.com/1602/json-form.git",
     "license": "BSD3",
     "source-directories": [
-        "src"
+        "src",
+        "../json-value/src"
     ],
     "exposed-modules": [ ],
     "dependencies": {
         "1602/elm-feather": "2.2.0 <= v < 3.0.0",
-        "1602/json-value": "1.1.0 <= v < 2.0.0",
         "1602/json-schema": "4.1.0 <= v < 5.0.0",
         "elm-lang/core": "5.0.0 <= v < 6.0.0",
         "elm-lang/html": "2.0.0 <= v < 3.0.0"

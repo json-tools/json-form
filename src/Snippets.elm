@@ -1,14 +1,15 @@
-module Snippets exposing (Snippet(..), index, getSnippet, getSnippetTitle)
+module Snippets exposing (Snippet(..), getSnippet, getSnippetTitle, index)
 
-import Json.Schema.Definitions exposing (Schema(..), blankSchema, blankSubSchema, Type(..), SingleType(..))
+import Json.Encode as Encode exposing (list, object, string)
 import Json.Schema.Builder exposing (..)
-import Json.Encode as Encode exposing (string)
+import Json.Schema.Definitions exposing (Schema(..), SingleType(..), Type(..), blankSchema, blankSubSchema)
 
 
 type Snippet
     = SimpleField
     | FlatObject
     | LoginForm
+    | Rules
     | FlightBooking
 
 
@@ -17,6 +18,7 @@ index =
     [ SimpleField
     , FlatObject
     , LoginForm
+    , Rules
     , FlightBooking
     ]
 
@@ -32,6 +34,9 @@ getSnippetTitle ds =
 
         LoginForm ->
             "Login Form"
+
+        Rules ->
+            "Rules"
 
         FlightBooking ->
             "Flight Booking"
@@ -101,6 +106,72 @@ getSnippet ds =
                       )
                     ]
                 |> withAdditionalProperties (boolSchema False)
+                |> toSchema
+                |> Result.withDefault blankSchema
+
+        Rules ->
+            buildSchema
+                |> withType "object"
+                |> withProperties
+                    [ ( "enabled"
+                      , buildSchema
+                            |> withType "boolean"
+                            -- |> withDefault (Encode.bool True)
+                            |> withTitle "enable"
+                            |> withDescription "Enable editing"
+                            |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
+                      )
+                    , ( "form"
+                      , buildSchema
+                            |> withType "object"
+                            |> withProperties
+                                [ ( "disableDemo"
+                                  , buildSchema
+                                        |> withTitle "Rule: disable"
+                                        |> withType "string"
+                                        |> withDescription "This field will be enabled when switch turned on"
+                                        |> withCustomKeyword "ui"
+                                            (object
+                                                [ ( "rule"
+                                                  , object
+                                                        [ ( "action", string "disable" )
+                                                        , ( "path", list [ string "enabled" ] )
+                                                        , ( "condition"
+                                                          , object
+                                                                [ ( "const", Encode.bool False )
+                                                                , ( "default", Encode.bool False )
+                                                                ]
+                                                          )
+                                                        ]
+                                                  )
+                                                ]
+                                            )
+                                  )
+                                , ( "hideDemo"
+                                  , buildSchema
+                                        |> withTitle "Rule: hide"
+                                        |> withType "string"
+                                        |> withDescription "This field will be shown when switch turned on"
+                                        |> withCustomKeyword "ui"
+                                            (object
+                                                [ ( "rule"
+                                                  , object
+                                                        [ ( "action", string "hide" )
+                                                        , ( "path", list [ string "enabled" ] )
+                                                        , ( "condition"
+                                                          , object
+                                                                [ ( "const", Encode.bool False )
+                                                                , ( "default", Encode.bool False )
+                                                                ]
+                                                          )
+                                                        ]
+                                                  )
+                                                ]
+                                            )
+                                  )
+                                ]
+                      )
+                    ]
                 |> toSchema
                 |> Result.withDefault blankSchema
 

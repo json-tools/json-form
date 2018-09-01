@@ -1,26 +1,25 @@
-module Json.Form
-    exposing
-        ( Model
-        , Msg
-        , ExternalMsg(..)
-        , init
-        , update
-        , view
-        )
+module Json.Form exposing
+    ( ExternalMsg(..)
+    , Model
+    , Msg
+    , init
+    , update
+    , view
+    )
 
-import Html exposing (..)
-import Json.Form.UiSpec as UiSpec
-import Json.Form.Definitions as Definitions exposing (Path, EditingMode(..), Msg(..))
-import Json.Schema.Definitions exposing (..)
-import Json.Schema
-import Json.Schema.Validation exposing (Error)
-import JsonValue exposing (JsonValue(..))
-import Json.Decode as Decode exposing (decodeValue)
-import ErrorMessages exposing (stringifyError)
 import Dict exposing (Dict)
-import Json.Form.TextField as TextField
+import ErrorMessages exposing (stringifyError)
+import Html exposing (..)
+import Json.Decode as Decode exposing (decodeValue)
+import Json.Form.Definitions as Definitions exposing (EditingMode(..), Msg(..), Path)
 import Json.Form.Selection as Selection
-import Util exposing (..)
+import Json.Form.TextField as TextField
+import Json.Form.UiSpec as UiSpec
+import Json.Schema
+import Json.Schema.Definitions exposing (..)
+import Json.Schema.Validation exposing (Error)
+import Json.Value as JsonValue exposing (JsonValue(..))
+import JsonFormUtil as Util exposing (..)
 
 
 type ExternalMsg
@@ -94,8 +93,8 @@ editingMode model schema =
 
 getBooleanUiWidget : Schema -> EditingMode
 getBooleanUiWidget schema =
-    case schema |> getUiSpec of
-        UiSpec.Switch ->
+    case schema |> getUiSpec |> .widgetType of
+        Just UiSpec.Switch ->
             Switch
 
         _ ->
@@ -112,15 +111,15 @@ viewObject model schema isRequired path =
                         viewNode model subSchema (required |> Maybe.withDefault [] |> List.member propName) (path ++ [ propName ])
                     )
     in
-        case schema of
-            ObjectSchema os ->
-                os.properties
-                    |> Maybe.map (iterateOverSchemata Dict.empty os.required)
-                    |> Maybe.withDefault []
-                    |> div []
+    case schema of
+        ObjectSchema os ->
+            os.properties
+                |> Maybe.map (iterateOverSchemata Dict.empty os.required)
+                |> Maybe.withDefault []
+                |> div []
 
-            _ ->
-                text ""
+        _ ->
+            text ""
 
 
 update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )
@@ -178,6 +177,7 @@ touch path focused beingEdited =
     if path == Nothing then
         beingEdited
             |> (::) (focused |> Maybe.withDefault [])
+
     else
         beingEdited
 
@@ -189,6 +189,7 @@ editValue model path val =
             model.value
                 |> Maybe.withDefault JsonValue.NullValue
                 |> JsonValue.setIn path val
+                |> Result.mapError (Debug.log "editValue")
                 |> Result.toMaybe
                 |> Maybe.withDefault JsonValue.NullValue
 
@@ -200,25 +201,25 @@ editValue model path val =
             model.schema
                 |> Json.Schema.validateValue { applyDefaults = True } updatedValue
     in
-        case validationResult of
-            Ok v ->
-                { model
-                    | value =
-                        v
-                            |> decodeValue JsonValue.decoder
-                            |> Result.toMaybe
-                    , errors = Dict.empty
-                }
-                    ! []
-                    => UpdateValue (Just updatedJsonValue) True
+    case validationResult of
+        Ok v ->
+            { model
+                | value =
+                    v
+                        |> decodeValue JsonValue.decoder
+                        |> Result.toMaybe
+                , errors = Dict.empty
+            }
+                ! []
+                => UpdateValue (Just updatedJsonValue) True
 
-            Err e ->
-                { model
-                    | value = Just updatedJsonValue
-                    , errors = dictFromListErrors e
-                }
-                    ! []
-                    => UpdateValue (Just updatedJsonValue) False
+        Err e ->
+            { model
+                | value = Just updatedJsonValue
+                , errors = dictFromListErrors e
+            }
+                ! []
+                => UpdateValue (Just updatedJsonValue) False
 
 
 dictFromListErrors : List Error -> Dict Path (List String)
