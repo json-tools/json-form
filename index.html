@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Form generator for JSON Schema and elm</title>
-  </head>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>JSON Form web-component demo</title>
+        <!--link rel="stylesheet" href="https://unpkg.com/@ubio/css@1.3.11/index.css"></link-->
+        <script src="https://unpkg.com/json-viewer-custom-element"></script>
+        <script>
+            const q = document.querySelector.bind(document);
 
-  <body>
-  <script type="text/javascript" src="main-5504b9431f5b1ab1c5c8.js"></script></body>
+            window.addEventListener('load', () => {
+                const form = q('json-form');
+                const viewer = q('json-viewer');
+                connect(form, viewer);
+            });
+
+            function connect(form, viewer) {
+                form.addEventListener('change', () =>
+                    viewer.setAttribute('value', form.getAttribute('value'))
+                );
+            }
+        </script>
+        <style>
+            json-viewer { margin: 50px; display: block; }
+            json-form { margin: 50px; display: block; }
+        </style>
+    </head>
+    <body>
+        <!--
+        <json-form
+                schema='{"type":"string","title":"Greeting","maxLength":5,"description":"Enter any greeting"}'
+          value='"hello"'
+        ></json-form>
+
+        <json-viewer
+            value='"hello"'
+        ></json-viewer>
+        -->
+    <script type="text/javascript" src="index.js"></script></body>
 </html>
