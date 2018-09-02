@@ -128,7 +128,7 @@ getSnippet ds =
                                 [ ( "disableDemo"
                                   , buildSchema
                                         |> withTitle "Rule: disable"
-                                        |> withType "string"
+                                        |> withType "number"
                                         |> withDescription "This field will be enabled when switch turned on"
                                         |> withCustomKeyword "ui"
                                             (object
@@ -150,7 +150,7 @@ getSnippet ds =
                                 , ( "hideDemo"
                                   , buildSchema
                                         |> withTitle "Rule: hide"
-                                        |> withType "string"
+                                        |> withType "number"
                                         |> withDescription "This field will be shown when switch turned on"
                                         |> withCustomKeyword "ui"
                                             (object
