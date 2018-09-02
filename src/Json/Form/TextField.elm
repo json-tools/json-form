@@ -11,8 +11,8 @@ import Json.Value as JsonValue exposing (JsonValue)
 import JsonFormUtil as Util exposing (getTitle, getUiSpec, jsonValueToString)
 
 
-view : Model -> Schema -> Bool -> Path -> Html Msg
-view model schema isRequired path =
+view : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
+view model schema isRequired isDisabled path =
     let
         editedValue =
             model.value
@@ -39,7 +39,7 @@ view model schema isRequired path =
             , ( "jf-textfield--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
             , ( "jf-textfield--empty", editedValue == "" )
             , ( "jf-textfield--invalid", hasError )
-            , ( "jf-textfield--disabled", disabled )
+            , ( "jf-textfield--disabled", isDisabled || disabled )
             , ( "jf-textfield--hidden", hidden )
             ]
         ]
@@ -49,7 +49,7 @@ view model schema isRequired path =
             , onBlur <| FocusInput Nothing
             , onInput <| \str -> EditValue path (JsonValue.StringValue str)
             , value <| editedValue
-            , Html.Attributes.disabled disabled
+            , Html.Attributes.disabled (isDisabled || disabled)
             , if isPassword then
                 type_ "password"
 
@@ -62,8 +62,8 @@ view model schema isRequired path =
         ]
 
 
-viewNumeric : Model -> Schema -> Bool -> Path -> Html Msg
-viewNumeric model schema isRequired path =
+viewNumeric : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
+viewNumeric model schema isRequired isDisabled path =
     let
         isFocused =
             model.focused
@@ -96,7 +96,7 @@ viewNumeric model schema isRequired path =
             , ( "jf-textfield--focused", isFocused )
             , ( "jf-textfield--empty", editedValue == "" )
             , ( "jf-textfield--invalid", hasError )
-            , ( "jf-textfield--disabled", disabled )
+            , ( "jf-textfield--disabled", isDisabled || disabled )
             , ( "jf-textfield--hidden", hidden )
             ]
         ]
@@ -107,7 +107,7 @@ viewNumeric model schema isRequired path =
             , onInput <| EditNumber
             , value <| editedValue
             , type_ "number"
-            , Html.Attributes.disabled disabled
+            , Html.Attributes.disabled (isDisabled || disabled)
             ]
             []
         , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]

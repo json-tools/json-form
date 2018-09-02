@@ -14,12 +14,12 @@ import Json.Decode as Decode exposing (decodeValue)
 import Json.Form.Definitions as Definitions exposing (EditingMode(..), Msg(..), Path)
 import Json.Form.Selection as Selection
 import Json.Form.TextField as TextField
-import Json.Form.UiSpec as UiSpec
+import Json.Form.UiSpec as UiSpec exposing (applyRule)
 import Json.Schema
 import Json.Schema.Definitions exposing (..)
 import Json.Schema.Validation exposing (Error)
 import Json.Value as JsonValue exposing (JsonValue(..))
-import JsonFormUtil as Util exposing (..)
+import JsonFormUtil as Util exposing ((=>), getUiSpec, jsonValueToString)
 
 
 type ExternalMsg
@@ -42,26 +42,26 @@ init =
 
 view : Model -> Html Msg
 view model =
-    viewNode model model.schema False []
+    viewNode model model.schema False False []
 
 
-viewNode : Model -> Schema -> Bool -> Path -> Html Msg
-viewNode model schema isRequired path =
+viewNode : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
+viewNode model schema isRequired isDisabled path =
     case editingMode model schema of
         TextField ->
-            TextField.view model schema isRequired path
+            TextField.view model schema isRequired isDisabled path
 
         NumberField ->
-            TextField.viewNumeric model schema isRequired path
+            TextField.viewNumeric model schema isRequired isDisabled path
 
         Switch ->
-            Selection.switch model schema isRequired path
+            Selection.switch model schema isRequired isDisabled path
 
         Checkbox ->
-            Selection.checkbox model schema isRequired path
+            Selection.checkbox model schema isRequired isDisabled path
 
         Object ->
-            viewObject model schema isRequired path
+            viewObject model schema isRequired isDisabled path
 
         x ->
             text (toString x ++ ": not implemented")
@@ -101,25 +101,35 @@ getBooleanUiWidget schema =
             Checkbox
 
 
-viewObject : Model -> Schema -> Bool -> Path -> Html Msg
-viewObject model schema isRequired path =
+viewObject : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
+viewObject model schema isRequired isDisabled path =
     let
         iterateOverSchemata propsDict required (Schemata schemata) =
             schemata
                 |> List.map
                     (\( propName, subSchema ) ->
-                        viewNode model subSchema (required |> Maybe.withDefault [] |> List.member propName) (path ++ [ propName ])
+                        viewNode model subSchema (required |> Maybe.withDefault [] |> List.member propName) (isDisabled || disabled) (path ++ [ propName ])
                     )
-    in
-    case schema of
-        ObjectSchema os ->
-            os.properties
-                |> Maybe.map (iterateOverSchemata Dict.empty os.required)
-                |> Maybe.withDefault []
-                |> div []
 
-        _ ->
-            text ""
+        ( disabled, hidden ) =
+            schema
+                |> getUiSpec
+                |> .rule
+                |> applyRule model.value
+    in
+    if hidden then
+        text ""
+
+    else
+        case schema of
+            ObjectSchema os ->
+                os.properties
+                    |> Maybe.map (iterateOverSchemata Dict.empty os.required)
+                    |> Maybe.withDefault []
+                    |> div []
+
+            _ ->
+                text ""
 
 
 update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )

@@ -205,6 +205,32 @@ getSnippet ds =
                                         |> withDescription "This switch will be enabled when switch turned on"
                                         |> withRuleAndWidget "disable" "switch"
                                   )
+                                , ( "nestedForm"
+                                  , buildSchema
+                                        |> withType "object"
+                                        |> withProperties
+                                            [ ( "disableDemo"
+                                              , buildSchema
+                                                    |> withTitle "Rule: disable nested form"
+                                                    |> withType "string"
+                                                    |> withDescription "This field will be enabled when switch turned on"
+                                              )
+                                            ]
+                                        |> withRule "disable"
+                                  )
+                                , ( "otherNestedForm"
+                                  , buildSchema
+                                        |> withType "object"
+                                        |> withProperties
+                                            [ ( "hideDemo"
+                                              , buildSchema
+                                                    |> withTitle "Rule: hide nested form"
+                                                    |> withType "string"
+                                                    |> withDescription "This field will be hidden when switch turned on"
+                                              )
+                                            ]
+                                        |> withRule "hide"
+                                  )
                                 ]
                       )
                     ]
