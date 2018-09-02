@@ -104,7 +104,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.jf-checkbox {\n    width: 300px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-checkbox__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-checkbox__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 24px;\n    cursor: pointer;\n}\n\n.jf-checkbox__box-outline {\n    width: 16px;\n    height: 16px;\n    position: absolute;\n    top: calc(50% - 8px);\n    left: 0;\n    border-radius: 2px;\n    border: 2px solid #0000008a;\n    cursor: pointer;\n    z-index: 2;\n}\n\n.jf-checkbox__tick-outline {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iY2xpcCI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Ik0gMCwwIDAsMSAxLDEgMSwwIDAsMCB6IE0gMC44NTM0Mzc1LDAuMTY3MTg3NSAwLjk1OTY4NzUsMC4yNzMxMjUgMC40MjkzNzUsMC44MDM0Mzc1IDAuMzIzMTI1LDAuOTA5Njg3NSAwLjIxNzE4NzUsMC44MDM0Mzc1IDAuMDQwMzEyNSwwLjYyNjg3NSAwLjE0NjU2MjUsMC41MjA2MjUgMC4zMjMxMjUsMC42OTc1IDAuODUzNDM3NSwwLjE2NzE4NzUgeiIKICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KICAgIDwvY2xpcFBhdGg+CiAgICA8bWFzayBpZD0ibWFzayIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgbWFza0NvbnRlbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICA8cGF0aAogICAgICAgICBkPSJNIDAsMCAwLDEgMSwxIDEsMCAwLDAgeiBNIDAuODUzNDM3NSwwLjE2NzE4NzUgMC45NTk2ODc1LDAuMjczMTI1IDAuNDI5Mzc1LDAuODAzNDM3NSAwLjMyMzEyNSwwLjkwOTY4NzUgMC4yMTcxODc1LDAuODAzNDM3NSAwLjA0MDMxMjUsMC42MjY4NzUgMC4xNDY1NjI1LDAuNTIwNjI1IDAuMzIzMTI1LDAuNjk3NSAwLjg1MzQzNzUsMC4xNjcxODc1IHoiCiAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmUiIC8+CiAgICA8L21hc2s+CiAgPC9kZWZzPgogIDxyZWN0CiAgICAgd2lkdGg9IjEiCiAgICAgaGVpZ2h0PSIxIgogICAgIHg9IjAiCiAgICAgeT0iMCIKICAgICBjbGlwLXBhdGg9InVybCgjY2xpcCkiCiAgICAgc3R5bGU9ImZpbGw6IzAwMDAwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KPC9zdmc+Cg==);\n    background: 0 0;\n    transition-duration: .28s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    transition-property: background;\n}\n\n\n.jf-checkbox--on .jf-checkbox__tick-outline {\n    background: #009688 url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8cGF0aAogICAgIGQ9Ik0gMC4wNDAzODA1OSwwLjYyNjc3NjcgMC4xNDY0NDY2MSwwLjUyMDcxMDY4IDAuNDI5Mjg5MzIsMC44MDM1NTMzOSAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IE0gMC4yMTcxNTcyOSwwLjgwMzU1MzM5IDAuODUzNTUzMzksMC4xNjcxNTcyOSAwLjk1OTYxOTQxLDAuMjczMjIzMyAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IgogICAgIGlkPSJyZWN0Mzc4MCIKICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiAvPgo8L3N2Zz4K);\n}\n\n\n.jf-checkbox--on .jf-checkbox__box-outline {\n    border: 2px solid #009688;\n}\n\n\n.jf-checkbox__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-checkbox--invalid .jf-checkbox__helper-text {\n    color: var(--color-red--500);\n}\n\n", ""]);
+exports.push([module.i, "\n.jf-checkbox {\n    width: 300px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-checkbox__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-checkbox__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 24px;\n    cursor: pointer;\n}\n\n.jf-checkbox__box-outline {\n    width: 16px;\n    height: 16px;\n    position: absolute;\n    top: calc(50% - 8px);\n    left: 0;\n    border-radius: 2px;\n    border: 2px solid #0000008a;\n    cursor: pointer;\n    z-index: 2;\n}\n\n.jf-checkbox__tick-outline {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iY2xpcCI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Ik0gMCwwIDAsMSAxLDEgMSwwIDAsMCB6IE0gMC44NTM0Mzc1LDAuMTY3MTg3NSAwLjk1OTY4NzUsMC4yNzMxMjUgMC40MjkzNzUsMC44MDM0Mzc1IDAuMzIzMTI1LDAuOTA5Njg3NSAwLjIxNzE4NzUsMC44MDM0Mzc1IDAuMDQwMzEyNSwwLjYyNjg3NSAwLjE0NjU2MjUsMC41MjA2MjUgMC4zMjMxMjUsMC42OTc1IDAuODUzNDM3NSwwLjE2NzE4NzUgeiIKICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KICAgIDwvY2xpcFBhdGg+CiAgICA8bWFzayBpZD0ibWFzayIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgbWFza0NvbnRlbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICA8cGF0aAogICAgICAgICBkPSJNIDAsMCAwLDEgMSwxIDEsMCAwLDAgeiBNIDAuODUzNDM3NSwwLjE2NzE4NzUgMC45NTk2ODc1LDAuMjczMTI1IDAuNDI5Mzc1LDAuODAzNDM3NSAwLjMyMzEyNSwwLjkwOTY4NzUgMC4yMTcxODc1LDAuODAzNDM3NSAwLjA0MDMxMjUsMC42MjY4NzUgMC4xNDY1NjI1LDAuNTIwNjI1IDAuMzIzMTI1LDAuNjk3NSAwLjg1MzQzNzUsMC4xNjcxODc1IHoiCiAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmUiIC8+CiAgICA8L21hc2s+CiAgPC9kZWZzPgogIDxyZWN0CiAgICAgd2lkdGg9IjEiCiAgICAgaGVpZ2h0PSIxIgogICAgIHg9IjAiCiAgICAgeT0iMCIKICAgICBjbGlwLXBhdGg9InVybCgjY2xpcCkiCiAgICAgc3R5bGU9ImZpbGw6IzAwMDAwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KPC9zdmc+Cg==);\n    background: 0 0;\n    transition-duration: .28s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    transition-property: background;\n}\n\n\n.jf-checkbox--on .jf-checkbox__tick-outline {\n    background: #009688 url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8cGF0aAogICAgIGQ9Ik0gMC4wNDAzODA1OSwwLjYyNjc3NjcgMC4xNDY0NDY2MSwwLjUyMDcxMDY4IDAuNDI5Mjg5MzIsMC44MDM1NTMzOSAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IE0gMC4yMTcxNTcyOSwwLjgwMzU1MzM5IDAuODUzNTUzMzksMC4xNjcxNTcyOSAwLjk1OTYxOTQxLDAuMjczMjIzMyAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IgogICAgIGlkPSJyZWN0Mzc4MCIKICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiAvPgo8L3N2Zz4K);\n}\n\n\n.jf-checkbox--on .jf-checkbox__box-outline {\n    border: 2px solid #009688;\n}\n\n\n.jf-checkbox__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-checkbox--invalid .jf-checkbox__helper-text {\n    color: var(--color-red--500);\n}\n\n\n.jf-checkbox--disabled .jf-checkbox__label,\n.jf-checkbox--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--disabled .jf-checkbox__tick-outline {\n    background-color: var(--color-inactive);\n}\n\n.jf-checkbox--disabled .jf-checkbox__box-outline {\n    border-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--hidden {\n    display: none;\n}\n", ""]);
 
 // exports
 
@@ -170,7 +170,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.jf-switch {\n    width: 300px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-switch__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-switch__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 50px;\n    cursor: pointer;\n}\n\n.jf-switch__track {\n    background-color: lightgrey;\n    width: 40px;\n    height: 14px;\n    position: absolute;\n    top: calc(50% - 7px);\n    left: 0;\n    border-radius: 14px;\n    cursor: pointer;\n}\n\n.jf-switch__thumb {\n    background-color: #fafafa;\n    width: 20px;\n    height: 20px;\n    position: absolute;\n    top: calc(50% - 10px);\n    left: 0;\n    cursor: pointer;\n    border-radius: 50%;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);\n}\n\n.jf-switch--on .jf-switch__thumb {\n    left: 20px;\n}\n\n.jf-switch--on .jf-switch__thumb {\n    background-color: var(--color-swatch--500);\n}\n\n.jf-switch__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-switch--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n", ""]);
+exports.push([module.i, "\n.jf-switch {\n    width: 300px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-switch__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-switch__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 50px;\n    cursor: pointer;\n}\n\n.jf-switch__track {\n    background-color: lightgrey;\n    width: 40px;\n    height: 14px;\n    position: absolute;\n    top: calc(50% - 7px);\n    left: 0;\n    border-radius: 14px;\n    cursor: pointer;\n}\n\n.jf-switch__thumb {\n    background-color: #fafafa;\n    width: 20px;\n    height: 20px;\n    position: absolute;\n    top: calc(50% - 10px);\n    left: 0;\n    cursor: pointer;\n    border-radius: 50%;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);\n}\n\n.jf-switch--on .jf-switch__thumb {\n    left: 20px;\n}\n\n.jf-switch--on .jf-switch__thumb {\n    background-color: var(--color-swatch--500);\n}\n\n.jf-switch__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-switch--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n\n.jf-switch--disabled .jf-switch__label,\n.jf-switch--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__thumb {\n    background-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__track {\n    cursor: default;\n}\n\n.jf-switch--hidden {\n    display: none;\n}\n", ""]);
 
 // exports
 
@@ -13317,6 +13317,10 @@ var _1602$json_form$Json_Form_Definitions$Model = F6(
 	function (a, b, c, d, e, f) {
 		return {schema: a, focused: b, value: c, errors: d, beingEdited: e, editedNumber: f};
 	});
+var _1602$json_form$Json_Form_Definitions$AddItem = F2(
+	function (a, b) {
+		return {ctor: 'AddItem', _0: a, _1: b};
+	});
 var _1602$json_form$Json_Form_Definitions$EditNumber = function (a) {
 	return {ctor: 'EditNumber', _0: a};
 };
@@ -13330,6 +13334,7 @@ var _1602$json_form$Json_Form_Definitions$FocusNumericInput = function (a) {
 var _1602$json_form$Json_Form_Definitions$FocusInput = function (a) {
 	return {ctor: 'FocusInput', _0: a};
 };
+var _1602$json_form$Json_Form_Definitions$Array = {ctor: 'Array'};
 var _1602$json_form$Json_Form_Definitions$Object = {ctor: 'Object'};
 var _1602$json_form$Json_Form_Definitions$JsonEditor = {ctor: 'JsonEditor'};
 var _1602$json_form$Json_Form_Definitions$Checkbox = {ctor: 'Checkbox'};
@@ -13337,6 +13342,119 @@ var _1602$json_form$Json_Form_Definitions$Switch = {ctor: 'Switch'};
 var _1602$json_form$Json_Form_Definitions$NumberField = {ctor: 'NumberField'};
 var _1602$json_form$Json_Form_Definitions$TextField = {ctor: 'TextField'};
 
+var _1602$json_form$Json_Form_UiSpec$applyRule = F3(
+	function (value, path, rule) {
+		var getDefaultValue = function (s) {
+			var _p0 = s;
+			if (_p0.ctor === 'ObjectSchema') {
+				return _1602$json_form$Json_Value$decodeValue(
+					A2(_elm_lang$core$Maybe$withDefault, _elm_lang$core$Json_Encode$null, _p0._0.$default));
+			} else {
+				return _1602$json_form$Json_Value$NullValue;
+			}
+		};
+		var referencedValue = F2(
+			function (subPath, s) {
+				return _1602$json_form$Json_Value$encode(
+					A2(
+						_elm_lang$core$Maybe$withDefault,
+						getDefaultValue(s),
+						A2(
+							_elm_lang$core$Maybe$andThen,
+							function (_p1) {
+								return _elm_lang$core$Result$toMaybe(
+									A2(_1602$json_form$Json_Value$getIn, subPath, _p1));
+							},
+							value)));
+			});
+		var validate = F2(
+			function (subPath, s) {
+				return A2(
+					_elm_lang$core$Result$withDefault,
+					false,
+					A2(
+						_elm_lang$core$Result$map,
+						function (_p2) {
+							return true;
+						},
+						A3(
+							_1602$json_schema$Json_Schema$validateValue,
+							{applyDefaults: true},
+							A2(referencedValue, subPath, s),
+							s)));
+			});
+		var resolvePath = function (subPath) {
+			return A3(
+				_elm_lang$core$List$foldl,
+				F2(
+					function (token, currentPath) {
+						return _elm_lang$core$Native_Utils.eq(token, '') ? {ctor: '[]'} : (_elm_lang$core$Native_Utils.eq(token, '.') ? currentPath : (_elm_lang$core$Native_Utils.eq(token, '..') ? A2(
+							_elm_lang$core$List$take,
+							_elm_lang$core$List$length(currentPath) - 1,
+							currentPath) : A2(
+							_elm_lang$core$Basics_ops['++'],
+							currentPath,
+							{
+								ctor: '::',
+								_0: token,
+								_1: {ctor: '[]'}
+							})));
+					}),
+				path,
+				A2(_elm_lang$core$String$split, '/', subPath));
+		};
+		var disabled = function () {
+			var _p3 = rule;
+			_v1_2:
+			do {
+				if (_p3.ctor === 'Just') {
+					switch (_p3._0.ctor) {
+						case 'Disable':
+							return A2(
+								validate,
+								resolvePath(_p3._0._0),
+								_p3._0._1);
+						case 'Enable':
+							return !A2(
+								validate,
+								resolvePath(_p3._0._0),
+								_p3._0._1);
+						default:
+							break _v1_2;
+					}
+				} else {
+					break _v1_2;
+				}
+			} while(false);
+			return false;
+		}();
+		var hidden = function () {
+			var _p4 = rule;
+			_v2_2:
+			do {
+				if (_p4.ctor === 'Just') {
+					switch (_p4._0.ctor) {
+						case 'Hide':
+							return A2(
+								validate,
+								resolvePath(_p4._0._0),
+								_p4._0._1);
+						case 'Show':
+							return !A2(
+								validate,
+								resolvePath(_p4._0._0),
+								_p4._0._1);
+						default:
+							break _v2_2;
+					}
+				} else {
+					break _v2_2;
+				}
+			} while(false);
+			return false;
+		}();
+		return {ctor: '_Tuple2', _0: disabled, _1: hidden};
+	});
 var _1602$json_form$Json_Form_UiSpec$blank = {widgetType: _elm_lang$core$Maybe$Nothing, rule: _elm_lang$core$Maybe$Nothing};
 var _1602$json_form$Json_Form_UiSpec$UiSpec = F2(
 	function (a, b) {
@@ -13376,10 +13494,7 @@ var _1602$json_form$Json_Form_UiSpec$ruleDecoder = A4(
 					A2(_elm_lang$core$Basics_ops['++'], action, '\''))))));
 		},
 		A2(_elm_lang$core$Json_Decode$field, 'action', _elm_lang$core$Json_Decode$string)),
-	A2(
-		_elm_lang$core$Json_Decode$field,
-		'path',
-		_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string)),
+	A2(_elm_lang$core$Json_Decode$field, 'path', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'condition', _1602$json_schema$Json_Schema_Definitions$decoder));
 var _1602$json_form$Json_Form_UiSpec$decoder = A3(
 	_elm_lang$core$Json_Decode$map2,
@@ -13482,21 +13597,31 @@ var _1602$json_form$Json_Form_Helper$view = F3(
 		};
 	});
 
-var _1602$json_form$Json_Form_Selection$checkbox = F4(
-	function (model, schema, isRequired, path) {
-		var _p0 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
-		var hasError = _p0._0;
-		var helperText = _p0._1;
+var _1602$json_form$Json_Form_Selection$checkbox = F5(
+	function (model, schema, isRequired, isDisabled, path) {
+		var _p0 = A3(
+			_1602$json_form$Json_Form_UiSpec$applyRule,
+			model.value,
+			path,
+			function (_) {
+				return _.rule;
+			}(
+				_1602$json_form$JsonFormUtil$getUiSpec(schema)));
+		var disabled = _p0._0;
+		var hidden = _p0._1;
+		var _p1 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
+		var hasError = _p1._0;
+		var helperText = _p1._1;
 		var isChecked = function () {
-			var _p2 = A2(
+			var _p3 = A2(
 				_elm_lang$core$Maybe$andThen,
-				function (_p1) {
+				function (_p2) {
 					return _elm_lang$core$Result$toMaybe(
-						A2(_1602$json_form$Json_Value$getIn, path, _p1));
+						A2(_1602$json_form$Json_Value$getIn, path, _p2));
 				},
 				model.value);
-			if ((_p2.ctor === 'Just') && (_p2._0.ctor === 'BoolValue')) {
-				return _p2._0._0;
+			if ((_p3.ctor === 'Just') && (_p3._0.ctor === 'BoolValue')) {
+				return _p3._0._0;
 			} else {
 				return false;
 			}
@@ -13531,7 +13656,15 @@ var _1602$json_form$Json_Form_Selection$checkbox = F4(
 								_1: {
 									ctor: '::',
 									_0: {ctor: '_Tuple2', _0: 'jf-checkbox--invalid', _1: hasError},
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'jf-checkbox--disabled', _1: isDisabled || disabled},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'jf-checkbox--hidden', _1: hidden},
+											_1: {ctor: '[]'}
+										}
+									}
 								}
 							}
 						}
@@ -13563,13 +13696,17 @@ var _1602$json_form$Json_Form_Selection$checkbox = F4(
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$html$Html_Events$onCheck(
-												function (_p3) {
+												function (_p4) {
 													return A2(
 														_1602$json_form$Json_Form_Definitions$EditValue,
 														path,
-														_1602$json_form$Json_Value$BoolValue(_p3));
+														_1602$json_form$Json_Value$BoolValue(_p4));
 												}),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$disabled(isDisabled || disabled),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -13633,21 +13770,31 @@ var _1602$json_form$Json_Form_Selection$checkbox = F4(
 				}
 			});
 	});
-var _1602$json_form$Json_Form_Selection$switch = F4(
-	function (model, schema, isRequired, path) {
-		var _p4 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
-		var hasError = _p4._0;
-		var helperText = _p4._1;
+var _1602$json_form$Json_Form_Selection$switch = F5(
+	function (model, schema, isRequired, isDisabled, path) {
+		var _p5 = A3(
+			_1602$json_form$Json_Form_UiSpec$applyRule,
+			model.value,
+			path,
+			function (_) {
+				return _.rule;
+			}(
+				_1602$json_form$JsonFormUtil$getUiSpec(schema)));
+		var disabled = _p5._0;
+		var hidden = _p5._1;
+		var _p6 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
+		var hasError = _p6._0;
+		var helperText = _p6._1;
 		var isChecked = function () {
-			var _p6 = A2(
+			var _p8 = A2(
 				_elm_lang$core$Maybe$andThen,
-				function (_p5) {
+				function (_p7) {
 					return _elm_lang$core$Result$toMaybe(
-						A2(_1602$json_form$Json_Value$getIn, path, _p5));
+						A2(_1602$json_form$Json_Value$getIn, path, _p7));
 				},
 				model.value);
-			if ((_p6.ctor === 'Just') && (_p6._0.ctor === 'BoolValue')) {
-				return _p6._0._0;
+			if ((_p8.ctor === 'Just') && (_p8._0.ctor === 'BoolValue')) {
+				return _p8._0._0;
 			} else {
 				return false;
 			}
@@ -13682,7 +13829,15 @@ var _1602$json_form$Json_Form_Selection$switch = F4(
 								_1: {
 									ctor: '::',
 									_0: {ctor: '_Tuple2', _0: 'jf-switch--invalid', _1: hasError},
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'jf-switch--disabled', _1: isDisabled || disabled},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'jf-switch--hidden', _1: hidden},
+											_1: {ctor: '[]'}
+										}
+									}
 								}
 							}
 						}
@@ -13714,13 +13869,17 @@ var _1602$json_form$Json_Form_Selection$switch = F4(
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$html$Html_Events$onCheck(
-												function (_p7) {
+												function (_p9) {
 													return A2(
 														_1602$json_form$Json_Form_Definitions$EditValue,
 														path,
-														_1602$json_form$Json_Value$BoolValue(_p7));
+														_1602$json_form$Json_Value$BoolValue(_p9));
 												}),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$disabled(isDisabled || disabled),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -13785,11 +13944,15 @@ var _1602$json_form$Json_Form_Selection$switch = F4(
 			});
 	});
 
-var _1602$json_form$Json_Form_TextField$viewNumeric = F4(
-	function (model, schema, isRequired, path) {
-		var _p0 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
-		var hasError = _p0._0;
-		var helperText = _p0._1;
+var _1602$json_form$Json_Form_TextField$viewNumeric = F5(
+	function (model, schema, isRequired, isDisabled, path) {
+		var uiSpec = _1602$json_form$JsonFormUtil$getUiSpec(schema);
+		var _p0 = A3(_1602$json_form$Json_Form_UiSpec$applyRule, model.value, path, uiSpec.rule);
+		var disabled = _p0._0;
+		var hidden = _p0._1;
+		var _p1 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
+		var hasError = _p1._0;
+		var helperText = _p1._1;
 		var isFocused = A2(
 			_elm_lang$core$Maybe$withDefault,
 			false,
@@ -13834,7 +13997,15 @@ var _1602$json_form$Json_Form_TextField$viewNumeric = F4(
 								_1: {
 									ctor: '::',
 									_0: {ctor: '_Tuple2', _0: 'jf-textfield--invalid', _1: hasError},
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: isDisabled || disabled},
+										_1: {
+											ctor: '::',
+											_0: {ctor: '_Tuple2', _0: 'jf-textfield--hidden', _1: hidden},
+											_1: {ctor: '[]'}
+										}
+									}
 								}
 							}
 						}
@@ -13866,7 +14037,11 @@ var _1602$json_form$Json_Form_TextField$viewNumeric = F4(
 										_1: {
 											ctor: '::',
 											_0: _elm_lang$html$Html_Attributes$type_('number'),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$disabled(isDisabled || disabled),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -13908,92 +14083,18 @@ var _1602$json_form$Json_Form_TextField$viewNumeric = F4(
 				}
 			});
 	});
-var _1602$json_form$Json_Form_TextField$view = F4(
-	function (model, schema, isRequired, path) {
-		var getDefaultValue = function (s) {
-			var _p1 = s;
-			if (_p1.ctor === 'ObjectSchema') {
-				return _1602$json_form$Json_Value$decodeValue(
-					A2(_elm_lang$core$Maybe$withDefault, _elm_lang$core$Json_Encode$null, _p1._0.$default));
-			} else {
-				return _1602$json_form$Json_Value$NullValue;
-			}
-		};
-		var referencedValue = F2(
-			function (subPath, s) {
-				return _1602$json_form$Json_Value$encode(
-					A2(
-						_elm_lang$core$Maybe$withDefault,
-						getDefaultValue(s),
-						A2(
-							_elm_lang$core$Maybe$andThen,
-							function (_p2) {
-								return _elm_lang$core$Result$toMaybe(
-									A2(_1602$json_form$Json_Value$getIn, subPath, _p2));
-							},
-							model.value)));
-			});
-		var validate = F2(
-			function (subPath, s) {
-				return A2(
-					_elm_lang$core$Result$withDefault,
-					false,
-					A2(
-						_elm_lang$core$Result$map,
-						function (_p3) {
-							return true;
-						},
-						A3(
-							_1602$json_schema$Json_Schema$validateValue,
-							{applyDefaults: true},
-							A2(referencedValue, subPath, s),
-							s)));
-			});
+var _1602$json_form$Json_Form_TextField$view = F5(
+	function (model, schema, isRequired, isDisabled, path) {
 		var uiSpec = _1602$json_form$JsonFormUtil$getUiSpec(schema);
 		var isPassword = _elm_lang$core$Native_Utils.eq(
 			uiSpec.widgetType,
 			_elm_lang$core$Maybe$Just(_1602$json_form$Json_Form_UiSpec$PasswordField));
-		var disabled = function () {
-			var _p4 = uiSpec.rule;
-			_v1_2:
-			do {
-				if (_p4.ctor === 'Just') {
-					switch (_p4._0.ctor) {
-						case 'Disable':
-							return A2(validate, _p4._0._0, _p4._0._1);
-						case 'Enable':
-							return !A2(validate, _p4._0._0, _p4._0._1);
-						default:
-							break _v1_2;
-					}
-				} else {
-					break _v1_2;
-				}
-			} while(false);
-			return false;
-		}();
-		var hidden = function () {
-			var _p5 = uiSpec.rule;
-			_v2_2:
-			do {
-				if (_p5.ctor === 'Just') {
-					switch (_p5._0.ctor) {
-						case 'Hide':
-							return A2(validate, _p5._0._0, _p5._0._1);
-						case 'Show':
-							return !A2(validate, _p5._0._0, _p5._0._1);
-						default:
-							break _v2_2;
-					}
-				} else {
-					break _v2_2;
-				}
-			} while(false);
-			return false;
-		}();
-		var _p6 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
-		var hasError = _p6._0;
-		var helperText = _p6._1;
+		var _p2 = A3(_1602$json_form$Json_Form_UiSpec$applyRule, model.value, path, uiSpec.rule);
+		var disabled = _p2._0;
+		var hidden = _p2._1;
+		var _p3 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
+		var hasError = _p3._0;
+		var helperText = _p3._1;
 		var editedValue = A2(
 			_elm_lang$core$Maybe$withDefault,
 			'',
@@ -14043,7 +14144,7 @@ var _1602$json_form$Json_Form_TextField$view = F4(
 									_0: {ctor: '_Tuple2', _0: 'jf-textfield--invalid', _1: hasError},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: disabled},
+										_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: isDisabled || disabled},
 										_1: {
 											ctor: '::',
 											_0: {ctor: '_Tuple2', _0: 'jf-textfield--hidden', _1: hidden},
@@ -14086,7 +14187,7 @@ var _1602$json_form$Json_Form_TextField$view = F4(
 										_0: _elm_lang$html$Html_Attributes$value(editedValue),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$disabled(disabled),
+											_0: _elm_lang$html$Html_Attributes$disabled(isDisabled || disabled),
 											_1: {
 												ctor: '::',
 												_0: isPassword ? _elm_lang$html$Html_Attributes$type_('password') : _elm_lang$html$Html_Attributes$type_('text'),
@@ -14198,7 +14299,7 @@ var _1602$json_form$Json_Form$editingMode = F2(
 		var _p2 = schema;
 		if (_p2.ctor === 'ObjectSchema') {
 			var _p3 = _p2._0.type_;
-			_v3_4:
+			_v3_5:
 			do {
 				if (_p3.ctor === 'SingleType') {
 					switch (_p3._0.ctor) {
@@ -14210,11 +14311,13 @@ var _1602$json_form$Json_Form$editingMode = F2(
 							return _1602$json_form$Json_Form$getBooleanUiWidget(schema);
 						case 'ObjectType':
 							return _1602$json_form$Json_Form_Definitions$Object;
+						case 'ArrayType':
+							return _1602$json_form$Json_Form_Definitions$Array;
 						default:
-							break _v3_4;
+							break _v3_5;
 					}
 				} else {
-					break _v3_4;
+					break _v3_5;
 				}
 			} while(false);
 			return _1602$json_form$Json_Form_Definitions$JsonEditor;
@@ -14222,20 +14325,22 @@ var _1602$json_form$Json_Form$editingMode = F2(
 			return _1602$json_form$Json_Form_Definitions$JsonEditor;
 		}
 	});
-var _1602$json_form$Json_Form$viewNode = F4(
-	function (model, schema, isRequired, path) {
+var _1602$json_form$Json_Form$viewNode = F5(
+	function (model, schema, isRequired, isDisabled, path) {
 		var _p4 = A2(_1602$json_form$Json_Form$editingMode, model, schema);
 		switch (_p4.ctor) {
 			case 'TextField':
-				return A4(_1602$json_form$Json_Form_TextField$view, model, schema, isRequired, path);
+				return A5(_1602$json_form$Json_Form_TextField$view, model, schema, isRequired, isDisabled, path);
 			case 'NumberField':
-				return A4(_1602$json_form$Json_Form_TextField$viewNumeric, model, schema, isRequired, path);
+				return A5(_1602$json_form$Json_Form_TextField$viewNumeric, model, schema, isRequired, isDisabled, path);
 			case 'Switch':
-				return A4(_1602$json_form$Json_Form_Selection$switch, model, schema, isRequired, path);
+				return A5(_1602$json_form$Json_Form_Selection$switch, model, schema, isRequired, isDisabled, path);
 			case 'Checkbox':
-				return A4(_1602$json_form$Json_Form_Selection$checkbox, model, schema, isRequired, path);
+				return A5(_1602$json_form$Json_Form_Selection$checkbox, model, schema, isRequired, isDisabled, path);
 			case 'Object':
-				return A4(_1602$json_form$Json_Form$viewObject, model, schema, isRequired, path);
+				return A5(_1602$json_form$Json_Form$viewObject, model, schema, isRequired, isDisabled, path);
+			case 'Array':
+				return A5(_1602$json_form$Json_Form$viewArray, model, schema, isRequired, isDisabled, path);
 			default:
 				return _elm_lang$html$Html$text(
 					A2(
@@ -14244,60 +14349,188 @@ var _1602$json_form$Json_Form$viewNode = F4(
 						': not implemented'));
 		}
 	});
-var _1602$json_form$Json_Form$viewObject = F4(
-	function (model, schema, isRequired, path) {
+var _1602$json_form$Json_Form$viewArray = F5(
+	function (model, schema, isRequired, isDisabled, path) {
+		var list = function (list) {
+			var _p5 = list;
+			if (_p5.ctor === 'ArrayValue') {
+				return A2(_elm_lang$core$Debug$log, 'sss', _p5._0);
+			} else {
+				return {ctor: '[]'};
+			}
+		}(
+			A2(
+				_elm_lang$core$Result$withDefault,
+				_1602$json_form$Json_Value$ArrayValue(
+					{ctor: '[]'}),
+				A2(
+					_1602$json_form$Json_Value$getIn,
+					path,
+					A2(_elm_lang$core$Maybe$withDefault, _1602$json_form$Json_Value$NullValue, model.value))));
+		var _p6 = A3(
+			_1602$json_form$Json_Form_UiSpec$applyRule,
+			model.value,
+			path,
+			function (_) {
+				return _.rule;
+			}(
+				_1602$json_form$JsonFormUtil$getUiSpec(schema)));
+		var disabled = _p6._0;
+		var hidden = _p6._1;
+		if (hidden) {
+			return _elm_lang$html$Html$text('');
+		} else {
+			var _p7 = schema;
+			if (_p7.ctor === 'ObjectSchema') {
+				var _p8 = _p7._0.items;
+				if (_p8.ctor === 'ItemDefinition') {
+					var _p10 = _p8._0;
+					return A2(
+						_elm_lang$html$Html$div,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{ctor: '[]'},
+								A2(
+									_elm_lang$core$List$indexedMap,
+									F2(
+										function (index, item) {
+											var propName = _elm_lang$core$Basics$toString(index);
+											var isRequired = function () {
+												var _p9 = _p10;
+												if (_p9.ctor === 'ObjectSchema') {
+													return A2(
+														_elm_lang$core$List$member,
+														propName,
+														A2(
+															_elm_lang$core$Maybe$withDefault,
+															{ctor: '[]'},
+															_p9._0.required));
+												} else {
+													return false;
+												}
+											}();
+											return A5(
+												_1602$json_form$Json_Form$viewNode,
+												model,
+												_p10,
+												isRequired,
+												isDisabled || disabled,
+												A2(
+													_elm_lang$core$Basics_ops['++'],
+													path,
+													{
+														ctor: '::',
+														_0: propName,
+														_1: {ctor: '[]'}
+													}));
+										}),
+									A2(_elm_lang$core$Debug$log, 'iterating over this', list))),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$button,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('button'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Events$onClick(
+												A2(
+													_1602$json_form$Json_Form_Definitions$AddItem,
+													path,
+													_elm_lang$core$List$length(list))),
+											_1: {ctor: '[]'}
+										}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('ADD ITEM'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						});
+				} else {
+					return _elm_lang$html$Html$text('');
+				}
+			} else {
+				return _elm_lang$html$Html$text('');
+			}
+		}
+	});
+var _1602$json_form$Json_Form$viewObject = F5(
+	function (model, schema, isRequired, isDisabled, path) {
+		var _p11 = A3(
+			_1602$json_form$Json_Form_UiSpec$applyRule,
+			model.value,
+			path,
+			function (_) {
+				return _.rule;
+			}(
+				_1602$json_form$JsonFormUtil$getUiSpec(schema)));
+		var disabled = _p11._0;
+		var hidden = _p11._1;
 		var iterateOverSchemata = F3(
-			function (propsDict, required, _p5) {
-				var _p6 = _p5;
+			function (propsDict, required, _p12) {
+				var _p13 = _p12;
 				return A2(
 					_elm_lang$core$List$map,
-					function (_p7) {
-						var _p8 = _p7;
-						var _p9 = _p8._0;
-						return A4(
+					function (_p14) {
+						var _p15 = _p14;
+						var _p16 = _p15._0;
+						return A5(
 							_1602$json_form$Json_Form$viewNode,
 							model,
-							_p8._1,
+							_p15._1,
 							A2(
 								_elm_lang$core$List$member,
-								_p9,
+								_p16,
 								A2(
 									_elm_lang$core$Maybe$withDefault,
 									{ctor: '[]'},
 									required)),
+							isDisabled || disabled,
 							A2(
 								_elm_lang$core$Basics_ops['++'],
 								path,
 								{
 									ctor: '::',
-									_0: _p9,
+									_0: _p16,
 									_1: {ctor: '[]'}
 								}));
 					},
-					_p6._0);
+					_p13._0);
 			});
-		var _p10 = schema;
-		if (_p10.ctor === 'ObjectSchema') {
-			var _p11 = _p10._0;
-			return A2(
-				_elm_lang$html$Html$div,
-				{ctor: '[]'},
-				A2(
-					_elm_lang$core$Maybe$withDefault,
+		if (hidden) {
+			return _elm_lang$html$Html$text('');
+		} else {
+			var _p17 = schema;
+			if (_p17.ctor === 'ObjectSchema') {
+				var _p18 = _p17._0;
+				return A2(
+					_elm_lang$html$Html$div,
 					{ctor: '[]'},
 					A2(
-						_elm_lang$core$Maybe$map,
-						A2(iterateOverSchemata, _elm_lang$core$Dict$empty, _p11.required),
-						_p11.properties)));
-		} else {
-			return _elm_lang$html$Html$text('');
+						_elm_lang$core$Maybe$withDefault,
+						{ctor: '[]'},
+						A2(
+							_elm_lang$core$Maybe$map,
+							A2(iterateOverSchemata, _elm_lang$core$Dict$empty, _p18.required),
+							_p18.properties)));
+			} else {
+				return _elm_lang$html$Html$text('');
+			}
 		}
 	});
 var _1602$json_form$Json_Form$view = function (model) {
-	return A4(
+	return A5(
 		_1602$json_form$Json_Form$viewNode,
 		model,
 		model.schema,
+		false,
 		false,
 		{ctor: '[]'});
 };
@@ -14326,8 +14559,8 @@ var _1602$json_form$Json_Form$editValue = F3(
 			{applyDefaults: true},
 			updatedValue,
 			model.schema);
-		var _p12 = validationResult;
-		if (_p12.ctor === 'Ok') {
+		var _p19 = validationResult;
+		if (_p19.ctor === 'Ok') {
 			return A2(
 				_1602$json_form$JsonFormUtil_ops['=>'],
 				A2(
@@ -14336,7 +14569,7 @@ var _1602$json_form$Json_Form$editValue = F3(
 						model,
 						{
 							value: _elm_lang$core$Result$toMaybe(
-								A2(_elm_lang$core$Json_Decode$decodeValue, _1602$json_form$Json_Value$decoder, _p12._0)),
+								A2(_elm_lang$core$Json_Decode$decodeValue, _1602$json_form$Json_Value$decoder, _p19._0)),
 							errors: _elm_lang$core$Dict$empty
 						}),
 					{ctor: '[]'}),
@@ -14353,7 +14586,7 @@ var _1602$json_form$Json_Form$editValue = F3(
 						model,
 						{
 							value: _elm_lang$core$Maybe$Just(updatedJsonValue),
-							errors: _1602$json_form$Json_Form$dictFromListErrors(_p12._0)
+							errors: _1602$json_form$Json_Form$dictFromListErrors(_p19._0)
 						}),
 					{ctor: '[]'}),
 				A2(
@@ -14365,10 +14598,48 @@ var _1602$json_form$Json_Form$editValue = F3(
 var _1602$json_form$Json_Form$None = {ctor: 'None'};
 var _1602$json_form$Json_Form$update = F2(
 	function (msg, model) {
-		var _p13 = msg;
-		switch (_p13.ctor) {
+		var _p20 = msg;
+		switch (_p20.ctor) {
+			case 'AddItem':
+				var _p23 = _p20._0;
+				var updatedModel = function () {
+					var _p22 = A2(
+						_elm_lang$core$Maybe$andThen,
+						function (_p21) {
+							return _elm_lang$core$Result$toMaybe(
+								A2(_1602$json_form$Json_Value$getIn, _p23, _p21));
+						},
+						model.value);
+					if (_p22.ctor === 'Just') {
+						return model;
+					} else {
+						return _elm_lang$core$Native_Utils.update(
+							model,
+							{
+								value: A2(
+									_elm_lang$core$Debug$log,
+									'init as empty array',
+									_elm_lang$core$Result$toMaybe(
+										A3(
+											_1602$json_form$Json_Value$setIn,
+											_p23,
+											_1602$json_form$Json_Value$ArrayValue(
+												{ctor: '[]'}),
+											A2(_elm_lang$core$Maybe$withDefault, _1602$json_form$Json_Value$NullValue, model.value))))
+							});
+					}
+				}();
+				var newPropPath = A2(
+					_elm_lang$core$Basics_ops['++'],
+					_p23,
+					{
+						ctor: '::',
+						_0: _elm_lang$core$Basics$toString(_p20._1),
+						_1: {ctor: '[]'}
+					});
+				return A3(_1602$json_form$Json_Form$editValue, updatedModel, newPropPath, _1602$json_form$Json_Value$NullValue);
 			case 'FocusInput':
-				var _p14 = _p13._0;
+				var _p24 = _p20._0;
 				return A2(
 					_1602$json_form$JsonFormUtil_ops['=>'],
 					A2(
@@ -14376,30 +14647,30 @@ var _1602$json_form$Json_Form$update = F2(
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								focused: _p14,
-								beingEdited: A3(_1602$json_form$Json_Form$touch, _p14, model.focused, model.beingEdited)
+								focused: _p24,
+								beingEdited: A3(_1602$json_form$Json_Form$touch, _p24, model.focused, model.beingEdited)
 							}),
 						{ctor: '[]'}),
 					_1602$json_form$Json_Form$None);
 			case 'FocusNumericInput':
-				var _p17 = _p13._0;
-				var _p15 = _p17;
-				if (_p15.ctor === 'Nothing') {
+				var _p27 = _p20._0;
+				var _p25 = _p27;
+				if (_p25.ctor === 'Nothing') {
 					return A3(
 						_1602$json_form$Json_Form$editValue,
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								beingEdited: A3(_1602$json_form$Json_Form$touch, _p17, model.focused, model.beingEdited)
+								beingEdited: A3(_1602$json_form$Json_Form$touch, _p27, model.focused, model.beingEdited)
 							}),
 						A2(
 							_elm_lang$core$Maybe$withDefault,
 							{ctor: '[]'},
 							model.focused),
 						function () {
-							var _p16 = _elm_lang$core$String$toFloat(model.editedNumber);
-							if (_p16.ctor === 'Ok') {
-								return _1602$json_form$Json_Value$NumericValue(_p16._0);
+							var _p26 = _elm_lang$core$String$toFloat(model.editedNumber);
+							if (_p26.ctor === 'Ok') {
+								return _1602$json_form$Json_Value$NumericValue(_p26._0);
 							} else {
 								return _1602$json_form$Json_Value$StringValue(model.editedNumber);
 							}
@@ -14412,7 +14683,7 @@ var _1602$json_form$Json_Form$update = F2(
 							_elm_lang$core$Native_Utils.update(
 								model,
 								{
-									focused: _p17,
+									focused: _p27,
 									editedNumber: A2(
 										_elm_lang$core$Maybe$withDefault,
 										'',
@@ -14424,28 +14695,28 @@ var _1602$json_form$Json_Form$update = F2(
 												_elm_lang$core$Result$toMaybe,
 												A2(
 													_elm_lang$core$Maybe$map,
-													_1602$json_form$Json_Value$getIn(_p15._0),
+													_1602$json_form$Json_Value$getIn(_p25._0),
 													model.value))))
 								}),
 							{ctor: '[]'}),
 						_1602$json_form$Json_Form$None);
 				}
 			case 'EditValue':
-				return A3(_1602$json_form$Json_Form$editValue, model, _p13._0, _p13._1);
+				return A3(_1602$json_form$Json_Form$editValue, model, _p20._0, _p20._1);
 			default:
-				var _p19 = _p13._0;
-				var _p18 = _elm_lang$core$String$toFloat(_p19);
-				if (_p18.ctor === 'Ok') {
+				var _p29 = _p20._0;
+				var _p28 = _elm_lang$core$String$toFloat(_p29);
+				if (_p28.ctor === 'Ok') {
 					return A3(
 						_1602$json_form$Json_Form$editValue,
 						_elm_lang$core$Native_Utils.update(
 							model,
-							{editedNumber: _p19}),
+							{editedNumber: _p29}),
 						A2(
 							_elm_lang$core$Maybe$withDefault,
 							{ctor: '[]'},
 							model.focused),
-						_1602$json_form$Json_Value$NumericValue(_p18._0));
+						_1602$json_form$Json_Value$NumericValue(_p28._0));
 				} else {
 					return A2(
 						_1602$json_form$JsonFormUtil_ops['=>'],
@@ -14453,7 +14724,7 @@ var _1602$json_form$Json_Form$update = F2(
 							_elm_lang$core$Platform_Cmd_ops['!'],
 							_elm_lang$core$Native_Utils.update(
 								model,
-								{editedNumber: _p19}),
+								{editedNumber: _p29}),
 							{ctor: '[]'}),
 						_1602$json_form$Json_Form$None);
 				}
@@ -16042,6 +16313,129 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 							},
 							A2(_1602$json_schema$Json_Schema_Builder$withType, 'object', _1602$json_schema$Json_Schema_Builder$buildSchema)))));
 		case 'Rules':
+			var withRuleAndWidget = F2(
+				function (name, widget) {
+					return A2(
+						_1602$json_schema$Json_Schema_Builder$withCustomKeyword,
+						'ui',
+						_elm_lang$core$Json_Encode$object(
+							{
+								ctor: '::',
+								_0: {
+									ctor: '_Tuple2',
+									_0: 'rule',
+									_1: _elm_lang$core$Json_Encode$object(
+										{
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'action',
+												_1: _elm_lang$core$Json_Encode$string(name)
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'path',
+													_1: _elm_lang$core$Json_Encode$string('/enabled')
+												},
+												_1: {
+													ctor: '::',
+													_0: {
+														ctor: '_Tuple2',
+														_0: 'condition',
+														_1: _elm_lang$core$Json_Encode$object(
+															{
+																ctor: '::',
+																_0: {
+																	ctor: '_Tuple2',
+																	_0: 'const',
+																	_1: _elm_lang$core$Json_Encode$bool(false)
+																},
+																_1: {
+																	ctor: '::',
+																	_0: {
+																		ctor: '_Tuple2',
+																		_0: 'default',
+																		_1: _elm_lang$core$Json_Encode$bool(false)
+																	},
+																	_1: {ctor: '[]'}
+																}
+															})
+													},
+													_1: {ctor: '[]'}
+												}
+											}
+										})
+								},
+								_1: {
+									ctor: '::',
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'widget',
+										_1: _elm_lang$core$Json_Encode$string(widget)
+									},
+									_1: {ctor: '[]'}
+								}
+							}));
+				});
+			var withRule = function (name) {
+				return A2(
+					_1602$json_schema$Json_Schema_Builder$withCustomKeyword,
+					'ui',
+					_elm_lang$core$Json_Encode$object(
+						{
+							ctor: '::',
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'rule',
+								_1: _elm_lang$core$Json_Encode$object(
+									{
+										ctor: '::',
+										_0: {
+											ctor: '_Tuple2',
+											_0: 'action',
+											_1: _elm_lang$core$Json_Encode$string(name)
+										},
+										_1: {
+											ctor: '::',
+											_0: {
+												ctor: '_Tuple2',
+												_0: 'path',
+												_1: _elm_lang$core$Json_Encode$string('/enabled')
+											},
+											_1: {
+												ctor: '::',
+												_0: {
+													ctor: '_Tuple2',
+													_0: 'condition',
+													_1: _elm_lang$core$Json_Encode$object(
+														{
+															ctor: '::',
+															_0: {
+																ctor: '_Tuple2',
+																_0: 'const',
+																_1: _elm_lang$core$Json_Encode$bool(false)
+															},
+															_1: {
+																ctor: '::',
+																_0: {
+																	ctor: '_Tuple2',
+																	_0: 'default',
+																	_1: _elm_lang$core$Json_Encode$bool(false)
+																},
+																_1: {ctor: '[]'}
+															}
+														})
+												},
+												_1: {ctor: '[]'}
+											}
+										}
+									})
+							},
+							_1: {ctor: '[]'}
+						}));
+			};
 			return A2(
 				_elm_lang$core$Result$withDefault,
 				_1602$json_schema$Json_Schema_Definitions$blankSchema,
@@ -16086,148 +16480,270 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 											_0: {
 												ctor: '_Tuple2',
 												_0: 'disableDemo',
-												_1: A3(
-													_1602$json_schema$Json_Schema_Builder$withCustomKeyword,
-													'ui',
-													_elm_lang$core$Json_Encode$object(
-														{
-															ctor: '::',
-															_0: {
-																ctor: '_Tuple2',
-																_0: 'rule',
-																_1: _elm_lang$core$Json_Encode$object(
-																	{
-																		ctor: '::',
-																		_0: {
-																			ctor: '_Tuple2',
-																			_0: 'action',
-																			_1: _elm_lang$core$Json_Encode$string('disable')
-																		},
-																		_1: {
-																			ctor: '::',
-																			_0: {
-																				ctor: '_Tuple2',
-																				_0: 'path',
-																				_1: _elm_lang$core$Json_Encode$list(
-																					{
-																						ctor: '::',
-																						_0: _elm_lang$core$Json_Encode$string('enabled'),
-																						_1: {ctor: '[]'}
-																					})
-																			},
-																			_1: {
-																				ctor: '::',
-																				_0: {
-																					ctor: '_Tuple2',
-																					_0: 'condition',
-																					_1: _elm_lang$core$Json_Encode$object(
-																						{
-																							ctor: '::',
-																							_0: {
-																								ctor: '_Tuple2',
-																								_0: 'const',
-																								_1: _elm_lang$core$Json_Encode$bool(false)
-																							},
-																							_1: {
-																								ctor: '::',
-																								_0: {
-																									ctor: '_Tuple2',
-																									_0: 'default',
-																									_1: _elm_lang$core$Json_Encode$bool(false)
-																								},
-																								_1: {ctor: '[]'}
-																							}
-																						})
-																				},
-																				_1: {ctor: '[]'}
-																			}
-																		}
-																	})
-															},
-															_1: {ctor: '[]'}
-														}),
+												_1: A2(
+													withRule,
+													'disable',
 													A2(
 														_1602$json_schema$Json_Schema_Builder$withDescription,
 														'This field will be enabled when switch turned on',
 														A2(
 															_1602$json_schema$Json_Schema_Builder$withType,
 															'string',
-															A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: disable', _1602$json_schema$Json_Schema_Builder$buildSchema))))
+															A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: disable text field', _1602$json_schema$Json_Schema_Builder$buildSchema))))
 											},
 											_1: {
 												ctor: '::',
 												_0: {
 													ctor: '_Tuple2',
 													_0: 'hideDemo',
-													_1: A3(
-														_1602$json_schema$Json_Schema_Builder$withCustomKeyword,
-														'ui',
-														_elm_lang$core$Json_Encode$object(
-															{
-																ctor: '::',
-																_0: {
-																	ctor: '_Tuple2',
-																	_0: 'rule',
-																	_1: _elm_lang$core$Json_Encode$object(
-																		{
-																			ctor: '::',
-																			_0: {
-																				ctor: '_Tuple2',
-																				_0: 'action',
-																				_1: _elm_lang$core$Json_Encode$string('hide')
-																			},
-																			_1: {
-																				ctor: '::',
-																				_0: {
-																					ctor: '_Tuple2',
-																					_0: 'path',
-																					_1: _elm_lang$core$Json_Encode$list(
-																						{
-																							ctor: '::',
-																							_0: _elm_lang$core$Json_Encode$string('enabled'),
-																							_1: {ctor: '[]'}
-																						})
-																				},
-																				_1: {
-																					ctor: '::',
-																					_0: {
-																						ctor: '_Tuple2',
-																						_0: 'condition',
-																						_1: _elm_lang$core$Json_Encode$object(
-																							{
-																								ctor: '::',
-																								_0: {
-																									ctor: '_Tuple2',
-																									_0: 'const',
-																									_1: _elm_lang$core$Json_Encode$bool(false)
-																								},
-																								_1: {
-																									ctor: '::',
-																									_0: {
-																										ctor: '_Tuple2',
-																										_0: 'default',
-																										_1: _elm_lang$core$Json_Encode$bool(false)
-																									},
-																									_1: {ctor: '[]'}
-																								}
-																							})
-																					},
-																					_1: {ctor: '[]'}
-																				}
-																			}
-																		})
-																},
-																_1: {ctor: '[]'}
-															}),
+													_1: A2(
+														withRule,
+														'hide',
 														A2(
 															_1602$json_schema$Json_Schema_Builder$withDescription,
 															'This field will be shown when switch turned on',
 															A2(
 																_1602$json_schema$Json_Schema_Builder$withType,
 																'string',
-																A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: hide', _1602$json_schema$Json_Schema_Builder$buildSchema))))
+																A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: hide text field', _1602$json_schema$Json_Schema_Builder$buildSchema))))
 												},
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: {
+														ctor: '_Tuple2',
+														_0: 'disableNumericDemo',
+														_1: A2(
+															withRule,
+															'disable',
+															A2(
+																_1602$json_schema$Json_Schema_Builder$withDescription,
+																'This numeric field will be enabled when switch turned on',
+																A2(
+																	_1602$json_schema$Json_Schema_Builder$withType,
+																	'number',
+																	A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: disable numeric', _1602$json_schema$Json_Schema_Builder$buildSchema))))
+													},
+													_1: {
+														ctor: '::',
+														_0: {
+															ctor: '_Tuple2',
+															_0: 'hideNumericDemo',
+															_1: A2(
+																withRule,
+																'hide',
+																A2(
+																	_1602$json_schema$Json_Schema_Builder$withDescription,
+																	'This numeric field will be shown when switch turned on',
+																	A2(
+																		_1602$json_schema$Json_Schema_Builder$withType,
+																		'number',
+																		A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: hide numeric', _1602$json_schema$Json_Schema_Builder$buildSchema))))
+														},
+														_1: {
+															ctor: '::',
+															_0: {
+																ctor: '_Tuple2',
+																_0: 'disableCheckboxDemo',
+																_1: A3(
+																	withRuleAndWidget,
+																	'disable',
+																	'checkbox',
+																	A2(
+																		_1602$json_schema$Json_Schema_Builder$withDescription,
+																		'This checkbox will be enabled when switch turned on',
+																		A2(
+																			_1602$json_schema$Json_Schema_Builder$withType,
+																			'boolean',
+																			A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: disable checkbox', _1602$json_schema$Json_Schema_Builder$buildSchema))))
+															},
+															_1: {
+																ctor: '::',
+																_0: {
+																	ctor: '_Tuple2',
+																	_0: 'disableSwitchDemo',
+																	_1: A3(
+																		withRuleAndWidget,
+																		'disable',
+																		'switch',
+																		A2(
+																			_1602$json_schema$Json_Schema_Builder$withDescription,
+																			'This switch will be enabled when switch turned on',
+																			A2(
+																				_1602$json_schema$Json_Schema_Builder$withType,
+																				'boolean',
+																				A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: disable switch', _1602$json_schema$Json_Schema_Builder$buildSchema))))
+																},
+																_1: {
+																	ctor: '::',
+																	_0: {
+																		ctor: '_Tuple2',
+																		_0: 'nestedForm',
+																		_1: A2(
+																			withRule,
+																			'disable',
+																			A2(
+																				_1602$json_schema$Json_Schema_Builder$withProperties,
+																				{
+																					ctor: '::',
+																					_0: {
+																						ctor: '_Tuple2',
+																						_0: 'disableDemo',
+																						_1: A2(
+																							_1602$json_schema$Json_Schema_Builder$withDescription,
+																							'This field will be enabled when switch turned on',
+																							A2(
+																								_1602$json_schema$Json_Schema_Builder$withType,
+																								'string',
+																								A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: disable nested form', _1602$json_schema$Json_Schema_Builder$buildSchema)))
+																					},
+																					_1: {ctor: '[]'}
+																				},
+																				A2(_1602$json_schema$Json_Schema_Builder$withType, 'object', _1602$json_schema$Json_Schema_Builder$buildSchema)))
+																	},
+																	_1: {
+																		ctor: '::',
+																		_0: {
+																			ctor: '_Tuple2',
+																			_0: 'otherNestedForm',
+																			_1: A2(
+																				withRule,
+																				'hide',
+																				A2(
+																					_1602$json_schema$Json_Schema_Builder$withProperties,
+																					{
+																						ctor: '::',
+																						_0: {
+																							ctor: '_Tuple2',
+																							_0: 'hideDemo',
+																							_1: A2(
+																								_1602$json_schema$Json_Schema_Builder$withDescription,
+																								'This field will be hidden when switch turned on',
+																								A2(
+																									_1602$json_schema$Json_Schema_Builder$withType,
+																									'string',
+																									A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: hide nested form', _1602$json_schema$Json_Schema_Builder$buildSchema)))
+																						},
+																						_1: {ctor: '[]'}
+																					},
+																					A2(_1602$json_schema$Json_Schema_Builder$withType, 'object', _1602$json_schema$Json_Schema_Builder$buildSchema)))
+																		},
+																		_1: {
+																			ctor: '::',
+																			_0: {
+																				ctor: '_Tuple2',
+																				_0: 'array',
+																				_1: A2(
+																					_1602$json_schema$Json_Schema_Builder$withItem,
+																					A2(
+																						_1602$json_schema$Json_Schema_Builder$withProperties,
+																						{
+																							ctor: '::',
+																							_0: {
+																								ctor: '_Tuple2',
+																								_0: 'enabled',
+																								_1: A3(
+																									_1602$json_schema$Json_Schema_Builder$withCustomKeyword,
+																									'ui',
+																									_elm_lang$core$Json_Encode$object(
+																										{
+																											ctor: '::',
+																											_0: {
+																												ctor: '_Tuple2',
+																												_0: 'widget',
+																												_1: _elm_lang$core$Json_Encode$string('switch')
+																											},
+																											_1: {ctor: '[]'}
+																										}),
+																									A2(
+																										_1602$json_schema$Json_Schema_Builder$withDescription,
+																										'Enable editing',
+																										A2(
+																											_1602$json_schema$Json_Schema_Builder$withTitle,
+																											'enable',
+																											A2(_1602$json_schema$Json_Schema_Builder$withType, 'boolean', _1602$json_schema$Json_Schema_Builder$buildSchema))))
+																							},
+																							_1: {
+																								ctor: '::',
+																								_0: {
+																									ctor: '_Tuple2',
+																									_0: 'hideDemo',
+																									_1: A3(
+																										_1602$json_schema$Json_Schema_Builder$withCustomKeyword,
+																										'ui',
+																										_elm_lang$core$Json_Encode$object(
+																											{
+																												ctor: '::',
+																												_0: {
+																													ctor: '_Tuple2',
+																													_0: 'rule',
+																													_1: _elm_lang$core$Json_Encode$object(
+																														{
+																															ctor: '::',
+																															_0: {
+																																ctor: '_Tuple2',
+																																_0: 'action',
+																																_1: _elm_lang$core$Json_Encode$string('disable')
+																															},
+																															_1: {
+																																ctor: '::',
+																																_0: {
+																																	ctor: '_Tuple2',
+																																	_0: 'path',
+																																	_1: _elm_lang$core$Json_Encode$string('../enabled')
+																																},
+																																_1: {
+																																	ctor: '::',
+																																	_0: {
+																																		ctor: '_Tuple2',
+																																		_0: 'condition',
+																																		_1: _elm_lang$core$Json_Encode$object(
+																																			{
+																																				ctor: '::',
+																																				_0: {
+																																					ctor: '_Tuple2',
+																																					_0: 'const',
+																																					_1: _elm_lang$core$Json_Encode$bool(false)
+																																				},
+																																				_1: {
+																																					ctor: '::',
+																																					_0: {
+																																						ctor: '_Tuple2',
+																																						_0: 'default',
+																																						_1: _elm_lang$core$Json_Encode$bool(false)
+																																					},
+																																					_1: {ctor: '[]'}
+																																				}
+																																			})
+																																	},
+																																	_1: {ctor: '[]'}
+																																}
+																															}
+																														})
+																												},
+																												_1: {ctor: '[]'}
+																											}),
+																										A2(
+																											_1602$json_schema$Json_Schema_Builder$withDescription,
+																											'Local condition demo',
+																											A2(
+																												_1602$json_schema$Json_Schema_Builder$withType,
+																												'string',
+																												A2(_1602$json_schema$Json_Schema_Builder$withTitle, 'Rule: disable based on local condition', _1602$json_schema$Json_Schema_Builder$buildSchema))))
+																								},
+																								_1: {ctor: '[]'}
+																							}
+																						},
+																						A2(_1602$json_schema$Json_Schema_Builder$withType, 'object', _1602$json_schema$Json_Schema_Builder$buildSchema)),
+																					A2(_1602$json_schema$Json_Schema_Builder$withType, 'array', _1602$json_schema$Json_Schema_Builder$buildSchema))
+																			},
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
 											}
 										},
 										A2(_1602$json_schema$Json_Schema_Builder$withType, 'object', _1602$json_schema$Json_Schema_Builder$buildSchema))
