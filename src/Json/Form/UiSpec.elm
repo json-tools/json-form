@@ -1,7 +1,10 @@
-module Json.Form.UiSpec exposing (Rule(..), UiSpec, WidgetType(..), blank, decoder)
+module Json.Form.UiSpec exposing (Rule(..), UiSpec, WidgetType(..), applyRule, blank, decoder)
 
 import Json.Decode as Decode exposing (Decoder, Value, fail, field, maybe, succeed)
-import Json.Schema.Definitions exposing (Schema)
+import Json.Encode as Encode
+import Json.Schema exposing (validateValue)
+import Json.Schema.Definitions exposing (Schema(ObjectSchema))
+import Json.Value as JsonValue exposing (JsonValue)
 
 
 type alias UiSpec =
@@ -74,3 +77,53 @@ ruleDecoder =
         )
         (Decode.field "path" (Decode.list Decode.string))
         (Decode.field "condition" Json.Schema.Definitions.decoder)
+
+
+applyRule : Maybe JsonValue -> Maybe Rule -> ( Bool, Bool )
+applyRule value rule =
+    let
+        getDefaultValue s =
+            case s of
+                ObjectSchema os ->
+                    os.default
+                        |> Maybe.withDefault Encode.null
+                        |> JsonValue.decodeValue
+
+                _ ->
+                    JsonValue.NullValue
+
+        referencedValue subPath s =
+            value
+                |> Maybe.andThen (JsonValue.getIn subPath >> Result.toMaybe)
+                |> Maybe.withDefault (s |> getDefaultValue)
+                |> JsonValue.encode
+
+        validate subPath s =
+            s
+                |> validateValue { applyDefaults = True } (referencedValue subPath s)
+                |> Result.map (\_ -> True)
+                |> Result.withDefault False
+
+        disabled =
+            case rule of
+                Just (Disable subPath s) ->
+                    validate subPath s
+
+                Just (Enable subPath s) ->
+                    validate subPath s |> not
+
+                _ ->
+                    False
+
+        hidden =
+            case rule of
+                Just (Hide subPath s) ->
+                    validate subPath s
+
+                Just (Show subPath s) ->
+                    validate subPath s |> not
+
+                _ ->
+                    False
+    in
+    ( disabled, hidden )

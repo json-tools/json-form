@@ -84,3 +84,22 @@
     color: var(--color-red--500);
 }
 
+
+.jf-checkbox--disabled .jf-checkbox__label,
+.jf-checkbox--disabled .jf-checkbox__helper-text {
+    color: var(--color-inactive);
+    cursor: default;
+}
+
+.jf-checkbox--disabled .jf-checkbox__tick-outline {
+    background-color: var(--color-inactive);
+}
+
+.jf-checkbox--disabled .jf-checkbox__box-outline {
+    border-color: var(--color-inactive);
+    cursor: default;
+}
+
+.jf-checkbox--hidden {
+    display: none;
+}

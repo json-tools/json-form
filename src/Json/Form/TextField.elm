@@ -3,64 +3,12 @@ module Json.Form.TextField exposing (view, viewNumeric)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onBlur, onFocus, onInput)
-import Json.Encode as Encode
 import Json.Form.Definitions exposing (..)
 import Json.Form.Helper as Helper
-import Json.Form.UiSpec exposing (Rule(..), UiSpec, WidgetType(..))
-import Json.Schema
+import Json.Form.UiSpec exposing (Rule(..), UiSpec, WidgetType(..), applyRule)
 import Json.Schema.Definitions exposing (Schema(ObjectSchema), getCustomKeywordValue)
 import Json.Value as JsonValue exposing (JsonValue)
 import JsonFormUtil as Util exposing (getTitle, getUiSpec, jsonValueToString)
-
-
-applyRule : Maybe JsonValue -> Maybe Rule -> ( Bool, Bool )
-applyRule value rule =
-    let
-        getDefaultValue s =
-            case s of
-                ObjectSchema os ->
-                    os.default
-                        |> Maybe.withDefault Encode.null
-                        |> JsonValue.decodeValue
-
-                _ ->
-                    JsonValue.NullValue
-
-        referencedValue subPath s =
-            value
-                |> Maybe.andThen (JsonValue.getIn subPath >> Result.toMaybe)
-                |> Maybe.withDefault (s |> getDefaultValue)
-                |> JsonValue.encode
-
-        validate subPath s =
-            s
-                |> Json.Schema.validateValue { applyDefaults = True } (referencedValue subPath s)
-                |> Result.map (\_ -> True)
-                |> Result.withDefault False
-
-        disabled =
-            case rule of
-                Just (Disable subPath s) ->
-                    validate subPath s
-
-                Just (Enable subPath s) ->
-                    validate subPath s |> not
-
-                _ ->
-                    False
-
-        hidden =
-            case rule of
-                Just (Hide subPath s) ->
-                    validate subPath s
-
-                Just (Show subPath s) ->
-                    validate subPath s |> not
-
-                _ ->
-                    False
-    in
-    ( disabled, hidden )
 
 
 view : Model -> Schema -> Bool -> Path -> Html Msg

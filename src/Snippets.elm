@@ -110,6 +110,44 @@ getSnippet ds =
                 |> Result.withDefault blankSchema
 
         Rules ->
+            let
+                withRule name =
+                    withCustomKeyword "ui"
+                        (object
+                            [ ( "rule"
+                              , object
+                                    [ ( "action", string name )
+                                    , ( "path", list [ string "enabled" ] )
+                                    , ( "condition"
+                                      , object
+                                            [ ( "const", Encode.bool False )
+                                            , ( "default", Encode.bool False )
+                                            ]
+                                      )
+                                    ]
+                              )
+                            ]
+                        )
+
+                withRuleAndWidget name widget =
+                    withCustomKeyword "ui"
+                        (object
+                            [ ( "rule"
+                              , object
+                                    [ ( "action", string name )
+                                    , ( "path", list [ string "enabled" ] )
+                                    , ( "condition"
+                                      , object
+                                            [ ( "const", Encode.bool False )
+                                            , ( "default", Encode.bool False )
+                                            ]
+                                      )
+                                    ]
+                              )
+                            , ( "widget", string widget )
+                            ]
+                        )
+            in
             buildSchema
                 |> withType "object"
                 |> withProperties
@@ -127,47 +165,45 @@ getSnippet ds =
                             |> withProperties
                                 [ ( "disableDemo"
                                   , buildSchema
-                                        |> withTitle "Rule: disable"
-                                        |> withType "number"
+                                        |> withTitle "Rule: disable text field"
+                                        |> withType "string"
                                         |> withDescription "This field will be enabled when switch turned on"
-                                        |> withCustomKeyword "ui"
-                                            (object
-                                                [ ( "rule"
-                                                  , object
-                                                        [ ( "action", string "disable" )
-                                                        , ( "path", list [ string "enabled" ] )
-                                                        , ( "condition"
-                                                          , object
-                                                                [ ( "const", Encode.bool False )
-                                                                , ( "default", Encode.bool False )
-                                                                ]
-                                                          )
-                                                        ]
-                                                  )
-                                                ]
-                                            )
+                                        |> withRule "disable"
                                   )
                                 , ( "hideDemo"
                                   , buildSchema
-                                        |> withTitle "Rule: hide"
-                                        |> withType "number"
+                                        |> withTitle "Rule: hide text field"
+                                        |> withType "string"
                                         |> withDescription "This field will be shown when switch turned on"
-                                        |> withCustomKeyword "ui"
-                                            (object
-                                                [ ( "rule"
-                                                  , object
-                                                        [ ( "action", string "hide" )
-                                                        , ( "path", list [ string "enabled" ] )
-                                                        , ( "condition"
-                                                          , object
-                                                                [ ( "const", Encode.bool False )
-                                                                , ( "default", Encode.bool False )
-                                                                ]
-                                                          )
-                                                        ]
-                                                  )
-                                                ]
-                                            )
+                                        |> withRule "hide"
+                                  )
+                                , ( "disableNumericDemo"
+                                  , buildSchema
+                                        |> withTitle "Rule: disable numeric"
+                                        |> withType "number"
+                                        |> withDescription "This numeric field will be enabled when switch turned on"
+                                        |> withRule "disable"
+                                  )
+                                , ( "hideNumericDemo"
+                                  , buildSchema
+                                        |> withTitle "Rule: hide numeric"
+                                        |> withType "number"
+                                        |> withDescription "This numeric field will be shown when switch turned on"
+                                        |> withRule "hide"
+                                  )
+                                , ( "disableCheckboxDemo"
+                                  , buildSchema
+                                        |> withTitle "Rule: disable checkbox"
+                                        |> withType "boolean"
+                                        |> withDescription "This checkbox will be enabled when switch turned on"
+                                        |> withRuleAndWidget "disable" "checkbox"
+                                  )
+                                , ( "disableSwitchDemo"
+                                  , buildSchema
+                                        |> withTitle "Rule: disable switch"
+                                        |> withType "boolean"
+                                        |> withDescription "This switch will be enabled when switch turned on"
+                                        |> withRuleAndWidget "disable" "switch"
                                   )
                                 ]
                       )
