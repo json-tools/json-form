@@ -56,6 +56,7 @@ type Msg
     | FocusNumericInput (Maybe Path)
     | EditValue Path JsonValue
     | EditNumber String
+    | AddItem Path Int
 
 
 type EditingMode
@@ -65,6 +66,7 @@ type EditingMode
     | Checkbox
     | JsonEditor
     | Object
+    | Array
 
 
 type alias Path =

@@ -29,7 +29,7 @@ switch model schema isRequired isDisabled path =
             schema
                 |> getUiSpec
                 |> .rule
-                |> applyRule model.value
+                |> applyRule model.value path
     in
     label
         [ classList
@@ -76,7 +76,7 @@ checkbox model schema isRequired isDisabled path =
             schema
                 |> getUiSpec
                 |> .rule
-                |> applyRule model.value
+                |> applyRule model.value path
     in
     label
         [ classList

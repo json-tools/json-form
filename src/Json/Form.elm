@@ -10,6 +10,8 @@ module Json.Form exposing
 import Dict exposing (Dict)
 import ErrorMessages exposing (stringifyError)
 import Html exposing (..)
+import Html.Attributes exposing (class)
+import Html.Events exposing (onClick)
 import Json.Decode as Decode exposing (decodeValue)
 import Json.Form.Definitions as Definitions exposing (EditingMode(..), Msg(..), Path)
 import Json.Form.Selection as Selection
@@ -63,6 +65,9 @@ viewNode model schema isRequired isDisabled path =
         Object ->
             viewObject model schema isRequired isDisabled path
 
+        Array ->
+            viewArray model schema isRequired isDisabled path
+
         x ->
             text (toString x ++ ": not implemented")
 
@@ -84,6 +89,9 @@ editingMode model schema =
                 SingleType ObjectType ->
                     Object
 
+                SingleType ArrayType ->
+                    Array
+
                 _ ->
                     JsonEditor
 
@@ -101,6 +109,75 @@ getBooleanUiWidget schema =
             Checkbox
 
 
+viewArray : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
+viewArray model schema isRequired isDisabled path =
+    let
+        ( disabled, hidden ) =
+            schema
+                |> getUiSpec
+                |> .rule
+                |> applyRule model.value path
+
+        list =
+            model.value
+                |> Maybe.withDefault JsonValue.NullValue
+                |> JsonValue.getIn path
+                |> Result.withDefault (JsonValue.ArrayValue [])
+                |> (\list ->
+                        case list of
+                            ArrayValue items ->
+                                items
+                                    |> Debug.log "sss"
+
+                            _ ->
+                                []
+                   )
+    in
+    if hidden then
+        text ""
+
+    else
+        case schema of
+            ObjectSchema os ->
+                case os.items of
+                    ItemDefinition itemSchema ->
+                        [ list
+                            |> Debug.log "iterating over this"
+                            |> List.indexedMap
+                                (\index item ->
+                                    let
+                                        propName =
+                                            index |> toString
+
+                                        isRequired =
+                                            case itemSchema of
+                                                ObjectSchema itemSchemaObject ->
+                                                    itemSchemaObject.required
+                                                        |> Maybe.withDefault []
+                                                        |> List.member propName
+
+                                                _ ->
+                                                    False
+                                    in
+                                    viewNode model itemSchema isRequired (isDisabled || disabled) (path ++ [ propName ])
+                                )
+                            |> div []
+                        , button [ class "button", onClick <| AddItem path (List.length list) ] [ text "ADD ITEM" ]
+                        ]
+                            |> div []
+
+                    {-
+                       div []
+                           [ text "TODO: Implement array editing"
+                           ]
+                    -}
+                    _ ->
+                        text ""
+
+            _ ->
+                text ""
+
+
 viewObject : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
 viewObject model schema isRequired isDisabled path =
     let
@@ -115,7 +192,7 @@ viewObject model schema isRequired isDisabled path =
             schema
                 |> getUiSpec
                 |> .rule
-                |> applyRule model.value
+                |> applyRule model.value path
     in
     if hidden then
         text ""
@@ -135,6 +212,28 @@ viewObject model schema isRequired isDisabled path =
 update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )
 update msg model =
     case msg of
+        AddItem path index ->
+            let
+                newPropPath =
+                    path ++ [ index |> toString ]
+
+                updatedModel =
+                    case model.value |> Maybe.andThen (JsonValue.getIn path >> Result.toMaybe) of
+                        Just _ ->
+                            model
+
+                        Nothing ->
+                            { model
+                                | value =
+                                    model.value
+                                        |> Maybe.withDefault NullValue
+                                        |> JsonValue.setIn path (ArrayValue [])
+                                        |> Result.toMaybe
+                                        |> Debug.log "init as empty array"
+                            }
+            in
+            editValue updatedModel newPropPath JsonValue.NullValue
+
         FocusInput focused ->
             { model
                 | focused = focused

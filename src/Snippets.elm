@@ -117,7 +117,7 @@ getSnippet ds =
                             [ ( "rule"
                               , object
                                     [ ( "action", string name )
-                                    , ( "path", list [ string "enabled" ] )
+                                    , ( "path", string "/enabled" )
                                     , ( "condition"
                                       , object
                                             [ ( "const", Encode.bool False )
@@ -135,7 +135,7 @@ getSnippet ds =
                             [ ( "rule"
                               , object
                                     [ ( "action", string name )
-                                    , ( "path", list [ string "enabled" ] )
+                                    , ( "path", string "/enabled" )
                                     , ( "condition"
                                       , object
                                             [ ( "const", Encode.bool False )
@@ -230,6 +230,46 @@ getSnippet ds =
                                               )
                                             ]
                                         |> withRule "hide"
+                                  )
+                                , ( "array"
+                                  , buildSchema
+                                        |> withType "array"
+                                        |> withItem
+                                            (buildSchema
+                                                |> withType "object"
+                                                |> withProperties
+                                                    [ ( "enabled"
+                                                      , buildSchema
+                                                            |> withType "boolean"
+                                                            -- |> withDefault (Encode.bool True)
+                                                            |> withTitle "enable"
+                                                            |> withDescription "Enable editing"
+                                                            |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
+                                                      )
+                                                    , ( "hideDemo"
+                                                      , buildSchema
+                                                            |> withTitle "Rule: disable based on local condition"
+                                                            |> withType "string"
+                                                            |> withDescription "Local condition demo"
+                                                            |> withCustomKeyword "ui"
+                                                                (object
+                                                                    [ ( "rule"
+                                                                      , object
+                                                                            [ ( "action", string "disable" )
+                                                                            , ( "path", string "../enabled" )
+                                                                            , ( "condition"
+                                                                              , object
+                                                                                    [ ( "const", Encode.bool False )
+                                                                                    , ( "default", Encode.bool False )
+                                                                                    ]
+                                                                              )
+                                                                            ]
+                                                                      )
+                                                                    ]
+                                                                )
+                                                      )
+                                                    ]
+                                            )
                                   )
                                 ]
                       )

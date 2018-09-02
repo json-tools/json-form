@@ -31,7 +31,7 @@ view model schema isRequired isDisabled path =
             uiSpec.widgetType == Just PasswordField
 
         ( disabled, hidden ) =
-            applyRule model.value uiSpec.rule
+            applyRule model.value path uiSpec.rule
     in
     div
         [ classList
@@ -88,7 +88,7 @@ viewNumeric model schema isRequired isDisabled path =
             schema |> getUiSpec
 
         ( disabled, hidden ) =
-            applyRule model.value uiSpec.rule
+            applyRule model.value path uiSpec.rule
     in
     div
         [ classList

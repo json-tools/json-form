@@ -19,10 +19,10 @@ type WidgetType
 
 
 type Rule
-    = Enable (List String) Schema
-    | Disable (List String) Schema
-    | Show (List String) Schema
-    | Hide (List String) Schema
+    = Enable String Schema
+    | Disable String Schema
+    | Show String Schema
+    | Hide String Schema
 
 
 blank : UiSpec
@@ -75,13 +75,32 @@ ruleDecoder =
                         fail <| "Expected one of 'disable', 'enabled', 'show', 'hide', but got unknown action: '" ++ action ++ "'"
                 )
         )
-        (Decode.field "path" (Decode.list Decode.string))
+        (Decode.field "path" Decode.string)
         (Decode.field "condition" Json.Schema.Definitions.decoder)
 
 
-applyRule : Maybe JsonValue -> Maybe Rule -> ( Bool, Bool )
-applyRule value rule =
+applyRule : Maybe JsonValue -> List String -> Maybe Rule -> ( Bool, Bool )
+applyRule value path rule =
     let
+        resolvePath subPath =
+            subPath
+                |> String.split "/"
+                |> List.foldl
+                    (\token currentPath ->
+                        if token == "" then
+                            []
+
+                        else if token == "." then
+                            currentPath
+
+                        else if token == ".." then
+                            currentPath |> List.take ((currentPath |> List.length) - 1)
+
+                        else
+                            currentPath ++ [ token ]
+                    )
+                    path
+
         getDefaultValue s =
             case s of
                 ObjectSchema os ->
@@ -107,10 +126,10 @@ applyRule value rule =
         disabled =
             case rule of
                 Just (Disable subPath s) ->
-                    validate subPath s
+                    validate (resolvePath subPath) s
 
                 Just (Enable subPath s) ->
-                    validate subPath s |> not
+                    validate (resolvePath subPath) s |> not
 
                 _ ->
                     False
@@ -118,10 +137,10 @@ applyRule value rule =
         hidden =
             case rule of
                 Just (Hide subPath s) ->
-                    validate subPath s
+                    validate (resolvePath subPath) s
 
                 Just (Show subPath s) ->
-                    validate subPath s |> not
+                    validate (resolvePath subPath) s |> not
 
                 _ ->
                     False
