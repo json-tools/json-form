@@ -80,3 +80,22 @@
 .jf-switch--invalid .jf-textfield__helper-text {
     color: var(--color-red--500);
 }
+
+.jf-switch--disabled .jf-switch__label,
+.jf-switch--disabled .jf-checkbox__helper-text {
+    color: var(--color-inactive);
+    cursor: default;
+}
+
+.jf-switch--disabled .jf-switch__thumb {
+    background-color: var(--color-inactive);
+    cursor: default;
+}
+
+.jf-switch--disabled .jf-switch__track {
+    cursor: default;
+}
+
+.jf-switch--hidden {
+    display: none;
+}

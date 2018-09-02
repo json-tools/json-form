@@ -1,14 +1,14 @@
 module Demo exposing (init, update, view)
 
-import Html exposing (Html, div, text, h3, h4, pre)
+import Html exposing (Html, div, h3, h4, pre, text)
 import Html.Attributes exposing (class, classList, style)
 import Html.Events exposing (onClick)
-import JsonViewer
-import JsonValue exposing (JsonValue)
-import Json.Form
-import Snippets exposing (Snippet(..), getSnippet, getSnippetTitle)
-import Json.Schema.Definitions
 import Json.Encode
+import Json.Form
+import Json.Schema.Definitions
+import Json.Value as JsonValue exposing (JsonValue)
+import JsonViewer
+import Snippets exposing (Snippet(..), getSnippet, getSnippetTitle)
 
 
 type alias Model =
@@ -21,7 +21,7 @@ type alias Model =
 
 initialShowcase : Snippet
 initialShowcase =
-    FlightBooking
+    Rules
 
 
 init : ( Model, Cmd Msg )
@@ -48,17 +48,17 @@ update message model =
                 ( ( m, cmd ), exMsg ) =
                     Json.Form.update msg model.form
             in
-                { model
-                    | form = m
-                    , editedValue =
-                        case exMsg of
-                            Json.Form.UpdateValue v _ ->
-                                v
+            { model
+                | form = m
+                , editedValue =
+                    case exMsg of
+                        Json.Form.UpdateValue v _ ->
+                            v
 
-                            _ ->
-                                model.editedValue
-                }
-                    ! [ cmd |> Cmd.map JsonFormMsg ]
+                        _ ->
+                            model.editedValue
+            }
+                ! [ cmd |> Cmd.map JsonFormMsg ]
 
         ToggleNode path ->
             { model
@@ -128,10 +128,10 @@ content model =
                     |> Maybe.withDefault (text "")
                 ]
     in
-        div [ class "app-content" ]
-            [ h3 [ style [ ( "padding", "8px" ), ( "border-bottom", "1px solid #e8e8e8" ) ] ] [ text <| "Showcase: " ++ (getSnippetTitle model.showcase) ]
-            , div [ style [] ]
-                [ generatedForm
-                , jsonSchema
-                ]
+    div [ class "app-content" ]
+        [ h3 [ style [ ( "padding", "8px" ), ( "border-bottom", "1px solid #e8e8e8" ) ] ] [ text <| "Showcase: " ++ getSnippetTitle model.showcase ]
+        , div [ style [] ]
+            [ generatedForm
+            , jsonSchema
             ]
+        ]

@@ -1,8 +1,11 @@
-module Json.Form.Definitions exposing (Model, Msg(..), Path, EditingMode(..), init)
+module Json.Form.Definitions exposing (EditingMode(..), Model, Msg(..), Path, init)
 
-import Json.Schema.Definitions exposing (..)
-import JsonValue exposing (JsonValue)
 import Dict exposing (Dict)
+import ErrorMessages exposing (stringifyError)
+import Json.Schema
+import Json.Schema.Definitions exposing (..)
+import Json.Schema.Validation exposing (Error)
+import Json.Value as JsonValue exposing (JsonValue)
 
 
 type alias Model =
@@ -16,10 +19,32 @@ type alias Model =
 
 
 init : Schema -> Maybe JsonValue -> Model
-init s v =
-    { schema = s
+init schema v =
+    let
+        someValue =
+            v
+                |> Maybe.withDefault JsonValue.NullValue
+                |> JsonValue.encode
+
+        ( value, errors ) =
+            schema
+                |> Json.Schema.validateValue { applyDefaults = True } someValue
+                |> (\res ->
+                        case res of
+                            Ok updValue ->
+                                ( updValue
+                                    |> JsonValue.decodeValue
+                                    |> Just
+                                , Dict.empty
+                                )
+
+                            Err x ->
+                                ( v, dictFromListErrors x )
+                   )
+    in
+    { schema = schema
     , focused = Nothing
-    , value = v
+    , value = value |> Debug.log "initial value"
     , errors = Dict.empty
     , beingEdited = []
     , editedNumber = ""
@@ -31,6 +56,7 @@ type Msg
     | FocusNumericInput (Maybe Path)
     | EditValue Path JsonValue
     | EditNumber String
+    | AddItem Path Int
 
 
 type EditingMode
@@ -40,7 +66,29 @@ type EditingMode
     | Checkbox
     | JsonEditor
     | Object
+    | Array
 
 
 type alias Path =
     List String
+
+
+dictFromListErrors : List Error -> Dict Path (List String)
+dictFromListErrors list =
+    list
+        |> List.foldl
+            (\error dict ->
+                dict
+                    |> Dict.update error.jsonPointer.path
+                        (\listDetails ->
+                            (case listDetails of
+                                Just l ->
+                                    l ++ [ error.details |> stringifyError ]
+
+                                Nothing ->
+                                    [ error.details |> stringifyError ]
+                            )
+                                |> Just
+                        )
+            )
+            Dict.empty

@@ -1,26 +1,27 @@
-module Json.Form
-    exposing
-        ( Model
-        , Msg
-        , ExternalMsg(..)
-        , init
-        , update
-        , view
-        )
+module Json.Form exposing
+    ( ExternalMsg(..)
+    , Model
+    , Msg
+    , init
+    , update
+    , view
+    )
 
-import Html exposing (..)
-import Json.Form.UiSpec as UiSpec
-import Json.Form.Definitions as Definitions exposing (Path, EditingMode(..), Msg(..))
-import Json.Schema.Definitions exposing (..)
-import Json.Schema
-import Json.Schema.Validation exposing (Error)
-import JsonValue exposing (JsonValue(..))
-import Json.Decode as Decode exposing (decodeValue)
-import ErrorMessages exposing (stringifyError)
 import Dict exposing (Dict)
-import Json.Form.TextField as TextField
+import ErrorMessages exposing (stringifyError)
+import Html exposing (..)
+import Html.Attributes exposing (class)
+import Html.Events exposing (onClick)
+import Json.Decode as Decode exposing (decodeValue)
+import Json.Form.Definitions as Definitions exposing (EditingMode(..), Msg(..), Path)
 import Json.Form.Selection as Selection
-import Util exposing (..)
+import Json.Form.TextField as TextField
+import Json.Form.UiSpec as UiSpec exposing (applyRule)
+import Json.Schema
+import Json.Schema.Definitions exposing (..)
+import Json.Schema.Validation exposing (Error)
+import Json.Value as JsonValue exposing (JsonValue(..))
+import JsonFormUtil as Util exposing ((=>), getUiSpec, jsonValueToString)
 
 
 type ExternalMsg
@@ -43,26 +44,29 @@ init =
 
 view : Model -> Html Msg
 view model =
-    viewNode model model.schema False []
+    viewNode model model.schema False False []
 
 
-viewNode : Model -> Schema -> Bool -> Path -> Html Msg
-viewNode model schema isRequired path =
+viewNode : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
+viewNode model schema isRequired isDisabled path =
     case editingMode model schema of
         TextField ->
-            TextField.view model schema isRequired path
+            TextField.view model schema isRequired isDisabled path
 
         NumberField ->
-            TextField.viewNumeric model schema isRequired path
+            TextField.viewNumeric model schema isRequired isDisabled path
 
         Switch ->
-            Selection.switch model schema isRequired path
+            Selection.switch model schema isRequired isDisabled path
 
         Checkbox ->
-            Selection.checkbox model schema isRequired path
+            Selection.checkbox model schema isRequired isDisabled path
 
         Object ->
-            viewObject model schema isRequired path
+            viewObject model schema isRequired isDisabled path
+
+        Array ->
+            viewArray model schema isRequired isDisabled path
 
         x ->
             text (toString x ++ ": not implemented")
@@ -85,6 +89,9 @@ editingMode model schema =
                 SingleType ObjectType ->
                     Object
 
+                SingleType ArrayType ->
+                    Array
+
                 _ ->
                     JsonEditor
 
@@ -94,24 +101,103 @@ editingMode model schema =
 
 getBooleanUiWidget : Schema -> EditingMode
 getBooleanUiWidget schema =
-    case schema |> getUiSpec of
-        UiSpec.Switch ->
+    case schema |> getUiSpec |> .widgetType of
+        Just UiSpec.Switch ->
             Switch
 
         _ ->
             Checkbox
 
 
-viewObject : Model -> Schema -> Bool -> Path -> Html Msg
-viewObject model schema isRequired path =
+viewArray : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
+viewArray model schema isRequired isDisabled path =
+    let
+        ( disabled, hidden ) =
+            schema
+                |> getUiSpec
+                |> .rule
+                |> applyRule model.value path
+
+        list =
+            model.value
+                |> Maybe.withDefault JsonValue.NullValue
+                |> JsonValue.getIn path
+                |> Result.withDefault (JsonValue.ArrayValue [])
+                |> (\list ->
+                        case list of
+                            ArrayValue items ->
+                                items
+                                    |> Debug.log "sss"
+
+                            _ ->
+                                []
+                   )
+    in
+    if hidden then
+        text ""
+
+    else
+        case schema of
+            ObjectSchema os ->
+                case os.items of
+                    ItemDefinition itemSchema ->
+                        [ list
+                            |> Debug.log "iterating over this"
+                            |> List.indexedMap
+                                (\index item ->
+                                    let
+                                        propName =
+                                            index |> toString
+
+                                        isRequired =
+                                            case itemSchema of
+                                                ObjectSchema itemSchemaObject ->
+                                                    itemSchemaObject.required
+                                                        |> Maybe.withDefault []
+                                                        |> List.member propName
+
+                                                _ ->
+                                                    False
+                                    in
+                                    viewNode model itemSchema isRequired (isDisabled || disabled) (path ++ [ propName ])
+                                )
+                            |> div []
+                        , button [ class "button", onClick <| AddItem path (List.length list) ] [ text "ADD ITEM" ]
+                        ]
+                            |> div []
+
+                    {-
+                       div []
+                           [ text "TODO: Implement array editing"
+                           ]
+                    -}
+                    _ ->
+                        text ""
+
+            _ ->
+                text ""
+
+
+viewObject : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
+viewObject model schema isRequired isDisabled path =
     let
         iterateOverSchemata propsDict required (Schemata schemata) =
             schemata
                 |> List.map
                     (\( propName, subSchema ) ->
-                        viewNode model subSchema (required |> Maybe.withDefault [] |> List.member propName) (path ++ [ propName ])
+                        viewNode model subSchema (required |> Maybe.withDefault [] |> List.member propName) (isDisabled || disabled) (path ++ [ propName ])
                     )
+
+        ( disabled, hidden ) =
+            schema
+                |> getUiSpec
+                |> .rule
+                |> applyRule model.value path
     in
+    if hidden then
+        text ""
+
+    else
         case schema of
             ObjectSchema os ->
                 os.properties
@@ -126,6 +212,28 @@ viewObject model schema isRequired path =
 update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )
 update msg model =
     case msg of
+        AddItem path index ->
+            let
+                newPropPath =
+                    path ++ [ index |> toString ]
+
+                updatedModel =
+                    case model.value |> Maybe.andThen (JsonValue.getIn path >> Result.toMaybe) of
+                        Just _ ->
+                            model
+
+                        Nothing ->
+                            { model
+                                | value =
+                                    model.value
+                                        |> Maybe.withDefault NullValue
+                                        |> JsonValue.setIn path (ArrayValue [])
+                                        |> Result.toMaybe
+                                        |> Debug.log "init as empty array"
+                            }
+            in
+            editValue updatedModel newPropPath JsonValue.NullValue
+
         FocusInput focused ->
             { model
                 | focused = focused
@@ -178,6 +286,7 @@ touch path focused beingEdited =
     if path == Nothing then
         beingEdited
             |> (::) (focused |> Maybe.withDefault [])
+
     else
         beingEdited
 
@@ -189,6 +298,7 @@ editValue model path val =
             model.value
                 |> Maybe.withDefault JsonValue.NullValue
                 |> JsonValue.setIn path val
+                |> Result.mapError (Debug.log "editValue")
                 |> Result.toMaybe
                 |> Maybe.withDefault JsonValue.NullValue
 
@@ -200,25 +310,25 @@ editValue model path val =
             model.schema
                 |> Json.Schema.validateValue { applyDefaults = True } updatedValue
     in
-        case validationResult of
-            Ok v ->
-                { model
-                    | value =
-                        v
-                            |> decodeValue JsonValue.decoder
-                            |> Result.toMaybe
-                    , errors = Dict.empty
-                }
-                    ! []
-                    => UpdateValue (Just updatedJsonValue) True
+    case validationResult of
+        Ok v ->
+            { model
+                | value =
+                    v
+                        |> decodeValue JsonValue.decoder
+                        |> Result.toMaybe
+                , errors = Dict.empty
+            }
+                ! []
+                => UpdateValue (Just updatedJsonValue) True
 
-            Err e ->
-                { model
-                    | value = Just updatedJsonValue
-                    , errors = dictFromListErrors e
-                }
-                    ! []
-                    => UpdateValue (Just updatedJsonValue) False
+        Err e ->
+            { model
+                | value = Just updatedJsonValue
+                , errors = dictFromListErrors e
+            }
+                ! []
+                => UpdateValue (Just updatedJsonValue) False
 
 
 dictFromListErrors : List Error -> Dict Path (List String)

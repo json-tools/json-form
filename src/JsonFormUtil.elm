@@ -1,10 +1,10 @@
-module Util exposing (..)
+module JsonFormUtil exposing ((=>), getDescription, getTextProp, getTitle, getUiSpec, jsonValueToString)
 
-import JsonValue exposing (JsonValue)
-import Json.Encode as Encode
 import Json.Decode as Decode
+import Json.Encode as Encode
 import Json.Form.UiSpec exposing (UiSpec, decoder)
 import Json.Schema.Definitions exposing (Schema(..), SubSchema, getCustomKeywordValue)
+import Json.Value as JsonValue exposing (JsonValue)
 
 
 jsonValueToString : JsonValue -> String
@@ -26,6 +26,7 @@ getTitle isRequired schema =
         |> (\title ->
                 if isRequired then
                     title ++ " *"
+
                 else
                     title
            )
@@ -58,7 +59,7 @@ getUiSpec schema =
                     |> Decode.decodeValue decoder
                     |> Result.toMaybe
             )
-        |> Maybe.withDefault (Json.Form.UiSpec.Unknown Encode.null)
+        |> Maybe.withDefault Json.Form.UiSpec.blank
 
 
 (=>) : a -> b -> ( a, b )

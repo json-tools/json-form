@@ -13,8 +13,8 @@ var filename = TARGET_ENV == "production" ? "[name]-[hash].js" : "index.js";
 
 var common = {
     entry: {
-        // 'index': "./src/index",
-        'custom-element': './src/custom-element'
+        'index': "./src/index",
+        // 'custom-element': './src/custom-element'
     },
     output: {
         path: path.join(__dirname, "dist"),
@@ -28,6 +28,7 @@ var common = {
             // inject details of output file at end of body
             inject: "body"
         }),
+        /*
         new UglifyJsPlugin({
             uglifyOptions: {
                 ecma: 6,
@@ -41,6 +42,7 @@ var common = {
                 }
             }
         })
+        */
     ],
     resolve: {
         modules: [path.join(__dirname, "src"), "node_modules"],
@@ -70,7 +72,8 @@ var common = {
             {
                 test: /\.css$/,
                 exclude: [/elm-stuff/, /node_modules/],
-                loaders: ["to-string-loader", "css-loader"]
+                loaders: ["style-loader", "css-loader"]
+                //loaders: ["to-string-loader", "css-loader"]
             },
             {
                 test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

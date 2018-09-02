@@ -162,3 +162,20 @@
 .jf-textfield--invalid:after {
     background-color: var(--color-red--500) !important;
 }
+
+.jf-textfield--disabled {
+    color: var(--color-inactive);
+}
+
+.jf-textfield--disabled:hover:after {
+    background-color: transparent;
+}
+
+.jf-textfield--disabled:after {
+    background-color: transparent;
+    border-bottom: 1px dotted var(--color-inactive);
+}
+
+.jf-textfield--hidden {
+    display: none;
+}
