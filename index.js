@@ -104,7 +104,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.jf-checkbox {\n    width: 300px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-checkbox__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-checkbox__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 24px;\n    cursor: pointer;\n}\n\n.jf-checkbox__box-outline {\n    width: 16px;\n    height: 16px;\n    position: absolute;\n    top: calc(50% - 8px);\n    left: 0;\n    border-radius: 2px;\n    border: 2px solid #0000008a;\n    cursor: pointer;\n    z-index: 2;\n}\n\n.jf-checkbox__tick-outline {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iY2xpcCI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Ik0gMCwwIDAsMSAxLDEgMSwwIDAsMCB6IE0gMC44NTM0Mzc1LDAuMTY3MTg3NSAwLjk1OTY4NzUsMC4yNzMxMjUgMC40MjkzNzUsMC44MDM0Mzc1IDAuMzIzMTI1LDAuOTA5Njg3NSAwLjIxNzE4NzUsMC44MDM0Mzc1IDAuMDQwMzEyNSwwLjYyNjg3NSAwLjE0NjU2MjUsMC41MjA2MjUgMC4zMjMxMjUsMC42OTc1IDAuODUzNDM3NSwwLjE2NzE4NzUgeiIKICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KICAgIDwvY2xpcFBhdGg+CiAgICA8bWFzayBpZD0ibWFzayIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgbWFza0NvbnRlbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICA8cGF0aAogICAgICAgICBkPSJNIDAsMCAwLDEgMSwxIDEsMCAwLDAgeiBNIDAuODUzNDM3NSwwLjE2NzE4NzUgMC45NTk2ODc1LDAuMjczMTI1IDAuNDI5Mzc1LDAuODAzNDM3NSAwLjMyMzEyNSwwLjkwOTY4NzUgMC4yMTcxODc1LDAuODAzNDM3NSAwLjA0MDMxMjUsMC42MjY4NzUgMC4xNDY1NjI1LDAuNTIwNjI1IDAuMzIzMTI1LDAuNjk3NSAwLjg1MzQzNzUsMC4xNjcxODc1IHoiCiAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmUiIC8+CiAgICA8L21hc2s+CiAgPC9kZWZzPgogIDxyZWN0CiAgICAgd2lkdGg9IjEiCiAgICAgaGVpZ2h0PSIxIgogICAgIHg9IjAiCiAgICAgeT0iMCIKICAgICBjbGlwLXBhdGg9InVybCgjY2xpcCkiCiAgICAgc3R5bGU9ImZpbGw6IzAwMDAwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KPC9zdmc+Cg==);\n    background: 0 0;\n    transition-duration: .28s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    transition-property: background;\n}\n\n\n.jf-checkbox--on .jf-checkbox__tick-outline {\n    background: #009688 url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8cGF0aAogICAgIGQ9Ik0gMC4wNDAzODA1OSwwLjYyNjc3NjcgMC4xNDY0NDY2MSwwLjUyMDcxMDY4IDAuNDI5Mjg5MzIsMC44MDM1NTMzOSAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IE0gMC4yMTcxNTcyOSwwLjgwMzU1MzM5IDAuODUzNTUzMzksMC4xNjcxNTcyOSAwLjk1OTYxOTQxLDAuMjczMjIzMyAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IgogICAgIGlkPSJyZWN0Mzc4MCIKICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiAvPgo8L3N2Zz4K);\n}\n\n\n.jf-checkbox--on .jf-checkbox__box-outline {\n    border: 2px solid #009688;\n}\n\n\n.jf-checkbox__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-checkbox--invalid .jf-checkbox__helper-text {\n    color: var(--color-red--500);\n}\n\n\n.jf-checkbox--disabled .jf-checkbox__label,\n.jf-checkbox--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--disabled .jf-checkbox__tick-outline {\n    background-color: var(--color-inactive);\n}\n\n.jf-checkbox--disabled .jf-checkbox__box-outline {\n    border-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--hidden {\n    display: none;\n}\n", ""]);
+exports.push([module.i, "\n.jf-checkbox {\n    width: 300px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-checkbox__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-checkbox__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 24px;\n    cursor: pointer;\n}\n\n.jf-checkbox__box-outline {\n    width: 16px;\n    height: 16px;\n    position: absolute;\n    top: calc(50% - 8px);\n    left: 0;\n    border-radius: 2px;\n    border: 2px solid #0000008a;\n    cursor: pointer;\n    z-index: 2;\n}\n\n.jf-checkbox__tick-outline {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iY2xpcCI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Ik0gMCwwIDAsMSAxLDEgMSwwIDAsMCB6IE0gMC44NTM0Mzc1LDAuMTY3MTg3NSAwLjk1OTY4NzUsMC4yNzMxMjUgMC40MjkzNzUsMC44MDM0Mzc1IDAuMzIzMTI1LDAuOTA5Njg3NSAwLjIxNzE4NzUsMC44MDM0Mzc1IDAuMDQwMzEyNSwwLjYyNjg3NSAwLjE0NjU2MjUsMC41MjA2MjUgMC4zMjMxMjUsMC42OTc1IDAuODUzNDM3NSwwLjE2NzE4NzUgeiIKICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KICAgIDwvY2xpcFBhdGg+CiAgICA8bWFzayBpZD0ibWFzayIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgbWFza0NvbnRlbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICA8cGF0aAogICAgICAgICBkPSJNIDAsMCAwLDEgMSwxIDEsMCAwLDAgeiBNIDAuODUzNDM3NSwwLjE2NzE4NzUgMC45NTk2ODc1LDAuMjczMTI1IDAuNDI5Mzc1LDAuODAzNDM3NSAwLjMyMzEyNSwwLjkwOTY4NzUgMC4yMTcxODc1LDAuODAzNDM3NSAwLjA0MDMxMjUsMC42MjY4NzUgMC4xNDY1NjI1LDAuNTIwNjI1IDAuMzIzMTI1LDAuNjk3NSAwLjg1MzQzNzUsMC4xNjcxODc1IHoiCiAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmUiIC8+CiAgICA8L21hc2s+CiAgPC9kZWZzPgogIDxyZWN0CiAgICAgd2lkdGg9IjEiCiAgICAgaGVpZ2h0PSIxIgogICAgIHg9IjAiCiAgICAgeT0iMCIKICAgICBjbGlwLXBhdGg9InVybCgjY2xpcCkiCiAgICAgc3R5bGU9ImZpbGw6IzAwMDAwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KPC9zdmc+Cg==);\n    background: 0 0;\n    transition-duration: .28s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    transition-property: background;\n}\n\n\n.jf-checkbox--on .jf-checkbox__tick-outline {\n    background: #009688 url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8cGF0aAogICAgIGQ9Ik0gMC4wNDAzODA1OSwwLjYyNjc3NjcgMC4xNDY0NDY2MSwwLjUyMDcxMDY4IDAuNDI5Mjg5MzIsMC44MDM1NTMzOSAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IE0gMC4yMTcxNTcyOSwwLjgwMzU1MzM5IDAuODUzNTUzMzksMC4xNjcxNTcyOSAwLjk1OTYxOTQxLDAuMjczMjIzMyAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IgogICAgIGlkPSJyZWN0Mzc4MCIKICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiAvPgo8L3N2Zz4K);\n}\n\n\n.jf-checkbox--on .jf-checkbox__box-outline {\n    border: 2px solid #009688;\n}\n\n\n.jf-checkbox__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-checkbox--invalid .jf-checkbox__helper-text {\n    color: var(--color-red--500);\n}\n\n\n.jf-checkbox--disabled .jf-checkbox__label,\n.jf-checkbox--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--disabled .jf-checkbox__tick-outline {\n    background-color: var(--color-inactive);\n}\n\n.jf-checkbox--disabled .jf-checkbox__box-outline {\n    border-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--hidden {\n    display: none;\n}\n", ""]);
 
 // exports
 
@@ -170,7 +170,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.jf-switch {\n    width: 300px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-switch__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-switch__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 50px;\n    cursor: pointer;\n}\n\n.jf-switch__track {\n    background-color: lightgrey;\n    width: 40px;\n    height: 14px;\n    position: absolute;\n    top: calc(50% - 7px);\n    left: 0;\n    border-radius: 14px;\n    cursor: pointer;\n}\n\n.jf-switch__thumb {\n    background-color: #fafafa;\n    width: 20px;\n    height: 20px;\n    position: absolute;\n    top: calc(50% - 10px);\n    left: 0;\n    cursor: pointer;\n    border-radius: 50%;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);\n}\n\n.jf-switch--on .jf-switch__thumb {\n    left: 20px;\n}\n\n.jf-switch--on .jf-switch__thumb {\n    background-color: var(--color-swatch--500);\n}\n\n.jf-switch__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-switch--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n\n.jf-switch--disabled .jf-switch__label,\n.jf-switch--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__thumb {\n    background-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__track {\n    cursor: default;\n}\n\n.jf-switch--hidden {\n    display: none;\n}\n", ""]);
+exports.push([module.i, "\n.jf-switch {\n    width: 300px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-switch__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-switch__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 50px;\n    cursor: pointer;\n}\n\n.jf-switch__track {\n    background-color: lightgrey;\n    width: 40px;\n    height: 14px;\n    position: absolute;\n    top: calc(50% - 7px);\n    left: 0;\n    border-radius: 14px;\n    cursor: pointer;\n}\n\n.jf-switch__thumb {\n    background-color: #fafafa;\n    width: 20px;\n    height: 20px;\n    position: absolute;\n    top: calc(50% - 10px);\n    left: 0;\n    cursor: pointer;\n    border-radius: 50%;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);\n}\n\n.jf-switch--on .jf-switch__thumb {\n    left: 20px;\n}\n\n.jf-switch--on .jf-switch__thumb {\n    background-color: var(--color-swatch--500);\n}\n\n.jf-switch__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-switch--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n\n.jf-switch--disabled .jf-switch__label,\n.jf-switch--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__thumb {\n    background-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__track {\n    cursor: default;\n}\n\n.jf-switch--hidden {\n    display: none;\n}\n", ""]);
 
 // exports
 
@@ -200,7 +200,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.jf-textfield {\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    width: 300px;\n    max-width: 100%;\n    margin: 0;\n    padding: 20px 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n}\n\n.jf-textfield__input {\n    border: none;\n    border-radius: 0;\n    outline: none;\n    display: block;\n    font-size: 16px;\n    font-family: var(--font-family);\n    margin: 0;\n    padding: 8px 0;\n    width: 100%;\n    background: 0 0;\n    text-align: left;\n    color: inherit;\n}\n\n.jf-textfield--focused .jf-textfield__input {\n    color: var(--color-active);\n}\n\n.jf-textfield--empty .jf-textfield__label {\n    top: 29px;\n    font-size: 16px;\n}\n\n.jf-textfield--focused .jf-textfield__label {\n    color: var(--color-active);\n    visibility: visible;\n    font-size: 12px;\n    top: 10px;\n}\n\n.jf-textfield__label {\n    color: var(--color-inactive);\n    font-size: 12px;\n    left: 0;\n    right: 0;\n    pointer-events: none;\n    position: absolute;\n    display: block;\n    bottom: 0;\n    top: 10px;\n    width: 100%;\n    overflow: hidden;\n    white-space: nowrap;\n    text-align: left;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4, 0, .2, 1);\n}\n\n/*\n.jf-textfield__bottom-border  {\n    border-bottom: 2px solid var(--color-active);\n    height: 0;\n    position: absolute;\n    top: 46px;\n    transition: width .1s ease-in 0s;\n    width: 0;\n}\n\n.jf-textfield--focused .jf-textfield__bottom-border {\n    width: 100%;\n}\n*/\n\n.jf-textfield__label:after {\n    background-color: var(--color-active);\n    bottom: 20px;\n    content: '';\n    height: 2px;\n    left: 45%;\n    position: absolute;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    visibility: hidden;\n    width: 10px;\n}\n\n.jf-textfield--focused .jf-textfield__label:after {\n    left: 0;\n    visibility: visible;\n    width: 100%;\n}\n\n/*\n.jf-textfield:before {\n  content: '';\n  background-color: rgba(0,0,0,0.06);\n  position: absolute;\n  top: 0;\n  bottom: 20px;\n  width: calc(100% + 32px);\n  z-index: -1;\n  border-radius: 4px;\n  margin-left: -16px;\n}\n*/\n\n.jf-textfield:after {\n    content: '';\n    position: absolute;\n    width: 100%;\n    height: 1px;\n    bottom: 20px;\n    background-color: var(--color-inactive);\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n}\n\n.jf-textfield--focused:after {\n    background-color: transparent;\n}\n\n.jf-textfield:hover:after {\n    background-color: #222;\n    bottom: 20px;\n    height: 2px;\n}\n\n.jf-textfield--focused:hover:after {\n    background-color: transparent;\n}\n\n\n.jf-textfield__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n\n.jf-textfield--invalid .jf-textfield__label:after {\n    background-color: var(--color-red--500);\n}\n\n.jf-textfield--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n\n.jf-textfield--invalid .jf-textfield__label {\n    color: var(--color-red--500);\n}\n\n.jf-textfield--invalid:after {\n    background-color: var(--color-red--500) !important;\n}\n\n.jf-textfield--disabled {\n    color: var(--color-inactive);\n}\n\n.jf-textfield--disabled:hover:after {\n    background-color: transparent;\n}\n\n.jf-textfield--disabled:after {\n    background-color: transparent;\n    border-bottom: 1px dotted var(--color-inactive);\n}\n\n.jf-textfield--hidden {\n    display: none;\n}\n", ""]);
+exports.push([module.i, "\n.jf-textfield {\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    width: 280px;\n    /* height: 56px; */\n    max-width: 100%;\n    margin: 0;\n    padding: 0;\n    padding-top: 20px;\n    margin-top: 16px;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    border-top-left-radius: 4px;\n    border-top-right-radius: 4px;\n    cursor: pointer;\n    background-color: #e8e8e8;\n    color: #00000099;\n}\n\n.jf-textfield:hover {\n    background-color: #dedede;\n    color: #000000de;\n}\n\n.jf-textfield--focused:hover {\n    background-color: #e8e8e8;\n    color: #00000099;\n}\n\n.jf-textfield__input {\n    border: none;\n    border-radius: 0;\n    outline: none;\n    display: block;\n    font-size: 16px;\n    font-family: var(--font-family);\n    margin: 0;\n    padding-left: 12px;\n    padding-right: 12px;\n    padding-top: 6px;\n    padding-bottom: 12px;\n    width: calc(100% - 24px);\n    background: 0 0;\n    text-align: left;\n    color: inherit;\n    caret-color: var(--color-active);\n}\n\n.jf-textfield--focused .jf-textfield__input {\n    /* color: var(--color-active); */\n    color: inherit;\n}\n\n.jf-textfield--empty .jf-textfield__label {\n    top: 24px;\n    font-size: 16px;\n}\n\n.jf-textfield--focused .jf-textfield__label {\n    color: var(--color-active);\n    visibility: visible;\n    font-size: 12px;\n    top: 10px;\n}\n\n.jf-textfield__label {\n    color: var(--color-inactive);\n    padding-left: 12px;\n    padding-right: 12px;\n    font-size: 12px;\n    left: 0;\n    right: 0;\n    pointer-events: none;\n    position: absolute;\n    display: block;\n    bottom: 0;\n    top: 10px;\n    width: 100%;\n    overflow: hidden;\n    white-space: nowrap;\n    text-align: left;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4, 0, .2, 1);\n}\n\n/*\n.jf-textfield__bottom-border  {\n    border-bottom: 2px solid var(--color-active);\n    height: 0;\n    position: absolute;\n    top: 46px;\n    transition: width .1s ease-in 0s;\n    width: 0;\n}\n\n.jf-textfield--focused .jf-textfield__bottom-border {\n    width: 100%;\n}\n*/\n\n.jf-textfield__label:after {\n    background-color: var(--color-active);\n    bottom: 0;\n    content: '';\n    height: 2px;\n    left: 45%;\n    position: absolute;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    visibility: hidden;\n    width: 10px;\n}\n\n.jf-textfield--focused .jf-textfield__label:after {\n    left: 0;\n    visibility: visible;\n    width: 100%;\n}\n\n/*\n.jf-textfield:before {\n  content: '';\n  background-color: rgba(0,0,0,0.06);\n  position: absolute;\n  top: 0;\n  bottom: 20px;\n  width: calc(100% + 32px);\n  z-index: -1;\n  border-radius: 4px;\n  margin-left: -16px;\n}\n*/\n\n.jf-textfield:after {\n    content: '';\n    position: absolute;\n    width: 100%;\n    height: 1px;\n    bottom: 0;\n    /* background-color: var(--color-inactive); */\n    background-color: transparent;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n}\n\n.jf-textfield:after:hover {\n    background-color: var(--color-inactive);\n}\n\n.jf-textfield--focused:after {\n    background-color: transparent;\n}\n\n.jf-textfield:hover:after {\n    background-color: #222;\n    height: 2px;\n}\n\n.jf-textfield--focused:hover:after {\n    background-color: transparent;\n}\n\n\n.jf-textfield__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: -16px;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n\n.jf-textfield--invalid .jf-textfield__label:after {\n    background-color: var(--color-red--500);\n}\n\n.jf-textfield--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n\n.jf-textfield--invalid .jf-textfield__label {\n    color: var(--color-red--500);\n}\n\n.jf-textfield--invalid:after {\n    background-color: var(--color-red--500) !important;\n}\n\n.jf-textfield--invalid .jf-textfield__input {\n    caret-color: var(--color-red--500);\n}\n\n.jf-textfield--disabled {\n    color: var(--color-inactive);\n    background-color: #e0e0e0;\n    cursor: default;\n}\n\n.jf-textfield--disabled:hover {\n    background-color: #e0e0e0;\n}\n\n.jf-textfield--disabled:hover:after {\n    background-color: transparent;\n}\n\n.jf-textfield--disabled:after {\n    background-color: transparent;\n    border-bottom: 1px dotted var(--color-inactive);\n}\n\n.jf-textfield--hidden {\n    display: none;\n}\n", ""]);
 
 // exports
 
@@ -12395,7 +12395,7 @@ var _1602$json_form$ErrorMessages$stringifyError = function (e) {
 		case 'MaxLength':
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
-				'Expected string not longer than ',
+				'Not longer than ',
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					A2(_1602$json_form$ErrorMessages$pluralize, _p1._0, 'character'),
@@ -12406,22 +12406,13 @@ var _1602$json_form$ErrorMessages$stringifyError = function (e) {
 		case 'MinLength':
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
-				'Expected string to be at least ',
+				'Less than ',
 				A2(
 					_elm_lang$core$Basics_ops['++'],
 					A2(_1602$json_form$ErrorMessages$pluralize, _p1._0, 'character'),
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						' long but its length is ',
-						A2(_1602$json_form$ErrorMessages$pluralize, _p1._1, 'character'))));
+					' long'));
 		case 'Pattern':
-			return A2(
-				_elm_lang$core$Basics_ops['++'],
-				'String ',
-				A2(
-					_elm_lang$core$Basics_ops['++'],
-					_elm_lang$core$Basics$toString(_p1._1),
-					A2(_elm_lang$core$Basics_ops['++'], ' does not match pattern ', _p1._0)));
+			return A2(_elm_lang$core$Basics_ops['++'], 'Does not match pattern ', _p1._0);
 		case 'MaxItems':
 			return A2(
 				_elm_lang$core$Basics_ops['++'],
@@ -12843,7 +12834,7 @@ var _1602$json_schema$Json_Schema$validateValue = F3(
 		return A5(_1602$json_schema$Json_Schema_Validation$validate, validationOptions, pool, value, schema, schema);
 	});
 
-var _1602$json_form$Json_Value$getIn = F2(
+var _1602$json_value$Json_Value$getIn = F2(
 	function (path, value) {
 		var _p0 = path;
 		if (_p0.ctor === '[]') {
@@ -12856,7 +12847,7 @@ var _1602$json_form$Json_Value$getIn = F2(
 				case 'ObjectValue':
 					return A2(
 						_elm_lang$core$Result$andThen,
-						_1602$json_form$Json_Value$getIn(_p5),
+						_1602$json_value$Json_Value$getIn(_p5),
 						A2(
 							_elm_lang$core$Result$fromMaybe,
 							'Key not found',
@@ -12872,7 +12863,7 @@ var _1602$json_form$Json_Value$getIn = F2(
 				case 'ArrayValue':
 					return A2(
 						_elm_lang$core$Result$andThen,
-						_1602$json_form$Json_Value$getIn(_p5),
+						_1602$json_value$Json_Value$getIn(_p5),
 						A2(
 							_elm_lang$core$Result$andThen,
 							function (index) {
@@ -12888,7 +12879,7 @@ var _1602$json_form$Json_Value$getIn = F2(
 			}
 		}
 	});
-var _1602$json_form$Json_Value$encode = function (v) {
+var _1602$json_value$Json_Value$encode = function (v) {
 	var _p6 = v;
 	switch (_p6.ctor) {
 		case 'ObjectValue':
@@ -12900,13 +12891,13 @@ var _1602$json_form$Json_Value$encode = function (v) {
 						return {
 							ctor: '_Tuple2',
 							_0: _p8._0,
-							_1: _1602$json_form$Json_Value$encode(_p8._1)
+							_1: _1602$json_value$Json_Value$encode(_p8._1)
 						};
 					},
 					_p6._0));
 		case 'ArrayValue':
 			return _elm_lang$core$Json_Encode$list(
-				A2(_elm_lang$core$List$map, _1602$json_form$Json_Value$encode, _p6._0));
+				A2(_elm_lang$core$List$map, _1602$json_value$Json_Value$encode, _p6._0));
 		case 'StringValue':
 			return _elm_lang$core$Json_Encode$string(_p6._0);
 		case 'BoolValue':
@@ -12917,34 +12908,34 @@ var _1602$json_form$Json_Value$encode = function (v) {
 			return _elm_lang$core$Json_Encode$float(_p6._0);
 	}
 };
-var _1602$json_form$Json_Value$StringValue = function (a) {
+var _1602$json_value$Json_Value$StringValue = function (a) {
 	return {ctor: 'StringValue', _0: a};
 };
-var _1602$json_form$Json_Value$NumericValue = function (a) {
+var _1602$json_value$Json_Value$NumericValue = function (a) {
 	return {ctor: 'NumericValue', _0: a};
 };
-var _1602$json_form$Json_Value$NullValue = {ctor: 'NullValue'};
-var _1602$json_form$Json_Value$BoolValue = function (a) {
+var _1602$json_value$Json_Value$NullValue = {ctor: 'NullValue'};
+var _1602$json_value$Json_Value$BoolValue = function (a) {
 	return {ctor: 'BoolValue', _0: a};
 };
-var _1602$json_form$Json_Value$ArrayValue = function (a) {
+var _1602$json_value$Json_Value$ArrayValue = function (a) {
 	return {ctor: 'ArrayValue', _0: a};
 };
-var _1602$json_form$Json_Value$ObjectValue = function (a) {
+var _1602$json_value$Json_Value$ObjectValue = function (a) {
 	return {ctor: 'ObjectValue', _0: a};
 };
-var _1602$json_form$Json_Value$decoder = function () {
+var _1602$json_value$Json_Value$decoder = function () {
 	var arrayValueDecoder = A2(
 		_elm_lang$core$Json_Decode$map,
-		_1602$json_form$Json_Value$ArrayValue,
+		_1602$json_value$Json_Value$ArrayValue,
 		_elm_lang$core$Json_Decode$list(
 			_elm_lang$core$Json_Decode$lazy(
 				function (_p9) {
-					return _1602$json_form$Json_Value$decoder;
+					return _1602$json_value$Json_Value$decoder;
 				})));
 	var objectValueDecoder = A2(
 		_elm_lang$core$Json_Decode$map,
-		_1602$json_form$Json_Value$ObjectValue,
+		_1602$json_value$Json_Value$ObjectValue,
 		A2(
 			_elm_lang$core$Json_Decode$andThen,
 			function (_p10) {
@@ -12954,7 +12945,7 @@ var _1602$json_form$Json_Value$decoder = function () {
 			_elm_lang$core$Json_Decode$keyValuePairs(
 				_elm_lang$core$Json_Decode$lazy(
 					function (_p11) {
-						return _1602$json_form$Json_Value$decoder;
+						return _1602$json_value$Json_Value$decoder;
 					}))));
 	return _elm_lang$core$Json_Decode$oneOf(
 		{
@@ -12965,16 +12956,16 @@ var _1602$json_form$Json_Value$decoder = function () {
 				_0: arrayValueDecoder,
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$core$Json_Decode$null(_1602$json_form$Json_Value$NullValue),
+					_0: _elm_lang$core$Json_Decode$null(_1602$json_value$Json_Value$NullValue),
 					_1: {
 						ctor: '::',
-						_0: A2(_elm_lang$core$Json_Decode$map, _1602$json_form$Json_Value$StringValue, _elm_lang$core$Json_Decode$string),
+						_0: A2(_elm_lang$core$Json_Decode$map, _1602$json_value$Json_Value$StringValue, _elm_lang$core$Json_Decode$string),
 						_1: {
 							ctor: '::',
-							_0: A2(_elm_lang$core$Json_Decode$map, _1602$json_form$Json_Value$NumericValue, _elm_lang$core$Json_Decode$float),
+							_0: A2(_elm_lang$core$Json_Decode$map, _1602$json_value$Json_Value$NumericValue, _elm_lang$core$Json_Decode$float),
 							_1: {
 								ctor: '::',
-								_0: A2(_elm_lang$core$Json_Decode$map, _1602$json_form$Json_Value$BoolValue, _elm_lang$core$Json_Decode$bool),
+								_0: A2(_elm_lang$core$Json_Decode$map, _1602$json_value$Json_Value$BoolValue, _elm_lang$core$Json_Decode$bool),
 								_1: {ctor: '[]'}
 							}
 						}
@@ -12983,13 +12974,13 @@ var _1602$json_form$Json_Value$decoder = function () {
 			}
 		});
 }();
-var _1602$json_form$Json_Value$decodeValue = function (v) {
+var _1602$json_value$Json_Value$decodeValue = function (v) {
 	return A2(
 		_elm_lang$core$Result$withDefault,
-		_1602$json_form$Json_Value$NullValue,
-		A2(_elm_lang$core$Json_Decode$decodeValue, _1602$json_form$Json_Value$decoder, v));
+		_1602$json_value$Json_Value$NullValue,
+		A2(_elm_lang$core$Json_Decode$decodeValue, _1602$json_value$Json_Value$decoder, v));
 };
-var _1602$json_form$Json_Value$setProperty = F3(
+var _1602$json_value$Json_Value$setProperty = F3(
 	function (key, value, object) {
 		var updateOrAppend = function (list) {
 			return A2(
@@ -13018,7 +13009,7 @@ var _1602$json_form$Json_Value$setProperty = F3(
 		switch (_p17.ctor) {
 			case 'ObjectValue':
 				return _elm_lang$core$Result$Ok(
-					_1602$json_form$Json_Value$ObjectValue(
+					_1602$json_value$Json_Value$ObjectValue(
 						updateOrAppend(_p17._0)));
 			case 'ArrayValue':
 				var _p18 = _p17._0;
@@ -13029,7 +13020,7 @@ var _1602$json_form$Json_Value$setProperty = F3(
 				return (_elm_lang$core$Native_Utils.cmp(
 					_elm_lang$core$List$length(_p18),
 					index) > 0) ? _elm_lang$core$Result$Ok(
-					_1602$json_form$Json_Value$ArrayValue(
+					_1602$json_value$Json_Value$ArrayValue(
 						A2(
 							_elm_lang$core$List$indexedMap,
 							F2(
@@ -13037,7 +13028,7 @@ var _1602$json_form$Json_Value$setProperty = F3(
 									return _elm_lang$core$Native_Utils.eq(i, index) ? value : v;
 								}),
 							_p18))) : _elm_lang$core$Result$Ok(
-					_1602$json_form$Json_Value$ArrayValue(
+					_1602$json_value$Json_Value$ArrayValue(
 						A2(
 							_elm_lang$core$Basics_ops['++'],
 							_p18,
@@ -13048,13 +13039,13 @@ var _1602$json_form$Json_Value$setProperty = F3(
 							})));
 			default:
 				return _elm_lang$core$Native_Utils.eq(key, '0') ? _elm_lang$core$Result$Ok(
-					_1602$json_form$Json_Value$ArrayValue(
+					_1602$json_value$Json_Value$ArrayValue(
 						{
 							ctor: '::',
 							_0: value,
 							_1: {ctor: '[]'}
 						})) : _elm_lang$core$Result$Ok(
-					_1602$json_form$Json_Value$ObjectValue(
+					_1602$json_value$Json_Value$ObjectValue(
 						{
 							ctor: '::',
 							_0: {ctor: '_Tuple2', _0: key, _1: value},
@@ -13062,7 +13053,7 @@ var _1602$json_form$Json_Value$setProperty = F3(
 						}));
 		}
 	});
-var _1602$json_form$Json_Value$setIn = F3(
+var _1602$json_value$Json_Value$setIn = F3(
 	function (pathInJson, valueToSet, hostValue) {
 		var path = _elm_lang$core$List$reverse(pathInJson);
 		var newValue = function () {
@@ -13086,7 +13077,7 @@ var _1602$json_form$Json_Value$setIn = F3(
 									function (vv) {
 										return A2(
 											_elm_lang$core$Result$withDefault,
-											_1602$json_form$Json_Value$ObjectValue(
+											_1602$json_value$Json_Value$ObjectValue(
 												{
 													ctor: '::',
 													_0: {ctor: '_Tuple2', _0: key, _1: vv},
@@ -13094,8 +13085,8 @@ var _1602$json_form$Json_Value$setIn = F3(
 												}),
 											A2(
 												_elm_lang$core$Result$andThen,
-												A2(_1602$json_form$Json_Value$setProperty, key, vv),
-												A2(_1602$json_form$Json_Value$getIn, p, hostValue)));
+												A2(_1602$json_value$Json_Value$setProperty, key, vv),
+												A2(_1602$json_value$Json_Value$getIn, p, hostValue)));
 									},
 									_p23._1);
 								var _p24 = _p25;
@@ -13119,7 +13110,7 @@ var _1602$json_form$Json_Value$setIn = F3(
 		}();
 		return newValue;
 	});
-var _1602$json_form$Json_Value$setPropertyName = F3(
+var _1602$json_value$Json_Value$setPropertyName = F3(
 	function (_p26, newName, hostValue) {
 		var _p27 = _p26;
 		var _p32 = _p27._0;
@@ -13128,7 +13119,7 @@ var _1602$json_form$Json_Value$setPropertyName = F3(
 			if (_p28.ctor === 'ObjectValue') {
 				return function (_p29) {
 					return _elm_lang$core$Result$Ok(
-						_1602$json_form$Json_Value$ObjectValue(_p29));
+						_1602$json_value$Json_Value$ObjectValue(_p29));
 				}(
 					A2(
 						_elm_lang$core$List$indexedMap,
@@ -13152,10 +13143,10 @@ var _1602$json_form$Json_Value$setPropertyName = F3(
 			A2(
 				_elm_lang$core$Result$andThen,
 				renameKey,
-				A2(_1602$json_form$Json_Value$getIn, _p32, hostValue)));
-		return A3(_1602$json_form$Json_Value$setIn, _p32, targetValue, hostValue);
+				A2(_1602$json_value$Json_Value$getIn, _p32, hostValue)));
+		return A3(_1602$json_value$Json_Value$setIn, _p32, targetValue, hostValue);
 	});
-var _1602$json_form$Json_Value$deleteIn = F2(
+var _1602$json_value$Json_Value$deleteIn = F2(
 	function (pathInJson, hostValue) {
 		var rejectKey = F2(
 			function (key, val) {
@@ -13164,7 +13155,7 @@ var _1602$json_form$Json_Value$deleteIn = F2(
 					case 'ObjectValue':
 						return function (_p34) {
 							return _elm_lang$core$Result$Ok(
-								_1602$json_form$Json_Value$ObjectValue(_p34));
+								_1602$json_value$Json_Value$ObjectValue(_p34));
 						}(
 							A2(
 								_elm_lang$core$List$filter,
@@ -13176,7 +13167,7 @@ var _1602$json_form$Json_Value$deleteIn = F2(
 					case 'ArrayValue':
 						return function (_p37) {
 							return _elm_lang$core$Result$Ok(
-								_1602$json_form$Json_Value$ArrayValue(_p37));
+								_1602$json_value$Json_Value$ArrayValue(_p37));
 						}(
 							A2(
 								_elm_lang$core$List$map,
@@ -13233,12 +13224,12 @@ var _1602$json_form$Json_Value$deleteIn = F2(
 					A2(
 						_elm_lang$core$Result$andThen,
 						rejectKey(_p44._0),
-						A2(_1602$json_form$Json_Value$getIn, path, hostValue)));
+						A2(_1602$json_value$Json_Value$getIn, path, hostValue)));
 			} else {
 				return hostValue;
 			}
 		}();
-		return A3(_1602$json_form$Json_Value$setIn, path, targetValue, hostValue);
+		return A3(_1602$json_value$Json_Value$setIn, path, targetValue, hostValue);
 	});
 
 var _1602$json_form$Json_Form_Definitions$dictFromListErrors = function (list) {
@@ -13278,15 +13269,15 @@ var _1602$json_form$Json_Form_Definitions$dictFromListErrors = function (list) {
 };
 var _1602$json_form$Json_Form_Definitions$init = F2(
 	function (schema, v) {
-		var someValue = _1602$json_form$Json_Value$encode(
-			A2(_elm_lang$core$Maybe$withDefault, _1602$json_form$Json_Value$NullValue, v));
+		var someValue = _1602$json_value$Json_Value$encode(
+			A2(_elm_lang$core$Maybe$withDefault, _1602$json_value$Json_Value$NullValue, v));
 		var _p1 = function (res) {
 			var _p2 = res;
 			if (_p2.ctor === 'Ok') {
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Maybe$Just(
-						_1602$json_form$Json_Value$decodeValue(_p2._0)),
+						_1602$json_value$Json_Value$decodeValue(_p2._0)),
 					_1: _elm_lang$core$Dict$empty
 				};
 			} else {
@@ -13307,7 +13298,7 @@ var _1602$json_form$Json_Form_Definitions$init = F2(
 		return {
 			schema: schema,
 			focused: _elm_lang$core$Maybe$Nothing,
-			value: A2(_elm_lang$core$Debug$log, 'initial value', value),
+			value: value,
 			errors: _elm_lang$core$Dict$empty,
 			beingEdited: {ctor: '[]'},
 			editedNumber: ''
@@ -13347,15 +13338,15 @@ var _1602$json_form$Json_Form_UiSpec$applyRule = F3(
 		var getDefaultValue = function (s) {
 			var _p0 = s;
 			if (_p0.ctor === 'ObjectSchema') {
-				return _1602$json_form$Json_Value$decodeValue(
+				return _1602$json_value$Json_Value$decodeValue(
 					A2(_elm_lang$core$Maybe$withDefault, _elm_lang$core$Json_Encode$null, _p0._0.$default));
 			} else {
-				return _1602$json_form$Json_Value$NullValue;
+				return _1602$json_value$Json_Value$NullValue;
 			}
 		};
 		var referencedValue = F2(
 			function (subPath, s) {
-				return _1602$json_form$Json_Value$encode(
+				return _1602$json_value$Json_Value$encode(
 					A2(
 						_elm_lang$core$Maybe$withDefault,
 						getDefaultValue(s),
@@ -13363,7 +13354,7 @@ var _1602$json_form$Json_Form_UiSpec$applyRule = F3(
 							_elm_lang$core$Maybe$andThen,
 							function (_p1) {
 								return _elm_lang$core$Result$toMaybe(
-									A2(_1602$json_form$Json_Value$getIn, subPath, _p1));
+									A2(_1602$json_value$Json_Value$getIn, subPath, _p1));
 							},
 							value)));
 			});
@@ -13617,7 +13608,7 @@ var _1602$json_form$Json_Form_Selection$checkbox = F5(
 				_elm_lang$core$Maybe$andThen,
 				function (_p2) {
 					return _elm_lang$core$Result$toMaybe(
-						A2(_1602$json_form$Json_Value$getIn, path, _p2));
+						A2(_1602$json_value$Json_Value$getIn, path, _p2));
 				},
 				model.value);
 			if ((_p3.ctor === 'Just') && (_p3._0.ctor === 'BoolValue')) {
@@ -13700,7 +13691,7 @@ var _1602$json_form$Json_Form_Selection$checkbox = F5(
 													return A2(
 														_1602$json_form$Json_Form_Definitions$EditValue,
 														path,
-														_1602$json_form$Json_Value$BoolValue(_p4));
+														_1602$json_value$Json_Value$BoolValue(_p4));
 												}),
 											_1: {
 												ctor: '::',
@@ -13790,7 +13781,7 @@ var _1602$json_form$Json_Form_Selection$switch = F5(
 				_elm_lang$core$Maybe$andThen,
 				function (_p7) {
 					return _elm_lang$core$Result$toMaybe(
-						A2(_1602$json_form$Json_Value$getIn, path, _p7));
+						A2(_1602$json_value$Json_Value$getIn, path, _p7));
 				},
 				model.value);
 			if ((_p8.ctor === 'Just') && (_p8._0.ctor === 'BoolValue')) {
@@ -13873,7 +13864,7 @@ var _1602$json_form$Json_Form_Selection$switch = F5(
 													return A2(
 														_1602$json_form$Json_Form_Definitions$EditValue,
 														path,
-														_1602$json_form$Json_Value$BoolValue(_p9));
+														_1602$json_value$Json_Value$BoolValue(_p9));
 												}),
 											_1: {
 												ctor: '::',
@@ -13974,7 +13965,7 @@ var _1602$json_form$Json_Form_TextField$viewNumeric = F5(
 					_elm_lang$core$Result$toMaybe,
 					A2(
 						_elm_lang$core$Maybe$map,
-						_1602$json_form$Json_Value$getIn(path),
+						_1602$json_value$Json_Value$getIn(path),
 						model.value))));
 		return A2(
 			_elm_lang$html$Html$div,
@@ -14106,7 +14097,7 @@ var _1602$json_form$Json_Form_TextField$view = F5(
 					_elm_lang$core$Result$toMaybe,
 					A2(
 						_elm_lang$core$Maybe$map,
-						_1602$json_form$Json_Value$getIn(path),
+						_1602$json_value$Json_Value$getIn(path),
 						model.value))));
 		return A2(
 			_elm_lang$html$Html$div,
@@ -14180,7 +14171,7 @@ var _1602$json_form$Json_Form_TextField$view = F5(
 											return A2(
 												_1602$json_form$Json_Form_Definitions$EditValue,
 												path,
-												_1602$json_form$Json_Value$StringValue(str));
+												_1602$json_value$Json_Value$StringValue(str));
 										}),
 									_1: {
 										ctor: '::',
@@ -14354,19 +14345,19 @@ var _1602$json_form$Json_Form$viewArray = F5(
 		var list = function (list) {
 			var _p5 = list;
 			if (_p5.ctor === 'ArrayValue') {
-				return A2(_elm_lang$core$Debug$log, 'sss', _p5._0);
+				return _p5._0;
 			} else {
 				return {ctor: '[]'};
 			}
 		}(
 			A2(
 				_elm_lang$core$Result$withDefault,
-				_1602$json_form$Json_Value$ArrayValue(
+				_1602$json_value$Json_Value$ArrayValue(
 					{ctor: '[]'}),
 				A2(
-					_1602$json_form$Json_Value$getIn,
+					_1602$json_value$Json_Value$getIn,
 					path,
-					A2(_elm_lang$core$Maybe$withDefault, _1602$json_form$Json_Value$NullValue, model.value))));
+					A2(_elm_lang$core$Maybe$withDefault, _1602$json_value$Json_Value$NullValue, model.value))));
 		var _p6 = A3(
 			_1602$json_form$Json_Form_UiSpec$applyRule,
 			model.value,
@@ -14427,7 +14418,7 @@ var _1602$json_form$Json_Form$viewArray = F5(
 														_1: {ctor: '[]'}
 													}));
 										}),
-									A2(_elm_lang$core$Debug$log, 'iterating over this', list))),
+									list)),
 							_1: {
 								ctor: '::',
 								_0: A2(
@@ -14543,17 +14534,14 @@ var _1602$json_form$Json_Form$editValue = F3(
 	function (model, path, val) {
 		var updatedJsonValue = A2(
 			_elm_lang$core$Maybe$withDefault,
-			_1602$json_form$Json_Value$NullValue,
+			_1602$json_value$Json_Value$NullValue,
 			_elm_lang$core$Result$toMaybe(
-				A2(
-					_elm_lang$core$Result$mapError,
-					_elm_lang$core$Debug$log('editValue'),
-					A3(
-						_1602$json_form$Json_Value$setIn,
-						path,
-						val,
-						A2(_elm_lang$core$Maybe$withDefault, _1602$json_form$Json_Value$NullValue, model.value)))));
-		var updatedValue = _1602$json_form$Json_Value$encode(updatedJsonValue);
+				A3(
+					_1602$json_value$Json_Value$setIn,
+					path,
+					val,
+					A2(_elm_lang$core$Maybe$withDefault, _1602$json_value$Json_Value$NullValue, model.value))));
+		var updatedValue = _1602$json_value$Json_Value$encode(updatedJsonValue);
 		var validationResult = A3(
 			_1602$json_schema$Json_Schema$validateValue,
 			{applyDefaults: true},
@@ -14569,7 +14557,7 @@ var _1602$json_form$Json_Form$editValue = F3(
 						model,
 						{
 							value: _elm_lang$core$Result$toMaybe(
-								A2(_elm_lang$core$Json_Decode$decodeValue, _1602$json_form$Json_Value$decoder, _p19._0)),
+								A2(_elm_lang$core$Json_Decode$decodeValue, _1602$json_value$Json_Value$decoder, _p19._0)),
 							errors: _elm_lang$core$Dict$empty
 						}),
 					{ctor: '[]'}),
@@ -14607,7 +14595,7 @@ var _1602$json_form$Json_Form$update = F2(
 						_elm_lang$core$Maybe$andThen,
 						function (_p21) {
 							return _elm_lang$core$Result$toMaybe(
-								A2(_1602$json_form$Json_Value$getIn, _p23, _p21));
+								A2(_1602$json_value$Json_Value$getIn, _p23, _p21));
 						},
 						model.value);
 					if (_p22.ctor === 'Just') {
@@ -14616,16 +14604,13 @@ var _1602$json_form$Json_Form$update = F2(
 						return _elm_lang$core$Native_Utils.update(
 							model,
 							{
-								value: A2(
-									_elm_lang$core$Debug$log,
-									'init as empty array',
-									_elm_lang$core$Result$toMaybe(
-										A3(
-											_1602$json_form$Json_Value$setIn,
-											_p23,
-											_1602$json_form$Json_Value$ArrayValue(
-												{ctor: '[]'}),
-											A2(_elm_lang$core$Maybe$withDefault, _1602$json_form$Json_Value$NullValue, model.value))))
+								value: _elm_lang$core$Result$toMaybe(
+									A3(
+										_1602$json_value$Json_Value$setIn,
+										_p23,
+										_1602$json_value$Json_Value$ArrayValue(
+											{ctor: '[]'}),
+										A2(_elm_lang$core$Maybe$withDefault, _1602$json_value$Json_Value$NullValue, model.value)))
 							});
 					}
 				}();
@@ -14637,7 +14622,7 @@ var _1602$json_form$Json_Form$update = F2(
 						_0: _elm_lang$core$Basics$toString(_p20._1),
 						_1: {ctor: '[]'}
 					});
-				return A3(_1602$json_form$Json_Form$editValue, updatedModel, newPropPath, _1602$json_form$Json_Value$NullValue);
+				return A3(_1602$json_form$Json_Form$editValue, updatedModel, newPropPath, _1602$json_value$Json_Value$NullValue);
 			case 'FocusInput':
 				var _p24 = _p20._0;
 				return A2(
@@ -14661,7 +14646,8 @@ var _1602$json_form$Json_Form$update = F2(
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								beingEdited: A3(_1602$json_form$Json_Form$touch, _p27, model.focused, model.beingEdited)
+								beingEdited: A3(_1602$json_form$Json_Form$touch, _p27, model.focused, model.beingEdited),
+								focused: _p27
 							}),
 						A2(
 							_elm_lang$core$Maybe$withDefault,
@@ -14670,9 +14656,9 @@ var _1602$json_form$Json_Form$update = F2(
 						function () {
 							var _p26 = _elm_lang$core$String$toFloat(model.editedNumber);
 							if (_p26.ctor === 'Ok') {
-								return _1602$json_form$Json_Value$NumericValue(_p26._0);
+								return _1602$json_value$Json_Value$NumericValue(_p26._0);
 							} else {
-								return _1602$json_form$Json_Value$StringValue(model.editedNumber);
+								return _1602$json_value$Json_Value$StringValue(model.editedNumber);
 							}
 						}());
 				} else {
@@ -14695,7 +14681,7 @@ var _1602$json_form$Json_Form$update = F2(
 												_elm_lang$core$Result$toMaybe,
 												A2(
 													_elm_lang$core$Maybe$map,
-													_1602$json_form$Json_Value$getIn(_p25._0),
+													_1602$json_value$Json_Value$getIn(_p25._0),
 													model.value))))
 								}),
 							{ctor: '[]'}),
@@ -14716,7 +14702,7 @@ var _1602$json_form$Json_Form$update = F2(
 							_elm_lang$core$Maybe$withDefault,
 							{ctor: '[]'},
 							model.focused),
-						_1602$json_form$Json_Value$NumericValue(_p28._0));
+						_1602$json_value$Json_Value$NumericValue(_p28._0));
 				} else {
 					return A2(
 						_1602$json_form$JsonFormUtil_ops['=>'],
@@ -16301,7 +16287,7 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 													}),
 												A2(
 													_1602$json_schema$Json_Schema_Builder$withDescription,
-													'This will keep you logged in for another 2 weeks',
+													'Will keep you logged in for another 2 weeks',
 													A2(
 														_1602$json_schema$Json_Schema_Builder$withTitle,
 														'remember me',
@@ -16485,7 +16471,7 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 													'disable',
 													A2(
 														_1602$json_schema$Json_Schema_Builder$withDescription,
-														'This field will be enabled when switch turned on',
+														'Will be enabled when switch turned on',
 														A2(
 															_1602$json_schema$Json_Schema_Builder$withType,
 															'string',
@@ -16501,7 +16487,7 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 														'hide',
 														A2(
 															_1602$json_schema$Json_Schema_Builder$withDescription,
-															'This field will be shown when switch turned on',
+															'Will be shown when switch turned on',
 															A2(
 																_1602$json_schema$Json_Schema_Builder$withType,
 																'string',
@@ -16517,7 +16503,7 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 															'disable',
 															A2(
 																_1602$json_schema$Json_Schema_Builder$withDescription,
-																'This numeric field will be enabled when switch turned on',
+																'Will be enabled when switch turned on',
 																A2(
 																	_1602$json_schema$Json_Schema_Builder$withType,
 																	'number',
@@ -16533,7 +16519,7 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 																'hide',
 																A2(
 																	_1602$json_schema$Json_Schema_Builder$withDescription,
-																	'This numeric field will be shown when switch turned on',
+																	'Will be shown when switch turned on',
 																	A2(
 																		_1602$json_schema$Json_Schema_Builder$withType,
 																		'number',
@@ -16550,7 +16536,7 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 																	'checkbox',
 																	A2(
 																		_1602$json_schema$Json_Schema_Builder$withDescription,
-																		'This checkbox will be enabled when switch turned on',
+																		'Will be enabled when switch turned on',
 																		A2(
 																			_1602$json_schema$Json_Schema_Builder$withType,
 																			'boolean',
@@ -16567,7 +16553,7 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 																		'switch',
 																		A2(
 																			_1602$json_schema$Json_Schema_Builder$withDescription,
-																			'This switch will be enabled when switch turned on',
+																			'Will be enabled when switch turned on',
 																			A2(
 																				_1602$json_schema$Json_Schema_Builder$withType,
 																				'boolean',
@@ -16590,7 +16576,7 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 																						_0: 'disableDemo',
 																						_1: A2(
 																							_1602$json_schema$Json_Schema_Builder$withDescription,
-																							'This field will be enabled when switch turned on',
+																							'Will be enabled when switch turned on',
 																							A2(
 																								_1602$json_schema$Json_Schema_Builder$withType,
 																								'string',
@@ -16617,7 +16603,7 @@ var _1602$json_form$Snippets$getSnippet = function (ds) {
 																							_0: 'hideDemo',
 																							_1: A2(
 																								_1602$json_schema$Json_Schema_Builder$withDescription,
-																								'This field will be hidden when switch turned on',
+																								'Will be hidden when switch turned on',
 																								A2(
 																									_1602$json_schema$Json_Schema_Builder$withType,
 																									'string',
