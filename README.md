@@ -40,13 +40,16 @@ Development progress:
 - [x] customizable widgets
 - [x] password field
 - [x] mark required fields with *
+- [x] basic array editing capabilities
+- [x] rules to disable or hide form elements based on conditions
 
 Next steps will be some of those (not necessarily in this order):
 
+- [ ] multiline editing
+- [ ] range widget for numbers
 - [ ] radiogroup widget for enum
 - [ ] optional field indication (configurable alternative to required)
 - [ ] dealing with `undefined` (erase property)
-- [ ] multiline editing
 - [ ] editing as json
 - [ ] form layout customisation
 - [ ] editing array of items
@@ -67,6 +70,8 @@ yarn dev
 
 ## Project structure
 
-All sources live in `./src`, package code that will be published to a registry is in `./src/Json/Form.elm`, legacy code (with lots of feature covered in a slightly odd way lives here: `./src/LegacyFormComponent.elm`)
+All sources live in `./src`, package code that will be published to the elm package registry is in `./src/Json/Form.elm`.
+
+All [json-form-custom-element](https://www.webcomponents.org/element/json-form-custom-element) web-component related sources live in a different repo: https://github.com/1602/json-form-custom-element
 
 Contributors welcome, submit an issue to open a discussion.
