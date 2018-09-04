@@ -44,7 +44,7 @@ init schema v =
     in
     { schema = schema
     , focused = Nothing
-    , value = value |> Debug.log "initial value"
+    , value = value
     , errors = Dict.empty
     , beingEdited = []
     , editedNumber = ""

@@ -101,7 +101,7 @@ getSnippet ds =
                       , buildSchema
                             |> withType "boolean"
                             |> withTitle "remember me"
-                            |> withDescription "This will keep you logged in for another 2 weeks"
+                            |> withDescription "Will keep you logged in for another 2 weeks"
                             |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "checkbox" ) ])
                       )
                     ]
@@ -167,42 +167,42 @@ getSnippet ds =
                                   , buildSchema
                                         |> withTitle "Rule: disable text field"
                                         |> withType "string"
-                                        |> withDescription "This field will be enabled when switch turned on"
+                                        |> withDescription "Will be enabled when switch turned on"
                                         |> withRule "disable"
                                   )
                                 , ( "hideDemo"
                                   , buildSchema
                                         |> withTitle "Rule: hide text field"
                                         |> withType "string"
-                                        |> withDescription "This field will be shown when switch turned on"
+                                        |> withDescription "Will be shown when switch turned on"
                                         |> withRule "hide"
                                   )
                                 , ( "disableNumericDemo"
                                   , buildSchema
                                         |> withTitle "Rule: disable numeric"
                                         |> withType "number"
-                                        |> withDescription "This numeric field will be enabled when switch turned on"
+                                        |> withDescription "Will be enabled when switch turned on"
                                         |> withRule "disable"
                                   )
                                 , ( "hideNumericDemo"
                                   , buildSchema
                                         |> withTitle "Rule: hide numeric"
                                         |> withType "number"
-                                        |> withDescription "This numeric field will be shown when switch turned on"
+                                        |> withDescription "Will be shown when switch turned on"
                                         |> withRule "hide"
                                   )
                                 , ( "disableCheckboxDemo"
                                   , buildSchema
                                         |> withTitle "Rule: disable checkbox"
                                         |> withType "boolean"
-                                        |> withDescription "This checkbox will be enabled when switch turned on"
+                                        |> withDescription "Will be enabled when switch turned on"
                                         |> withRuleAndWidget "disable" "checkbox"
                                   )
                                 , ( "disableSwitchDemo"
                                   , buildSchema
                                         |> withTitle "Rule: disable switch"
                                         |> withType "boolean"
-                                        |> withDescription "This switch will be enabled when switch turned on"
+                                        |> withDescription "Will be enabled when switch turned on"
                                         |> withRuleAndWidget "disable" "switch"
                                   )
                                 , ( "nestedForm"
@@ -213,7 +213,7 @@ getSnippet ds =
                                               , buildSchema
                                                     |> withTitle "Rule: disable nested form"
                                                     |> withType "string"
-                                                    |> withDescription "This field will be enabled when switch turned on"
+                                                    |> withDescription "Will be enabled when switch turned on"
                                               )
                                             ]
                                         |> withRule "disable"
@@ -226,7 +226,7 @@ getSnippet ds =
                                               , buildSchema
                                                     |> withTitle "Rule: hide nested form"
                                                     |> withType "string"
-                                                    |> withDescription "This field will be hidden when switch turned on"
+                                                    |> withDescription "Will be hidden when switch turned on"
                                               )
                                             ]
                                         |> withRule "hide"

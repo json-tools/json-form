@@ -127,7 +127,6 @@ viewArray model schema isRequired isDisabled path =
                         case list of
                             ArrayValue items ->
                                 items
-                                    |> Debug.log "sss"
 
                             _ ->
                                 []
@@ -142,7 +141,6 @@ viewArray model schema isRequired isDisabled path =
                 case os.items of
                     ItemDefinition itemSchema ->
                         [ list
-                            |> Debug.log "iterating over this"
                             |> List.indexedMap
                                 (\index item ->
                                     let
@@ -229,7 +227,6 @@ update msg model =
                                         |> Maybe.withDefault NullValue
                                         |> JsonValue.setIn path (ArrayValue [])
                                         |> Result.toMaybe
-                                        |> Debug.log "init as empty array"
                             }
             in
             editValue updatedModel newPropPath JsonValue.NullValue
@@ -246,7 +243,7 @@ update msg model =
             case focused of
                 Nothing ->
                     editValue
-                        { model | beingEdited = touch focused model.focused model.beingEdited }
+                        { model | beingEdited = touch focused model.focused model.beingEdited, focused = focused }
                         (model.focused |> Maybe.withDefault [])
                         (case model.editedNumber |> String.toFloat of
                             Ok num ->
@@ -298,7 +295,6 @@ editValue model path val =
             model.value
                 |> Maybe.withDefault JsonValue.NullValue
                 |> JsonValue.setIn path val
-                |> Result.mapError (Debug.log "editValue")
                 |> Result.toMaybe
                 |> Maybe.withDefault JsonValue.NullValue
 
