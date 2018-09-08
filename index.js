@@ -89,7 +89,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".app-topbar {\n  background-color: var(--color-mono--700);\n  color: var(--color-mono--300);\n  font-size: 14px;\n}\n\n.app-content {\n  padding: 16px;\n}\n", ""]);
+exports.push([module.i, ":root {\n    --color-active: #27b9cc;\n    --color-inactive: #8a8a8a;\n    --color-invalid: #d95559;\n}\n\n.app-topbar {\n  background-color: var(--color-mono--700);\n  color: var(--color-mono--300);\n  font-size: 14px;\n}\n\n.app-content {\n  padding: 16px;\n}\n", ""]);
 
 // exports
 
@@ -104,7 +104,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.jf-checkbox {\n    width: 300px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-checkbox__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-checkbox__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 24px;\n    cursor: pointer;\n}\n\n.jf-checkbox__box-outline {\n    width: 16px;\n    height: 16px;\n    position: absolute;\n    top: calc(50% - 8px);\n    left: 0;\n    border-radius: 2px;\n    border: 2px solid #0000008a;\n    cursor: pointer;\n    z-index: 2;\n}\n\n.jf-checkbox__tick-outline {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iY2xpcCI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Ik0gMCwwIDAsMSAxLDEgMSwwIDAsMCB6IE0gMC44NTM0Mzc1LDAuMTY3MTg3NSAwLjk1OTY4NzUsMC4yNzMxMjUgMC40MjkzNzUsMC44MDM0Mzc1IDAuMzIzMTI1LDAuOTA5Njg3NSAwLjIxNzE4NzUsMC44MDM0Mzc1IDAuMDQwMzEyNSwwLjYyNjg3NSAwLjE0NjU2MjUsMC41MjA2MjUgMC4zMjMxMjUsMC42OTc1IDAuODUzNDM3NSwwLjE2NzE4NzUgeiIKICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KICAgIDwvY2xpcFBhdGg+CiAgICA8bWFzayBpZD0ibWFzayIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgbWFza0NvbnRlbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICA8cGF0aAogICAgICAgICBkPSJNIDAsMCAwLDEgMSwxIDEsMCAwLDAgeiBNIDAuODUzNDM3NSwwLjE2NzE4NzUgMC45NTk2ODc1LDAuMjczMTI1IDAuNDI5Mzc1LDAuODAzNDM3NSAwLjMyMzEyNSwwLjkwOTY4NzUgMC4yMTcxODc1LDAuODAzNDM3NSAwLjA0MDMxMjUsMC42MjY4NzUgMC4xNDY1NjI1LDAuNTIwNjI1IDAuMzIzMTI1LDAuNjk3NSAwLjg1MzQzNzUsMC4xNjcxODc1IHoiCiAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmUiIC8+CiAgICA8L21hc2s+CiAgPC9kZWZzPgogIDxyZWN0CiAgICAgd2lkdGg9IjEiCiAgICAgaGVpZ2h0PSIxIgogICAgIHg9IjAiCiAgICAgeT0iMCIKICAgICBjbGlwLXBhdGg9InVybCgjY2xpcCkiCiAgICAgc3R5bGU9ImZpbGw6IzAwMDAwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KPC9zdmc+Cg==);\n    background: 0 0;\n    transition-duration: .28s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    transition-property: background;\n}\n\n\n.jf-checkbox--on .jf-checkbox__tick-outline {\n    background: #009688 url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8cGF0aAogICAgIGQ9Ik0gMC4wNDAzODA1OSwwLjYyNjc3NjcgMC4xNDY0NDY2MSwwLjUyMDcxMDY4IDAuNDI5Mjg5MzIsMC44MDM1NTMzOSAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IE0gMC4yMTcxNTcyOSwwLjgwMzU1MzM5IDAuODUzNTUzMzksMC4xNjcxNTcyOSAwLjk1OTYxOTQxLDAuMjczMjIzMyAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IgogICAgIGlkPSJyZWN0Mzc4MCIKICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiAvPgo8L3N2Zz4K);\n}\n\n\n.jf-checkbox--on .jf-checkbox__box-outline {\n    border: 2px solid #009688;\n}\n\n\n.jf-checkbox__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-checkbox--invalid .jf-checkbox__helper-text {\n    color: var(--color-red--500);\n}\n\n\n.jf-checkbox--disabled .jf-checkbox__label,\n.jf-checkbox--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--disabled .jf-checkbox__tick-outline {\n    background-color: var(--color-inactive);\n}\n\n.jf-checkbox--disabled .jf-checkbox__box-outline {\n    border-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--hidden {\n    display: none;\n}\n", ""]);
+exports.push([module.i, "\n.jf-checkbox {\n    width: 280px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-checkbox__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-checkbox__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 44px;\n    cursor: pointer;\n}\n\n.jf-checkbox__box-outline {\n    width: 16px;\n    height: 16px;\n    position: absolute;\n    top: calc(50% - 8px);\n    left: 12px;\n    border-radius: 2px;\n    border: 2px solid #0000008a;\n    cursor: pointer;\n    z-index: 2;\n}\n\n.jf-checkbox__tick-outline {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iY2xpcCI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Ik0gMCwwIDAsMSAxLDEgMSwwIDAsMCB6IE0gMC44NTM0Mzc1LDAuMTY3MTg3NSAwLjk1OTY4NzUsMC4yNzMxMjUgMC40MjkzNzUsMC44MDM0Mzc1IDAuMzIzMTI1LDAuOTA5Njg3NSAwLjIxNzE4NzUsMC44MDM0Mzc1IDAuMDQwMzEyNSwwLjYyNjg3NSAwLjE0NjU2MjUsMC41MjA2MjUgMC4zMjMxMjUsMC42OTc1IDAuODUzNDM3NSwwLjE2NzE4NzUgeiIKICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KICAgIDwvY2xpcFBhdGg+CiAgICA8bWFzayBpZD0ibWFzayIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgbWFza0NvbnRlbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICA8cGF0aAogICAgICAgICBkPSJNIDAsMCAwLDEgMSwxIDEsMCAwLDAgeiBNIDAuODUzNDM3NSwwLjE2NzE4NzUgMC45NTk2ODc1LDAuMjczMTI1IDAuNDI5Mzc1LDAuODAzNDM3NSAwLjMyMzEyNSwwLjkwOTY4NzUgMC4yMTcxODc1LDAuODAzNDM3NSAwLjA0MDMxMjUsMC42MjY4NzUgMC4xNDY1NjI1LDAuNTIwNjI1IDAuMzIzMTI1LDAuNjk3NSAwLjg1MzQzNzUsMC4xNjcxODc1IHoiCiAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmUiIC8+CiAgICA8L21hc2s+CiAgPC9kZWZzPgogIDxyZWN0CiAgICAgd2lkdGg9IjEiCiAgICAgaGVpZ2h0PSIxIgogICAgIHg9IjAiCiAgICAgeT0iMCIKICAgICBjbGlwLXBhdGg9InVybCgjY2xpcCkiCiAgICAgc3R5bGU9ImZpbGw6IzAwMDAwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KPC9zdmc+Cg==);\n    background: 0 0;\n    transition-duration: .28s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    transition-property: background;\n}\n\n\n.jf-checkbox--on .jf-checkbox__tick-outline {\n    background: var(--color-active) url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8cGF0aAogICAgIGQ9Ik0gMC4wNDAzODA1OSwwLjYyNjc3NjcgMC4xNDY0NDY2MSwwLjUyMDcxMDY4IDAuNDI5Mjg5MzIsMC44MDM1NTMzOSAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IE0gMC4yMTcxNTcyOSwwLjgwMzU1MzM5IDAuODUzNTUzMzksMC4xNjcxNTcyOSAwLjk1OTYxOTQxLDAuMjczMjIzMyAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IgogICAgIGlkPSJyZWN0Mzc4MCIKICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiAvPgo8L3N2Zz4K);\n}\n\n\n.jf-checkbox--on .jf-checkbox__box-outline {\n    border: 2px solid var(--color-active);\n}\n\n\n.jf-checkbox__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-checkbox--invalid .jf-checkbox__helper-text {\n    color: var(--color-red--500);\n}\n\n\n.jf-checkbox--disabled .jf-checkbox__label,\n.jf-checkbox--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--disabled .jf-checkbox__tick-outline {\n    background-color: var(--color-inactive);\n}\n\n.jf-checkbox--disabled .jf-checkbox__box-outline {\n    border-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--hidden {\n    display: none;\n}\n", ""]);
 
 // exports
 
@@ -123,7 +123,7 @@ exports.i(__webpack_require__("./node_modules/css-loader/index.js!./stylesheets/
 exports.i(__webpack_require__("./node_modules/css-loader/index.js!./stylesheets/json-form.css"), "");
 
 // module
-exports.push([module.i, "\n", ""]);
+exports.push([module.i, "/* @import './test-builder.css' */\n", ""]);
 
 // exports
 
@@ -140,7 +140,7 @@ exports.i(__webpack_require__("./node_modules/css-loader/index.js!./stylesheets/
 exports.i(__webpack_require__("./node_modules/css-loader/index.js!./stylesheets/checkbox.css"), "");
 
 // module
-exports.push([module.i, ":root {\n    --color-active: #2a79ff;\n    --color-inactive: #8a8a8a;\n    --color-swatch--500: #009688;\n}\n", ""]);
+exports.push([module.i, "\n", ""]);
 
 // exports
 
@@ -170,7 +170,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.jf-switch {\n    width: 300px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-switch__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-switch__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 50px;\n    cursor: pointer;\n}\n\n.jf-switch__track {\n    background-color: lightgrey;\n    width: 40px;\n    height: 14px;\n    position: absolute;\n    top: calc(50% - 7px);\n    left: 0;\n    border-radius: 14px;\n    cursor: pointer;\n}\n\n.jf-switch__thumb {\n    background-color: #fafafa;\n    width: 20px;\n    height: 20px;\n    position: absolute;\n    top: calc(50% - 10px);\n    left: 0;\n    cursor: pointer;\n    border-radius: 50%;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);\n}\n\n.jf-switch--on .jf-switch__thumb {\n    left: 20px;\n}\n\n.jf-switch--on .jf-switch__thumb {\n    background-color: var(--color-swatch--500);\n}\n\n.jf-switch__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-switch--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n\n.jf-switch--disabled .jf-switch__label,\n.jf-switch--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__thumb {\n    background-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__track {\n    cursor: default;\n}\n\n.jf-switch--hidden {\n    display: none;\n}\n", ""]);
+exports.push([module.i, "\n.jf-switch {\n    width: 280px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-switch__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-switch__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 50px;\n    cursor: pointer;\n}\n\n.jf-switch__track {\n    background-color: lightgrey;\n    width: 40px;\n    height: 14px;\n    position: absolute;\n    top: calc(50% - 7px);\n    left: 0;\n    border-radius: 14px;\n    cursor: pointer;\n}\n\n.jf-switch__thumb {\n    background-color: #fafafa;\n    width: 20px;\n    height: 20px;\n    position: absolute;\n    top: calc(50% - 10px);\n    left: 0;\n    cursor: pointer;\n    border-radius: 50%;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);\n}\n\n.jf-switch--on .jf-switch__thumb {\n    left: 20px;\n}\n\n.jf-switch--on .jf-switch__thumb {\n    background-color: var(--color-active);\n}\n\n.jf-switch__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-switch--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n\n.jf-switch--disabled .jf-switch__label,\n.jf-switch--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__thumb {\n    background-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__track {\n    cursor: default;\n}\n\n.jf-switch--hidden {\n    display: none;\n}\n", ""]);
 
 // exports
 
@@ -200,7 +200,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.jf-textfield {\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    width: 280px;\n    /* height: 56px; */\n    max-width: 100%;\n    margin: 0;\n    padding: 0;\n    padding-top: 20px;\n    margin-top: 16px;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    border-top-left-radius: 4px;\n    border-top-right-radius: 4px;\n    cursor: pointer;\n    background-color: #e8e8e8;\n    color: #00000099;\n}\n\n.jf-textfield:hover {\n    background-color: #dedede;\n    color: #000000de;\n}\n\n.jf-textfield--focused:hover {\n    background-color: #e8e8e8;\n    color: #00000099;\n}\n\n.jf-textfield__input {\n    border: none;\n    border-radius: 0;\n    outline: none;\n    display: block;\n    font-size: 16px;\n    font-family: var(--font-family);\n    margin: 0;\n    padding-left: 12px;\n    padding-right: 12px;\n    padding-top: 6px;\n    padding-bottom: 12px;\n    width: calc(100% - 24px);\n    background: 0 0;\n    text-align: left;\n    color: inherit;\n    caret-color: var(--color-active);\n}\n\n.jf-textfield--focused .jf-textfield__input {\n    /* color: var(--color-active); */\n    color: inherit;\n}\n\n.jf-textfield--empty .jf-textfield__label {\n    top: 24px;\n    font-size: 16px;\n}\n\n.jf-textfield--focused .jf-textfield__label {\n    color: var(--color-active);\n    visibility: visible;\n    font-size: 12px;\n    top: 10px;\n}\n\n.jf-textfield__label {\n    color: var(--color-inactive);\n    padding-left: 12px;\n    padding-right: 12px;\n    font-size: 12px;\n    left: 0;\n    right: 0;\n    pointer-events: none;\n    position: absolute;\n    display: block;\n    bottom: 0;\n    top: 10px;\n    width: 100%;\n    overflow: hidden;\n    white-space: nowrap;\n    text-align: left;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4, 0, .2, 1);\n}\n\n/*\n.jf-textfield__bottom-border  {\n    border-bottom: 2px solid var(--color-active);\n    height: 0;\n    position: absolute;\n    top: 46px;\n    transition: width .1s ease-in 0s;\n    width: 0;\n}\n\n.jf-textfield--focused .jf-textfield__bottom-border {\n    width: 100%;\n}\n*/\n\n.jf-textfield__label:after {\n    background-color: var(--color-active);\n    bottom: 0;\n    content: '';\n    height: 2px;\n    left: 45%;\n    position: absolute;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    visibility: hidden;\n    width: 10px;\n}\n\n.jf-textfield--focused .jf-textfield__label:after {\n    left: 0;\n    visibility: visible;\n    width: 100%;\n}\n\n/*\n.jf-textfield:before {\n  content: '';\n  background-color: rgba(0,0,0,0.06);\n  position: absolute;\n  top: 0;\n  bottom: 20px;\n  width: calc(100% + 32px);\n  z-index: -1;\n  border-radius: 4px;\n  margin-left: -16px;\n}\n*/\n\n.jf-textfield:after {\n    content: '';\n    position: absolute;\n    width: 100%;\n    height: 1px;\n    bottom: 0;\n    /* background-color: var(--color-inactive); */\n    background-color: transparent;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n}\n\n.jf-textfield:after:hover {\n    background-color: var(--color-inactive);\n}\n\n.jf-textfield--focused:after {\n    background-color: transparent;\n}\n\n.jf-textfield:hover:after {\n    background-color: #222;\n    height: 2px;\n}\n\n.jf-textfield--focused:hover:after {\n    background-color: transparent;\n}\n\n\n.jf-textfield__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: -16px;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n\n.jf-textfield--invalid .jf-textfield__label:after {\n    background-color: var(--color-red--500);\n}\n\n.jf-textfield--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n\n.jf-textfield--invalid .jf-textfield__label {\n    color: var(--color-red--500);\n}\n\n.jf-textfield--invalid:after {\n    background-color: var(--color-red--500) !important;\n}\n\n.jf-textfield--invalid .jf-textfield__input {\n    caret-color: var(--color-red--500);\n}\n\n.jf-textfield--disabled {\n    color: var(--color-inactive);\n    background-color: #e0e0e0;\n    cursor: default;\n}\n\n.jf-textfield--disabled:hover {\n    background-color: #e0e0e0;\n}\n\n.jf-textfield--disabled:hover:after {\n    background-color: transparent;\n}\n\n.jf-textfield--disabled:after {\n    background-color: transparent;\n    border-bottom: 1px dotted var(--color-inactive);\n}\n\n.jf-textfield--hidden {\n    display: none;\n}\n", ""]);
+exports.push([module.i, ".jf-textfield {\n    position: relative;\n    height: 56px;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    width: 280px;\n    max-width: 100%;\n    margin: 0;\n    padding: 0;\n    margin-top: 16px;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    border-top-left-radius: 4px;\n    border-top-right-radius: 4px;\n    cursor: pointer;\n    background-color: #e8e8e8;\n    color: #00000099;\n    outline: none;\n}\n\n.jf-textfield--outlined {\n    background-color: white;\n    border-radius: 4px;\n    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5);\n}\n\n.jf-textfield:hover {\n    background-color: #dedede;\n    color: #000000de;\n}\n\n.jf-textfield--focused.jf-textfield--outlined {\n    box-shadow: inset 0 0 0 2px var(--color-active);\n}\n\n.jf-textfield--focused:hover {\n    background-color: #e8e8e8;\n    color: #00000099;\n}\n\n.jf-textfield--outlined:hover {\n    background: white;\n}\n\n.jf-textfield__input {\n    border: none;\n    border-radius: 0;\n    border-top-right-radius: 4px;\n    border-top-left-radius: 4px;\n    outline: none;\n    display: block;\n    font-size: 16px;\n    font-family: var(--font-family);\n    margin: 0;\n    padding-left: 12px;\n    padding-right: 12px;\n    padding-top: 20px;\n    padding-bottom: 12px;\n    width: calc(100% - 26px);\n    background: 0 0;\n    text-align: left;\n    color: inherit;\n    caret-color: var(--color-active);\n    position: absolute;\n    top: 1px;\n    bottom: 1px;\n    left: 1px;\n}\n\n.jf-textfield--focused .jf-textfield__input {\n    /* color: var(--color-active); */\n    color: inherit;\n}\n\n.jf-textfield--outlined.jf-textfield--empty .jf-textfield__label, .jf-textfield--empty .jf-textfield__label {\n    top: 21px;\n    font-size: 16px;\n}\n\n.jf-textfield--focused .jf-textfield__label {\n    color: var(--color-active);\n    visibility: visible;\n    font-size: 12px;\n    top: 10px;\n}\n\n.jf-textfield__label {\n    color: var(--color-inactive);\n    padding-left: 12px;\n    padding-right: 12px;\n    font-size: 12px;\n    left: 0;\n    right: 0;\n    pointer-events: none;\n    position: absolute;\n    display: block;\n    bottom: 0;\n    top: 6px;\n    width: 100%;\n    overflow: hidden;\n    white-space: nowrap;\n    text-align: left;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4, 0, .2, 1);\n}\n\n.jf-textfield--empty .jf-textfield__label {\n    font-size: 16px;\n}\n\n.jf-textfield--outlined .jf-textfield__label {\n    padding-left: 4px;\n    padding-right: 4px;\n    font-size: 12px;\n    left: 12px;\n    bottom: auto;\n    right: auto;\n    width: auto;\n    background-color: white;\n}\n\n.jf-textfield--focused.jf-textfield--outlined .jf-textfield__label {\n    top: -6px;\n    font-size: 12px;\n}\n\n.jf-textfield--focused .jf-textfield__label {\n    top: 6px;\n    font-size: 12px;\n}\n\n.jf-textfield--outlined .jf-textfield__label {\n    top: -6px;\n}\n\n.jf-textfield--outlined .jf-textfield__input {\n    padding-left: 12px;\n    padding-right: 12px;\n    padding-top: 20px;\n    padding-bottom: 18px;\n    top: 2px;\n    bottom: 2px;\n    left: 2px;\n    border-radius: 4px;\n}\n\n/*\n.jf-textfield__bottom-border  {\n    border-bottom: 2px solid var(--color-active);\n    height: 0;\n    position: absolute;\n    top: 46px;\n    transition: width .1s ease-in 0s;\n    width: 0;\n}\n\n.jf-textfield--focused .jf-textfield__bottom-border {\n    width: 100%;\n}\n*/\n\n.jf-textfield__label:after {\n    background-color: var(--color-active);\n    bottom: 0;\n    content: '';\n    height: 2px;\n    left: 45%;\n    position: absolute;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    visibility: hidden;\n    width: 10px;\n}\n\n.jf-textfield--focused {\n    cursor: auto;\n}\n\n.jf-textfield--focused .jf-textfield__label:after {\n    left: 0;\n    visibility: visible;\n    width: 100%;\n}\n\n.jf-textfield--outlined .jf-textfield__label:after {\n    background-color: transparent;\n    display: none;\n}\n\n/*\n.jf-textfield:before {\n  content: '';\n  background-color: rgba(0,0,0,0.06);\n  position: absolute;\n  top: 0;\n  bottom: 20px;\n  width: calc(100% + 32px);\n  z-index: -1;\n  border-radius: 4px;\n  margin-left: -16px;\n}\n*/\n\n.jf-textfield:after {\n    content: '';\n    position: absolute;\n    width: 100%;\n    height: 1px;\n    bottom: 0;\n    background-color: var(--color-inactive);\n    /* background-color: transparent; */\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n}\n\n.jf-textfield--outlined.jf-textfield:after {\n    display: none;\n}\n\n.jf-textfield:after:hover {\n    background-color: var(--color-inactive);\n}\n\n.jf-textfield--focused:after {\n    background-color: transparent;\n}\n\n.jf-textfield:hover:after {\n    background-color: #222;\n    height: 2px;\n}\n\n.jf-textfield--focused:hover:after {\n    background-color: transparent;\n}\n\n\n.jf-textfield__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: -16px;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-textfield svg {\n    position: absolute;\n    top: 16px;\n    right: 12px;\n}\n\n.jf-textfield--invalid svg {\n    color: var(--color-invalid);\n}\n\n\n/*\n.jf-textfield--outlined .jf-textfield__helper-text {\n    padding-left: 12px;\n}\n*/\n\n.jf-textfield--outlined .jf-textfield__label:after {\n    display: none;\n}\n\n\n/* INVALID */\n\n\n.jf-textfield--invalid .jf-textfield__label:after {\n    background-color: var(--color-invalid);\n}\n\n.jf-textfield--invalid .jf-textfield__helper-text {\n    color: var(--color-invalid);\n}\n\n.jf-textfield--invalid .jf-textfield__label {\n    color: var(--color-invalid);\n}\n\n.jf-textfield--invalid:after {\n    background-color: var(--color-invalid) !important;\n}\n\n.jf-textfield--invalid .jf-textfield__input {\n    caret-color: var(--color-invalid);\n}\n\n.jf-textfield--outlined.jf-textfield--invalid {\n    box-shadow: inset 0 0 0 2px var(--color-invalid);\n}\n\n/* DISABLED */\n\n\n.jf-textfield--disabled {\n    color: var(--color-inactive);\n    background-color: #e0e0e0;\n    cursor: default;\n}\n\n.jf-textfield--disabled:hover {\n    background-color: #e0e0e0;\n}\n\n.jf-textfield--disabled:hover:after {\n    background-color: transparent;\n}\n\n.jf-textfield--disabled:after {\n    background-color: transparent;\n    border-bottom: 1px dotted var(--color-inactive);\n}\n\n.jf-textfield--outlined.jf-textfield--disabled:hover {\n    background: white;\n}\n\n.jf-textfield--hidden {\n    display: none;\n}\n\n.jf-textfield--outlined.jf-textfield--disabled:after {\n    display: none;\n}\n\n.jf-textfield--outlined.jf-textfield--disabled {\n    background-color: white;\n    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);\n}\n", ""]);
 
 // exports
 
@@ -8559,6 +8559,347 @@ var _elm_lang$html$Html$summary = _elm_lang$html$Html$node('summary');
 var _elm_lang$html$Html$menuitem = _elm_lang$html$Html$node('menuitem');
 var _elm_lang$html$Html$menu = _elm_lang$html$Html$node('menu');
 
+var _elm_lang$svg$Svg$map = _elm_lang$virtual_dom$VirtualDom$map;
+var _elm_lang$svg$Svg$text = _elm_lang$virtual_dom$VirtualDom$text;
+var _elm_lang$svg$Svg$svgNamespace = A2(
+	_elm_lang$virtual_dom$VirtualDom$property,
+	'namespace',
+	_elm_lang$core$Json_Encode$string('http://www.w3.org/2000/svg'));
+var _elm_lang$svg$Svg$node = F3(
+	function (name, attributes, children) {
+		return A3(
+			_elm_lang$virtual_dom$VirtualDom$node,
+			name,
+			{ctor: '::', _0: _elm_lang$svg$Svg$svgNamespace, _1: attributes},
+			children);
+	});
+var _elm_lang$svg$Svg$svg = _elm_lang$svg$Svg$node('svg');
+var _elm_lang$svg$Svg$foreignObject = _elm_lang$svg$Svg$node('foreignObject');
+var _elm_lang$svg$Svg$animate = _elm_lang$svg$Svg$node('animate');
+var _elm_lang$svg$Svg$animateColor = _elm_lang$svg$Svg$node('animateColor');
+var _elm_lang$svg$Svg$animateMotion = _elm_lang$svg$Svg$node('animateMotion');
+var _elm_lang$svg$Svg$animateTransform = _elm_lang$svg$Svg$node('animateTransform');
+var _elm_lang$svg$Svg$mpath = _elm_lang$svg$Svg$node('mpath');
+var _elm_lang$svg$Svg$set = _elm_lang$svg$Svg$node('set');
+var _elm_lang$svg$Svg$a = _elm_lang$svg$Svg$node('a');
+var _elm_lang$svg$Svg$defs = _elm_lang$svg$Svg$node('defs');
+var _elm_lang$svg$Svg$g = _elm_lang$svg$Svg$node('g');
+var _elm_lang$svg$Svg$marker = _elm_lang$svg$Svg$node('marker');
+var _elm_lang$svg$Svg$mask = _elm_lang$svg$Svg$node('mask');
+var _elm_lang$svg$Svg$pattern = _elm_lang$svg$Svg$node('pattern');
+var _elm_lang$svg$Svg$switch = _elm_lang$svg$Svg$node('switch');
+var _elm_lang$svg$Svg$symbol = _elm_lang$svg$Svg$node('symbol');
+var _elm_lang$svg$Svg$desc = _elm_lang$svg$Svg$node('desc');
+var _elm_lang$svg$Svg$metadata = _elm_lang$svg$Svg$node('metadata');
+var _elm_lang$svg$Svg$title = _elm_lang$svg$Svg$node('title');
+var _elm_lang$svg$Svg$feBlend = _elm_lang$svg$Svg$node('feBlend');
+var _elm_lang$svg$Svg$feColorMatrix = _elm_lang$svg$Svg$node('feColorMatrix');
+var _elm_lang$svg$Svg$feComponentTransfer = _elm_lang$svg$Svg$node('feComponentTransfer');
+var _elm_lang$svg$Svg$feComposite = _elm_lang$svg$Svg$node('feComposite');
+var _elm_lang$svg$Svg$feConvolveMatrix = _elm_lang$svg$Svg$node('feConvolveMatrix');
+var _elm_lang$svg$Svg$feDiffuseLighting = _elm_lang$svg$Svg$node('feDiffuseLighting');
+var _elm_lang$svg$Svg$feDisplacementMap = _elm_lang$svg$Svg$node('feDisplacementMap');
+var _elm_lang$svg$Svg$feFlood = _elm_lang$svg$Svg$node('feFlood');
+var _elm_lang$svg$Svg$feFuncA = _elm_lang$svg$Svg$node('feFuncA');
+var _elm_lang$svg$Svg$feFuncB = _elm_lang$svg$Svg$node('feFuncB');
+var _elm_lang$svg$Svg$feFuncG = _elm_lang$svg$Svg$node('feFuncG');
+var _elm_lang$svg$Svg$feFuncR = _elm_lang$svg$Svg$node('feFuncR');
+var _elm_lang$svg$Svg$feGaussianBlur = _elm_lang$svg$Svg$node('feGaussianBlur');
+var _elm_lang$svg$Svg$feImage = _elm_lang$svg$Svg$node('feImage');
+var _elm_lang$svg$Svg$feMerge = _elm_lang$svg$Svg$node('feMerge');
+var _elm_lang$svg$Svg$feMergeNode = _elm_lang$svg$Svg$node('feMergeNode');
+var _elm_lang$svg$Svg$feMorphology = _elm_lang$svg$Svg$node('feMorphology');
+var _elm_lang$svg$Svg$feOffset = _elm_lang$svg$Svg$node('feOffset');
+var _elm_lang$svg$Svg$feSpecularLighting = _elm_lang$svg$Svg$node('feSpecularLighting');
+var _elm_lang$svg$Svg$feTile = _elm_lang$svg$Svg$node('feTile');
+var _elm_lang$svg$Svg$feTurbulence = _elm_lang$svg$Svg$node('feTurbulence');
+var _elm_lang$svg$Svg$font = _elm_lang$svg$Svg$node('font');
+var _elm_lang$svg$Svg$linearGradient = _elm_lang$svg$Svg$node('linearGradient');
+var _elm_lang$svg$Svg$radialGradient = _elm_lang$svg$Svg$node('radialGradient');
+var _elm_lang$svg$Svg$stop = _elm_lang$svg$Svg$node('stop');
+var _elm_lang$svg$Svg$circle = _elm_lang$svg$Svg$node('circle');
+var _elm_lang$svg$Svg$ellipse = _elm_lang$svg$Svg$node('ellipse');
+var _elm_lang$svg$Svg$image = _elm_lang$svg$Svg$node('image');
+var _elm_lang$svg$Svg$line = _elm_lang$svg$Svg$node('line');
+var _elm_lang$svg$Svg$path = _elm_lang$svg$Svg$node('path');
+var _elm_lang$svg$Svg$polygon = _elm_lang$svg$Svg$node('polygon');
+var _elm_lang$svg$Svg$polyline = _elm_lang$svg$Svg$node('polyline');
+var _elm_lang$svg$Svg$rect = _elm_lang$svg$Svg$node('rect');
+var _elm_lang$svg$Svg$use = _elm_lang$svg$Svg$node('use');
+var _elm_lang$svg$Svg$feDistantLight = _elm_lang$svg$Svg$node('feDistantLight');
+var _elm_lang$svg$Svg$fePointLight = _elm_lang$svg$Svg$node('fePointLight');
+var _elm_lang$svg$Svg$feSpotLight = _elm_lang$svg$Svg$node('feSpotLight');
+var _elm_lang$svg$Svg$altGlyph = _elm_lang$svg$Svg$node('altGlyph');
+var _elm_lang$svg$Svg$altGlyphDef = _elm_lang$svg$Svg$node('altGlyphDef');
+var _elm_lang$svg$Svg$altGlyphItem = _elm_lang$svg$Svg$node('altGlyphItem');
+var _elm_lang$svg$Svg$glyph = _elm_lang$svg$Svg$node('glyph');
+var _elm_lang$svg$Svg$glyphRef = _elm_lang$svg$Svg$node('glyphRef');
+var _elm_lang$svg$Svg$textPath = _elm_lang$svg$Svg$node('textPath');
+var _elm_lang$svg$Svg$text_ = _elm_lang$svg$Svg$node('text');
+var _elm_lang$svg$Svg$tref = _elm_lang$svg$Svg$node('tref');
+var _elm_lang$svg$Svg$tspan = _elm_lang$svg$Svg$node('tspan');
+var _elm_lang$svg$Svg$clipPath = _elm_lang$svg$Svg$node('clipPath');
+var _elm_lang$svg$Svg$colorProfile = _elm_lang$svg$Svg$node('colorProfile');
+var _elm_lang$svg$Svg$cursor = _elm_lang$svg$Svg$node('cursor');
+var _elm_lang$svg$Svg$filter = _elm_lang$svg$Svg$node('filter');
+var _elm_lang$svg$Svg$script = _elm_lang$svg$Svg$node('script');
+var _elm_lang$svg$Svg$style = _elm_lang$svg$Svg$node('style');
+var _elm_lang$svg$Svg$view = _elm_lang$svg$Svg$node('view');
+
+var _elm_lang$svg$Svg_Attributes$writingMode = _elm_lang$virtual_dom$VirtualDom$attribute('writing-mode');
+var _elm_lang$svg$Svg_Attributes$wordSpacing = _elm_lang$virtual_dom$VirtualDom$attribute('word-spacing');
+var _elm_lang$svg$Svg_Attributes$visibility = _elm_lang$virtual_dom$VirtualDom$attribute('visibility');
+var _elm_lang$svg$Svg_Attributes$unicodeBidi = _elm_lang$virtual_dom$VirtualDom$attribute('unicode-bidi');
+var _elm_lang$svg$Svg_Attributes$textRendering = _elm_lang$virtual_dom$VirtualDom$attribute('text-rendering');
+var _elm_lang$svg$Svg_Attributes$textDecoration = _elm_lang$virtual_dom$VirtualDom$attribute('text-decoration');
+var _elm_lang$svg$Svg_Attributes$textAnchor = _elm_lang$virtual_dom$VirtualDom$attribute('text-anchor');
+var _elm_lang$svg$Svg_Attributes$stroke = _elm_lang$virtual_dom$VirtualDom$attribute('stroke');
+var _elm_lang$svg$Svg_Attributes$strokeWidth = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-width');
+var _elm_lang$svg$Svg_Attributes$strokeOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-opacity');
+var _elm_lang$svg$Svg_Attributes$strokeMiterlimit = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-miterlimit');
+var _elm_lang$svg$Svg_Attributes$strokeLinejoin = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-linejoin');
+var _elm_lang$svg$Svg_Attributes$strokeLinecap = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-linecap');
+var _elm_lang$svg$Svg_Attributes$strokeDashoffset = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-dashoffset');
+var _elm_lang$svg$Svg_Attributes$strokeDasharray = _elm_lang$virtual_dom$VirtualDom$attribute('stroke-dasharray');
+var _elm_lang$svg$Svg_Attributes$stopOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('stop-opacity');
+var _elm_lang$svg$Svg_Attributes$stopColor = _elm_lang$virtual_dom$VirtualDom$attribute('stop-color');
+var _elm_lang$svg$Svg_Attributes$shapeRendering = _elm_lang$virtual_dom$VirtualDom$attribute('shape-rendering');
+var _elm_lang$svg$Svg_Attributes$pointerEvents = _elm_lang$virtual_dom$VirtualDom$attribute('pointer-events');
+var _elm_lang$svg$Svg_Attributes$overflow = _elm_lang$virtual_dom$VirtualDom$attribute('overflow');
+var _elm_lang$svg$Svg_Attributes$opacity = _elm_lang$virtual_dom$VirtualDom$attribute('opacity');
+var _elm_lang$svg$Svg_Attributes$mask = _elm_lang$virtual_dom$VirtualDom$attribute('mask');
+var _elm_lang$svg$Svg_Attributes$markerStart = _elm_lang$virtual_dom$VirtualDom$attribute('marker-start');
+var _elm_lang$svg$Svg_Attributes$markerMid = _elm_lang$virtual_dom$VirtualDom$attribute('marker-mid');
+var _elm_lang$svg$Svg_Attributes$markerEnd = _elm_lang$virtual_dom$VirtualDom$attribute('marker-end');
+var _elm_lang$svg$Svg_Attributes$lightingColor = _elm_lang$virtual_dom$VirtualDom$attribute('lighting-color');
+var _elm_lang$svg$Svg_Attributes$letterSpacing = _elm_lang$virtual_dom$VirtualDom$attribute('letter-spacing');
+var _elm_lang$svg$Svg_Attributes$kerning = _elm_lang$virtual_dom$VirtualDom$attribute('kerning');
+var _elm_lang$svg$Svg_Attributes$imageRendering = _elm_lang$virtual_dom$VirtualDom$attribute('image-rendering');
+var _elm_lang$svg$Svg_Attributes$glyphOrientationVertical = _elm_lang$virtual_dom$VirtualDom$attribute('glyph-orientation-vertical');
+var _elm_lang$svg$Svg_Attributes$glyphOrientationHorizontal = _elm_lang$virtual_dom$VirtualDom$attribute('glyph-orientation-horizontal');
+var _elm_lang$svg$Svg_Attributes$fontWeight = _elm_lang$virtual_dom$VirtualDom$attribute('font-weight');
+var _elm_lang$svg$Svg_Attributes$fontVariant = _elm_lang$virtual_dom$VirtualDom$attribute('font-variant');
+var _elm_lang$svg$Svg_Attributes$fontStyle = _elm_lang$virtual_dom$VirtualDom$attribute('font-style');
+var _elm_lang$svg$Svg_Attributes$fontStretch = _elm_lang$virtual_dom$VirtualDom$attribute('font-stretch');
+var _elm_lang$svg$Svg_Attributes$fontSize = _elm_lang$virtual_dom$VirtualDom$attribute('font-size');
+var _elm_lang$svg$Svg_Attributes$fontSizeAdjust = _elm_lang$virtual_dom$VirtualDom$attribute('font-size-adjust');
+var _elm_lang$svg$Svg_Attributes$fontFamily = _elm_lang$virtual_dom$VirtualDom$attribute('font-family');
+var _elm_lang$svg$Svg_Attributes$floodOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('flood-opacity');
+var _elm_lang$svg$Svg_Attributes$floodColor = _elm_lang$virtual_dom$VirtualDom$attribute('flood-color');
+var _elm_lang$svg$Svg_Attributes$filter = _elm_lang$virtual_dom$VirtualDom$attribute('filter');
+var _elm_lang$svg$Svg_Attributes$fill = _elm_lang$virtual_dom$VirtualDom$attribute('fill');
+var _elm_lang$svg$Svg_Attributes$fillRule = _elm_lang$virtual_dom$VirtualDom$attribute('fill-rule');
+var _elm_lang$svg$Svg_Attributes$fillOpacity = _elm_lang$virtual_dom$VirtualDom$attribute('fill-opacity');
+var _elm_lang$svg$Svg_Attributes$enableBackground = _elm_lang$virtual_dom$VirtualDom$attribute('enable-background');
+var _elm_lang$svg$Svg_Attributes$dominantBaseline = _elm_lang$virtual_dom$VirtualDom$attribute('dominant-baseline');
+var _elm_lang$svg$Svg_Attributes$display = _elm_lang$virtual_dom$VirtualDom$attribute('display');
+var _elm_lang$svg$Svg_Attributes$direction = _elm_lang$virtual_dom$VirtualDom$attribute('direction');
+var _elm_lang$svg$Svg_Attributes$cursor = _elm_lang$virtual_dom$VirtualDom$attribute('cursor');
+var _elm_lang$svg$Svg_Attributes$color = _elm_lang$virtual_dom$VirtualDom$attribute('color');
+var _elm_lang$svg$Svg_Attributes$colorRendering = _elm_lang$virtual_dom$VirtualDom$attribute('color-rendering');
+var _elm_lang$svg$Svg_Attributes$colorProfile = _elm_lang$virtual_dom$VirtualDom$attribute('color-profile');
+var _elm_lang$svg$Svg_Attributes$colorInterpolation = _elm_lang$virtual_dom$VirtualDom$attribute('color-interpolation');
+var _elm_lang$svg$Svg_Attributes$colorInterpolationFilters = _elm_lang$virtual_dom$VirtualDom$attribute('color-interpolation-filters');
+var _elm_lang$svg$Svg_Attributes$clip = _elm_lang$virtual_dom$VirtualDom$attribute('clip');
+var _elm_lang$svg$Svg_Attributes$clipRule = _elm_lang$virtual_dom$VirtualDom$attribute('clip-rule');
+var _elm_lang$svg$Svg_Attributes$clipPath = _elm_lang$virtual_dom$VirtualDom$attribute('clip-path');
+var _elm_lang$svg$Svg_Attributes$baselineShift = _elm_lang$virtual_dom$VirtualDom$attribute('baseline-shift');
+var _elm_lang$svg$Svg_Attributes$alignmentBaseline = _elm_lang$virtual_dom$VirtualDom$attribute('alignment-baseline');
+var _elm_lang$svg$Svg_Attributes$zoomAndPan = _elm_lang$virtual_dom$VirtualDom$attribute('zoomAndPan');
+var _elm_lang$svg$Svg_Attributes$z = _elm_lang$virtual_dom$VirtualDom$attribute('z');
+var _elm_lang$svg$Svg_Attributes$yChannelSelector = _elm_lang$virtual_dom$VirtualDom$attribute('yChannelSelector');
+var _elm_lang$svg$Svg_Attributes$y2 = _elm_lang$virtual_dom$VirtualDom$attribute('y2');
+var _elm_lang$svg$Svg_Attributes$y1 = _elm_lang$virtual_dom$VirtualDom$attribute('y1');
+var _elm_lang$svg$Svg_Attributes$y = _elm_lang$virtual_dom$VirtualDom$attribute('y');
+var _elm_lang$svg$Svg_Attributes$xmlSpace = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:space');
+var _elm_lang$svg$Svg_Attributes$xmlLang = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:lang');
+var _elm_lang$svg$Svg_Attributes$xmlBase = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/XML/1998/namespace', 'xml:base');
+var _elm_lang$svg$Svg_Attributes$xlinkType = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:type');
+var _elm_lang$svg$Svg_Attributes$xlinkTitle = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:title');
+var _elm_lang$svg$Svg_Attributes$xlinkShow = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:show');
+var _elm_lang$svg$Svg_Attributes$xlinkRole = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:role');
+var _elm_lang$svg$Svg_Attributes$xlinkHref = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:href');
+var _elm_lang$svg$Svg_Attributes$xlinkArcrole = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:arcrole');
+var _elm_lang$svg$Svg_Attributes$xlinkActuate = A2(_elm_lang$virtual_dom$VirtualDom$attributeNS, 'http://www.w3.org/1999/xlink', 'xlink:actuate');
+var _elm_lang$svg$Svg_Attributes$xChannelSelector = _elm_lang$virtual_dom$VirtualDom$attribute('xChannelSelector');
+var _elm_lang$svg$Svg_Attributes$x2 = _elm_lang$virtual_dom$VirtualDom$attribute('x2');
+var _elm_lang$svg$Svg_Attributes$x1 = _elm_lang$virtual_dom$VirtualDom$attribute('x1');
+var _elm_lang$svg$Svg_Attributes$xHeight = _elm_lang$virtual_dom$VirtualDom$attribute('x-height');
+var _elm_lang$svg$Svg_Attributes$x = _elm_lang$virtual_dom$VirtualDom$attribute('x');
+var _elm_lang$svg$Svg_Attributes$widths = _elm_lang$virtual_dom$VirtualDom$attribute('widths');
+var _elm_lang$svg$Svg_Attributes$width = _elm_lang$virtual_dom$VirtualDom$attribute('width');
+var _elm_lang$svg$Svg_Attributes$viewTarget = _elm_lang$virtual_dom$VirtualDom$attribute('viewTarget');
+var _elm_lang$svg$Svg_Attributes$viewBox = _elm_lang$virtual_dom$VirtualDom$attribute('viewBox');
+var _elm_lang$svg$Svg_Attributes$vertOriginY = _elm_lang$virtual_dom$VirtualDom$attribute('vert-origin-y');
+var _elm_lang$svg$Svg_Attributes$vertOriginX = _elm_lang$virtual_dom$VirtualDom$attribute('vert-origin-x');
+var _elm_lang$svg$Svg_Attributes$vertAdvY = _elm_lang$virtual_dom$VirtualDom$attribute('vert-adv-y');
+var _elm_lang$svg$Svg_Attributes$version = _elm_lang$virtual_dom$VirtualDom$attribute('version');
+var _elm_lang$svg$Svg_Attributes$values = _elm_lang$virtual_dom$VirtualDom$attribute('values');
+var _elm_lang$svg$Svg_Attributes$vMathematical = _elm_lang$virtual_dom$VirtualDom$attribute('v-mathematical');
+var _elm_lang$svg$Svg_Attributes$vIdeographic = _elm_lang$virtual_dom$VirtualDom$attribute('v-ideographic');
+var _elm_lang$svg$Svg_Attributes$vHanging = _elm_lang$virtual_dom$VirtualDom$attribute('v-hanging');
+var _elm_lang$svg$Svg_Attributes$vAlphabetic = _elm_lang$virtual_dom$VirtualDom$attribute('v-alphabetic');
+var _elm_lang$svg$Svg_Attributes$unitsPerEm = _elm_lang$virtual_dom$VirtualDom$attribute('units-per-em');
+var _elm_lang$svg$Svg_Attributes$unicodeRange = _elm_lang$virtual_dom$VirtualDom$attribute('unicode-range');
+var _elm_lang$svg$Svg_Attributes$unicode = _elm_lang$virtual_dom$VirtualDom$attribute('unicode');
+var _elm_lang$svg$Svg_Attributes$underlineThickness = _elm_lang$virtual_dom$VirtualDom$attribute('underline-thickness');
+var _elm_lang$svg$Svg_Attributes$underlinePosition = _elm_lang$virtual_dom$VirtualDom$attribute('underline-position');
+var _elm_lang$svg$Svg_Attributes$u2 = _elm_lang$virtual_dom$VirtualDom$attribute('u2');
+var _elm_lang$svg$Svg_Attributes$u1 = _elm_lang$virtual_dom$VirtualDom$attribute('u1');
+var _elm_lang$svg$Svg_Attributes$type_ = _elm_lang$virtual_dom$VirtualDom$attribute('type');
+var _elm_lang$svg$Svg_Attributes$transform = _elm_lang$virtual_dom$VirtualDom$attribute('transform');
+var _elm_lang$svg$Svg_Attributes$to = _elm_lang$virtual_dom$VirtualDom$attribute('to');
+var _elm_lang$svg$Svg_Attributes$title = _elm_lang$virtual_dom$VirtualDom$attribute('title');
+var _elm_lang$svg$Svg_Attributes$textLength = _elm_lang$virtual_dom$VirtualDom$attribute('textLength');
+var _elm_lang$svg$Svg_Attributes$targetY = _elm_lang$virtual_dom$VirtualDom$attribute('targetY');
+var _elm_lang$svg$Svg_Attributes$targetX = _elm_lang$virtual_dom$VirtualDom$attribute('targetX');
+var _elm_lang$svg$Svg_Attributes$target = _elm_lang$virtual_dom$VirtualDom$attribute('target');
+var _elm_lang$svg$Svg_Attributes$tableValues = _elm_lang$virtual_dom$VirtualDom$attribute('tableValues');
+var _elm_lang$svg$Svg_Attributes$systemLanguage = _elm_lang$virtual_dom$VirtualDom$attribute('systemLanguage');
+var _elm_lang$svg$Svg_Attributes$surfaceScale = _elm_lang$virtual_dom$VirtualDom$attribute('surfaceScale');
+var _elm_lang$svg$Svg_Attributes$style = _elm_lang$virtual_dom$VirtualDom$attribute('style');
+var _elm_lang$svg$Svg_Attributes$string = _elm_lang$virtual_dom$VirtualDom$attribute('string');
+var _elm_lang$svg$Svg_Attributes$strikethroughThickness = _elm_lang$virtual_dom$VirtualDom$attribute('strikethrough-thickness');
+var _elm_lang$svg$Svg_Attributes$strikethroughPosition = _elm_lang$virtual_dom$VirtualDom$attribute('strikethrough-position');
+var _elm_lang$svg$Svg_Attributes$stitchTiles = _elm_lang$virtual_dom$VirtualDom$attribute('stitchTiles');
+var _elm_lang$svg$Svg_Attributes$stemv = _elm_lang$virtual_dom$VirtualDom$attribute('stemv');
+var _elm_lang$svg$Svg_Attributes$stemh = _elm_lang$virtual_dom$VirtualDom$attribute('stemh');
+var _elm_lang$svg$Svg_Attributes$stdDeviation = _elm_lang$virtual_dom$VirtualDom$attribute('stdDeviation');
+var _elm_lang$svg$Svg_Attributes$startOffset = _elm_lang$virtual_dom$VirtualDom$attribute('startOffset');
+var _elm_lang$svg$Svg_Attributes$spreadMethod = _elm_lang$virtual_dom$VirtualDom$attribute('spreadMethod');
+var _elm_lang$svg$Svg_Attributes$speed = _elm_lang$virtual_dom$VirtualDom$attribute('speed');
+var _elm_lang$svg$Svg_Attributes$specularExponent = _elm_lang$virtual_dom$VirtualDom$attribute('specularExponent');
+var _elm_lang$svg$Svg_Attributes$specularConstant = _elm_lang$virtual_dom$VirtualDom$attribute('specularConstant');
+var _elm_lang$svg$Svg_Attributes$spacing = _elm_lang$virtual_dom$VirtualDom$attribute('spacing');
+var _elm_lang$svg$Svg_Attributes$slope = _elm_lang$virtual_dom$VirtualDom$attribute('slope');
+var _elm_lang$svg$Svg_Attributes$seed = _elm_lang$virtual_dom$VirtualDom$attribute('seed');
+var _elm_lang$svg$Svg_Attributes$scale = _elm_lang$virtual_dom$VirtualDom$attribute('scale');
+var _elm_lang$svg$Svg_Attributes$ry = _elm_lang$virtual_dom$VirtualDom$attribute('ry');
+var _elm_lang$svg$Svg_Attributes$rx = _elm_lang$virtual_dom$VirtualDom$attribute('rx');
+var _elm_lang$svg$Svg_Attributes$rotate = _elm_lang$virtual_dom$VirtualDom$attribute('rotate');
+var _elm_lang$svg$Svg_Attributes$result = _elm_lang$virtual_dom$VirtualDom$attribute('result');
+var _elm_lang$svg$Svg_Attributes$restart = _elm_lang$virtual_dom$VirtualDom$attribute('restart');
+var _elm_lang$svg$Svg_Attributes$requiredFeatures = _elm_lang$virtual_dom$VirtualDom$attribute('requiredFeatures');
+var _elm_lang$svg$Svg_Attributes$requiredExtensions = _elm_lang$virtual_dom$VirtualDom$attribute('requiredExtensions');
+var _elm_lang$svg$Svg_Attributes$repeatDur = _elm_lang$virtual_dom$VirtualDom$attribute('repeatDur');
+var _elm_lang$svg$Svg_Attributes$repeatCount = _elm_lang$virtual_dom$VirtualDom$attribute('repeatCount');
+var _elm_lang$svg$Svg_Attributes$renderingIntent = _elm_lang$virtual_dom$VirtualDom$attribute('rendering-intent');
+var _elm_lang$svg$Svg_Attributes$refY = _elm_lang$virtual_dom$VirtualDom$attribute('refY');
+var _elm_lang$svg$Svg_Attributes$refX = _elm_lang$virtual_dom$VirtualDom$attribute('refX');
+var _elm_lang$svg$Svg_Attributes$radius = _elm_lang$virtual_dom$VirtualDom$attribute('radius');
+var _elm_lang$svg$Svg_Attributes$r = _elm_lang$virtual_dom$VirtualDom$attribute('r');
+var _elm_lang$svg$Svg_Attributes$primitiveUnits = _elm_lang$virtual_dom$VirtualDom$attribute('primitiveUnits');
+var _elm_lang$svg$Svg_Attributes$preserveAspectRatio = _elm_lang$virtual_dom$VirtualDom$attribute('preserveAspectRatio');
+var _elm_lang$svg$Svg_Attributes$preserveAlpha = _elm_lang$virtual_dom$VirtualDom$attribute('preserveAlpha');
+var _elm_lang$svg$Svg_Attributes$pointsAtZ = _elm_lang$virtual_dom$VirtualDom$attribute('pointsAtZ');
+var _elm_lang$svg$Svg_Attributes$pointsAtY = _elm_lang$virtual_dom$VirtualDom$attribute('pointsAtY');
+var _elm_lang$svg$Svg_Attributes$pointsAtX = _elm_lang$virtual_dom$VirtualDom$attribute('pointsAtX');
+var _elm_lang$svg$Svg_Attributes$points = _elm_lang$virtual_dom$VirtualDom$attribute('points');
+var _elm_lang$svg$Svg_Attributes$pointOrder = _elm_lang$virtual_dom$VirtualDom$attribute('point-order');
+var _elm_lang$svg$Svg_Attributes$patternUnits = _elm_lang$virtual_dom$VirtualDom$attribute('patternUnits');
+var _elm_lang$svg$Svg_Attributes$patternTransform = _elm_lang$virtual_dom$VirtualDom$attribute('patternTransform');
+var _elm_lang$svg$Svg_Attributes$patternContentUnits = _elm_lang$virtual_dom$VirtualDom$attribute('patternContentUnits');
+var _elm_lang$svg$Svg_Attributes$pathLength = _elm_lang$virtual_dom$VirtualDom$attribute('pathLength');
+var _elm_lang$svg$Svg_Attributes$path = _elm_lang$virtual_dom$VirtualDom$attribute('path');
+var _elm_lang$svg$Svg_Attributes$panose1 = _elm_lang$virtual_dom$VirtualDom$attribute('panose-1');
+var _elm_lang$svg$Svg_Attributes$overlineThickness = _elm_lang$virtual_dom$VirtualDom$attribute('overline-thickness');
+var _elm_lang$svg$Svg_Attributes$overlinePosition = _elm_lang$virtual_dom$VirtualDom$attribute('overline-position');
+var _elm_lang$svg$Svg_Attributes$origin = _elm_lang$virtual_dom$VirtualDom$attribute('origin');
+var _elm_lang$svg$Svg_Attributes$orientation = _elm_lang$virtual_dom$VirtualDom$attribute('orientation');
+var _elm_lang$svg$Svg_Attributes$orient = _elm_lang$virtual_dom$VirtualDom$attribute('orient');
+var _elm_lang$svg$Svg_Attributes$order = _elm_lang$virtual_dom$VirtualDom$attribute('order');
+var _elm_lang$svg$Svg_Attributes$operator = _elm_lang$virtual_dom$VirtualDom$attribute('operator');
+var _elm_lang$svg$Svg_Attributes$offset = _elm_lang$virtual_dom$VirtualDom$attribute('offset');
+var _elm_lang$svg$Svg_Attributes$numOctaves = _elm_lang$virtual_dom$VirtualDom$attribute('numOctaves');
+var _elm_lang$svg$Svg_Attributes$name = _elm_lang$virtual_dom$VirtualDom$attribute('name');
+var _elm_lang$svg$Svg_Attributes$mode = _elm_lang$virtual_dom$VirtualDom$attribute('mode');
+var _elm_lang$svg$Svg_Attributes$min = _elm_lang$virtual_dom$VirtualDom$attribute('min');
+var _elm_lang$svg$Svg_Attributes$method = _elm_lang$virtual_dom$VirtualDom$attribute('method');
+var _elm_lang$svg$Svg_Attributes$media = _elm_lang$virtual_dom$VirtualDom$attribute('media');
+var _elm_lang$svg$Svg_Attributes$max = _elm_lang$virtual_dom$VirtualDom$attribute('max');
+var _elm_lang$svg$Svg_Attributes$mathematical = _elm_lang$virtual_dom$VirtualDom$attribute('mathematical');
+var _elm_lang$svg$Svg_Attributes$maskUnits = _elm_lang$virtual_dom$VirtualDom$attribute('maskUnits');
+var _elm_lang$svg$Svg_Attributes$maskContentUnits = _elm_lang$virtual_dom$VirtualDom$attribute('maskContentUnits');
+var _elm_lang$svg$Svg_Attributes$markerWidth = _elm_lang$virtual_dom$VirtualDom$attribute('markerWidth');
+var _elm_lang$svg$Svg_Attributes$markerUnits = _elm_lang$virtual_dom$VirtualDom$attribute('markerUnits');
+var _elm_lang$svg$Svg_Attributes$markerHeight = _elm_lang$virtual_dom$VirtualDom$attribute('markerHeight');
+var _elm_lang$svg$Svg_Attributes$local = _elm_lang$virtual_dom$VirtualDom$attribute('local');
+var _elm_lang$svg$Svg_Attributes$limitingConeAngle = _elm_lang$virtual_dom$VirtualDom$attribute('limitingConeAngle');
+var _elm_lang$svg$Svg_Attributes$lengthAdjust = _elm_lang$virtual_dom$VirtualDom$attribute('lengthAdjust');
+var _elm_lang$svg$Svg_Attributes$lang = _elm_lang$virtual_dom$VirtualDom$attribute('lang');
+var _elm_lang$svg$Svg_Attributes$keyTimes = _elm_lang$virtual_dom$VirtualDom$attribute('keyTimes');
+var _elm_lang$svg$Svg_Attributes$keySplines = _elm_lang$virtual_dom$VirtualDom$attribute('keySplines');
+var _elm_lang$svg$Svg_Attributes$keyPoints = _elm_lang$virtual_dom$VirtualDom$attribute('keyPoints');
+var _elm_lang$svg$Svg_Attributes$kernelUnitLength = _elm_lang$virtual_dom$VirtualDom$attribute('kernelUnitLength');
+var _elm_lang$svg$Svg_Attributes$kernelMatrix = _elm_lang$virtual_dom$VirtualDom$attribute('kernelMatrix');
+var _elm_lang$svg$Svg_Attributes$k4 = _elm_lang$virtual_dom$VirtualDom$attribute('k4');
+var _elm_lang$svg$Svg_Attributes$k3 = _elm_lang$virtual_dom$VirtualDom$attribute('k3');
+var _elm_lang$svg$Svg_Attributes$k2 = _elm_lang$virtual_dom$VirtualDom$attribute('k2');
+var _elm_lang$svg$Svg_Attributes$k1 = _elm_lang$virtual_dom$VirtualDom$attribute('k1');
+var _elm_lang$svg$Svg_Attributes$k = _elm_lang$virtual_dom$VirtualDom$attribute('k');
+var _elm_lang$svg$Svg_Attributes$intercept = _elm_lang$virtual_dom$VirtualDom$attribute('intercept');
+var _elm_lang$svg$Svg_Attributes$in2 = _elm_lang$virtual_dom$VirtualDom$attribute('in2');
+var _elm_lang$svg$Svg_Attributes$in_ = _elm_lang$virtual_dom$VirtualDom$attribute('in');
+var _elm_lang$svg$Svg_Attributes$ideographic = _elm_lang$virtual_dom$VirtualDom$attribute('ideographic');
+var _elm_lang$svg$Svg_Attributes$id = _elm_lang$virtual_dom$VirtualDom$attribute('id');
+var _elm_lang$svg$Svg_Attributes$horizOriginY = _elm_lang$virtual_dom$VirtualDom$attribute('horiz-origin-y');
+var _elm_lang$svg$Svg_Attributes$horizOriginX = _elm_lang$virtual_dom$VirtualDom$attribute('horiz-origin-x');
+var _elm_lang$svg$Svg_Attributes$horizAdvX = _elm_lang$virtual_dom$VirtualDom$attribute('horiz-adv-x');
+var _elm_lang$svg$Svg_Attributes$height = _elm_lang$virtual_dom$VirtualDom$attribute('height');
+var _elm_lang$svg$Svg_Attributes$hanging = _elm_lang$virtual_dom$VirtualDom$attribute('hanging');
+var _elm_lang$svg$Svg_Attributes$gradientUnits = _elm_lang$virtual_dom$VirtualDom$attribute('gradientUnits');
+var _elm_lang$svg$Svg_Attributes$gradientTransform = _elm_lang$virtual_dom$VirtualDom$attribute('gradientTransform');
+var _elm_lang$svg$Svg_Attributes$glyphRef = _elm_lang$virtual_dom$VirtualDom$attribute('glyphRef');
+var _elm_lang$svg$Svg_Attributes$glyphName = _elm_lang$virtual_dom$VirtualDom$attribute('glyph-name');
+var _elm_lang$svg$Svg_Attributes$g2 = _elm_lang$virtual_dom$VirtualDom$attribute('g2');
+var _elm_lang$svg$Svg_Attributes$g1 = _elm_lang$virtual_dom$VirtualDom$attribute('g1');
+var _elm_lang$svg$Svg_Attributes$fy = _elm_lang$virtual_dom$VirtualDom$attribute('fy');
+var _elm_lang$svg$Svg_Attributes$fx = _elm_lang$virtual_dom$VirtualDom$attribute('fx');
+var _elm_lang$svg$Svg_Attributes$from = _elm_lang$virtual_dom$VirtualDom$attribute('from');
+var _elm_lang$svg$Svg_Attributes$format = _elm_lang$virtual_dom$VirtualDom$attribute('format');
+var _elm_lang$svg$Svg_Attributes$filterUnits = _elm_lang$virtual_dom$VirtualDom$attribute('filterUnits');
+var _elm_lang$svg$Svg_Attributes$filterRes = _elm_lang$virtual_dom$VirtualDom$attribute('filterRes');
+var _elm_lang$svg$Svg_Attributes$externalResourcesRequired = _elm_lang$virtual_dom$VirtualDom$attribute('externalResourcesRequired');
+var _elm_lang$svg$Svg_Attributes$exponent = _elm_lang$virtual_dom$VirtualDom$attribute('exponent');
+var _elm_lang$svg$Svg_Attributes$end = _elm_lang$virtual_dom$VirtualDom$attribute('end');
+var _elm_lang$svg$Svg_Attributes$elevation = _elm_lang$virtual_dom$VirtualDom$attribute('elevation');
+var _elm_lang$svg$Svg_Attributes$edgeMode = _elm_lang$virtual_dom$VirtualDom$attribute('edgeMode');
+var _elm_lang$svg$Svg_Attributes$dy = _elm_lang$virtual_dom$VirtualDom$attribute('dy');
+var _elm_lang$svg$Svg_Attributes$dx = _elm_lang$virtual_dom$VirtualDom$attribute('dx');
+var _elm_lang$svg$Svg_Attributes$dur = _elm_lang$virtual_dom$VirtualDom$attribute('dur');
+var _elm_lang$svg$Svg_Attributes$divisor = _elm_lang$virtual_dom$VirtualDom$attribute('divisor');
+var _elm_lang$svg$Svg_Attributes$diffuseConstant = _elm_lang$virtual_dom$VirtualDom$attribute('diffuseConstant');
+var _elm_lang$svg$Svg_Attributes$descent = _elm_lang$virtual_dom$VirtualDom$attribute('descent');
+var _elm_lang$svg$Svg_Attributes$decelerate = _elm_lang$virtual_dom$VirtualDom$attribute('decelerate');
+var _elm_lang$svg$Svg_Attributes$d = _elm_lang$virtual_dom$VirtualDom$attribute('d');
+var _elm_lang$svg$Svg_Attributes$cy = _elm_lang$virtual_dom$VirtualDom$attribute('cy');
+var _elm_lang$svg$Svg_Attributes$cx = _elm_lang$virtual_dom$VirtualDom$attribute('cx');
+var _elm_lang$svg$Svg_Attributes$contentStyleType = _elm_lang$virtual_dom$VirtualDom$attribute('contentStyleType');
+var _elm_lang$svg$Svg_Attributes$contentScriptType = _elm_lang$virtual_dom$VirtualDom$attribute('contentScriptType');
+var _elm_lang$svg$Svg_Attributes$clipPathUnits = _elm_lang$virtual_dom$VirtualDom$attribute('clipPathUnits');
+var _elm_lang$svg$Svg_Attributes$class = _elm_lang$virtual_dom$VirtualDom$attribute('class');
+var _elm_lang$svg$Svg_Attributes$capHeight = _elm_lang$virtual_dom$VirtualDom$attribute('cap-height');
+var _elm_lang$svg$Svg_Attributes$calcMode = _elm_lang$virtual_dom$VirtualDom$attribute('calcMode');
+var _elm_lang$svg$Svg_Attributes$by = _elm_lang$virtual_dom$VirtualDom$attribute('by');
+var _elm_lang$svg$Svg_Attributes$bias = _elm_lang$virtual_dom$VirtualDom$attribute('bias');
+var _elm_lang$svg$Svg_Attributes$begin = _elm_lang$virtual_dom$VirtualDom$attribute('begin');
+var _elm_lang$svg$Svg_Attributes$bbox = _elm_lang$virtual_dom$VirtualDom$attribute('bbox');
+var _elm_lang$svg$Svg_Attributes$baseProfile = _elm_lang$virtual_dom$VirtualDom$attribute('baseProfile');
+var _elm_lang$svg$Svg_Attributes$baseFrequency = _elm_lang$virtual_dom$VirtualDom$attribute('baseFrequency');
+var _elm_lang$svg$Svg_Attributes$azimuth = _elm_lang$virtual_dom$VirtualDom$attribute('azimuth');
+var _elm_lang$svg$Svg_Attributes$autoReverse = _elm_lang$virtual_dom$VirtualDom$attribute('autoReverse');
+var _elm_lang$svg$Svg_Attributes$attributeType = _elm_lang$virtual_dom$VirtualDom$attribute('attributeType');
+var _elm_lang$svg$Svg_Attributes$attributeName = _elm_lang$virtual_dom$VirtualDom$attribute('attributeName');
+var _elm_lang$svg$Svg_Attributes$ascent = _elm_lang$virtual_dom$VirtualDom$attribute('ascent');
+var _elm_lang$svg$Svg_Attributes$arabicForm = _elm_lang$virtual_dom$VirtualDom$attribute('arabic-form');
+var _elm_lang$svg$Svg_Attributes$amplitude = _elm_lang$virtual_dom$VirtualDom$attribute('amplitude');
+var _elm_lang$svg$Svg_Attributes$allowReorder = _elm_lang$virtual_dom$VirtualDom$attribute('allowReorder');
+var _elm_lang$svg$Svg_Attributes$alphabetic = _elm_lang$virtual_dom$VirtualDom$attribute('alphabetic');
+var _elm_lang$svg$Svg_Attributes$additive = _elm_lang$virtual_dom$VirtualDom$attribute('additive');
+var _elm_lang$svg$Svg_Attributes$accumulate = _elm_lang$virtual_dom$VirtualDom$attribute('accumulate');
+var _elm_lang$svg$Svg_Attributes$accelerate = _elm_lang$virtual_dom$VirtualDom$attribute('accelerate');
+var _elm_lang$svg$Svg_Attributes$accentHeight = _elm_lang$virtual_dom$VirtualDom$attribute('accent-height');
+
 var _elm_lang$html$Html_Attributes$map = _elm_lang$virtual_dom$VirtualDom$mapProperty;
 var _elm_lang$html$Html_Attributes$attribute = _elm_lang$virtual_dom$VirtualDom$attribute;
 var _elm_lang$html$Html_Attributes$contextmenu = function (value) {
@@ -9023,6 +9364,392 @@ var _elm_lang$html$Html_Events$Options = F2(
 	function (a, b) {
 		return {stopPropagation: a, preventDefault: b};
 	});
+
+var _elm_lang$dom$Native_Dom = function() {
+
+var fakeNode = {
+	addEventListener: function() {},
+	removeEventListener: function() {}
+};
+
+var onDocument = on(typeof document !== 'undefined' ? document : fakeNode);
+var onWindow = on(typeof window !== 'undefined' ? window : fakeNode);
+
+function on(node)
+{
+	return function(eventName, decoder, toTask)
+	{
+		return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback) {
+
+			function performTask(event)
+			{
+				var result = A2(_elm_lang$core$Json_Decode$decodeValue, decoder, event);
+				if (result.ctor === 'Ok')
+				{
+					_elm_lang$core$Native_Scheduler.rawSpawn(toTask(result._0));
+				}
+			}
+
+			node.addEventListener(eventName, performTask);
+
+			return function()
+			{
+				node.removeEventListener(eventName, performTask);
+			};
+		});
+	};
+}
+
+var rAF = typeof requestAnimationFrame !== 'undefined'
+	? requestAnimationFrame
+	: function(callback) { callback(); };
+
+function withNode(id, doStuff)
+{
+	return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)
+	{
+		rAF(function()
+		{
+			var node = document.getElementById(id);
+			if (node === null)
+			{
+				callback(_elm_lang$core$Native_Scheduler.fail({ ctor: 'NotFound', _0: id }));
+				return;
+			}
+			callback(_elm_lang$core$Native_Scheduler.succeed(doStuff(node)));
+		});
+	});
+}
+
+
+// FOCUS
+
+function focus(id)
+{
+	return withNode(id, function(node) {
+		node.focus();
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+function blur(id)
+{
+	return withNode(id, function(node) {
+		node.blur();
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+
+// SCROLLING
+
+function getScrollTop(id)
+{
+	return withNode(id, function(node) {
+		return node.scrollTop;
+	});
+}
+
+function setScrollTop(id, desiredScrollTop)
+{
+	return withNode(id, function(node) {
+		node.scrollTop = desiredScrollTop;
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+function toBottom(id)
+{
+	return withNode(id, function(node) {
+		node.scrollTop = node.scrollHeight;
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+function getScrollLeft(id)
+{
+	return withNode(id, function(node) {
+		return node.scrollLeft;
+	});
+}
+
+function setScrollLeft(id, desiredScrollLeft)
+{
+	return withNode(id, function(node) {
+		node.scrollLeft = desiredScrollLeft;
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+function toRight(id)
+{
+	return withNode(id, function(node) {
+		node.scrollLeft = node.scrollWidth;
+		return _elm_lang$core$Native_Utils.Tuple0;
+	});
+}
+
+
+// SIZE
+
+function width(options, id)
+{
+	return withNode(id, function(node) {
+		switch (options.ctor)
+		{
+			case 'Content':
+				return node.scrollWidth;
+			case 'VisibleContent':
+				return node.clientWidth;
+			case 'VisibleContentWithBorders':
+				return node.offsetWidth;
+			case 'VisibleContentWithBordersAndMargins':
+				var rect = node.getBoundingClientRect();
+				return rect.right - rect.left;
+		}
+	});
+}
+
+function height(options, id)
+{
+	return withNode(id, function(node) {
+		switch (options.ctor)
+		{
+			case 'Content':
+				return node.scrollHeight;
+			case 'VisibleContent':
+				return node.clientHeight;
+			case 'VisibleContentWithBorders':
+				return node.offsetHeight;
+			case 'VisibleContentWithBordersAndMargins':
+				var rect = node.getBoundingClientRect();
+				return rect.bottom - rect.top;
+		}
+	});
+}
+
+return {
+	onDocument: F3(onDocument),
+	onWindow: F3(onWindow),
+
+	focus: focus,
+	blur: blur,
+
+	getScrollTop: getScrollTop,
+	setScrollTop: F2(setScrollTop),
+	getScrollLeft: getScrollLeft,
+	setScrollLeft: F2(setScrollLeft),
+	toBottom: toBottom,
+	toRight: toRight,
+
+	height: F2(height),
+	width: F2(width)
+};
+
+}();
+
+var _elm_lang$core$Task$onError = _elm_lang$core$Native_Scheduler.onError;
+var _elm_lang$core$Task$andThen = _elm_lang$core$Native_Scheduler.andThen;
+var _elm_lang$core$Task$spawnCmd = F2(
+	function (router, _p0) {
+		var _p1 = _p0;
+		return _elm_lang$core$Native_Scheduler.spawn(
+			A2(
+				_elm_lang$core$Task$andThen,
+				_elm_lang$core$Platform$sendToApp(router),
+				_p1._0));
+	});
+var _elm_lang$core$Task$fail = _elm_lang$core$Native_Scheduler.fail;
+var _elm_lang$core$Task$mapError = F2(
+	function (convert, task) {
+		return A2(
+			_elm_lang$core$Task$onError,
+			function (_p2) {
+				return _elm_lang$core$Task$fail(
+					convert(_p2));
+			},
+			task);
+	});
+var _elm_lang$core$Task$succeed = _elm_lang$core$Native_Scheduler.succeed;
+var _elm_lang$core$Task$map = F2(
+	function (func, taskA) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return _elm_lang$core$Task$succeed(
+					func(a));
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map2 = F3(
+	function (func, taskA, taskB) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return _elm_lang$core$Task$succeed(
+							A2(func, a, b));
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map3 = F4(
+	function (func, taskA, taskB, taskC) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							function (c) {
+								return _elm_lang$core$Task$succeed(
+									A3(func, a, b, c));
+							},
+							taskC);
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map4 = F5(
+	function (func, taskA, taskB, taskC, taskD) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							function (c) {
+								return A2(
+									_elm_lang$core$Task$andThen,
+									function (d) {
+										return _elm_lang$core$Task$succeed(
+											A4(func, a, b, c, d));
+									},
+									taskD);
+							},
+							taskC);
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map5 = F6(
+	function (func, taskA, taskB, taskC, taskD, taskE) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							function (c) {
+								return A2(
+									_elm_lang$core$Task$andThen,
+									function (d) {
+										return A2(
+											_elm_lang$core$Task$andThen,
+											function (e) {
+												return _elm_lang$core$Task$succeed(
+													A5(func, a, b, c, d, e));
+											},
+											taskE);
+									},
+									taskD);
+							},
+							taskC);
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$sequence = function (tasks) {
+	var _p3 = tasks;
+	if (_p3.ctor === '[]') {
+		return _elm_lang$core$Task$succeed(
+			{ctor: '[]'});
+	} else {
+		return A3(
+			_elm_lang$core$Task$map2,
+			F2(
+				function (x, y) {
+					return {ctor: '::', _0: x, _1: y};
+				}),
+			_p3._0,
+			_elm_lang$core$Task$sequence(_p3._1));
+	}
+};
+var _elm_lang$core$Task$onEffects = F3(
+	function (router, commands, state) {
+		return A2(
+			_elm_lang$core$Task$map,
+			function (_p4) {
+				return {ctor: '_Tuple0'};
+			},
+			_elm_lang$core$Task$sequence(
+				A2(
+					_elm_lang$core$List$map,
+					_elm_lang$core$Task$spawnCmd(router),
+					commands)));
+	});
+var _elm_lang$core$Task$init = _elm_lang$core$Task$succeed(
+	{ctor: '_Tuple0'});
+var _elm_lang$core$Task$onSelfMsg = F3(
+	function (_p7, _p6, _p5) {
+		return _elm_lang$core$Task$succeed(
+			{ctor: '_Tuple0'});
+	});
+var _elm_lang$core$Task$command = _elm_lang$core$Native_Platform.leaf('Task');
+var _elm_lang$core$Task$Perform = function (a) {
+	return {ctor: 'Perform', _0: a};
+};
+var _elm_lang$core$Task$perform = F2(
+	function (toMessage, task) {
+		return _elm_lang$core$Task$command(
+			_elm_lang$core$Task$Perform(
+				A2(_elm_lang$core$Task$map, toMessage, task)));
+	});
+var _elm_lang$core$Task$attempt = F2(
+	function (resultToMessage, task) {
+		return _elm_lang$core$Task$command(
+			_elm_lang$core$Task$Perform(
+				A2(
+					_elm_lang$core$Task$onError,
+					function (_p8) {
+						return _elm_lang$core$Task$succeed(
+							resultToMessage(
+								_elm_lang$core$Result$Err(_p8)));
+					},
+					A2(
+						_elm_lang$core$Task$andThen,
+						function (_p9) {
+							return _elm_lang$core$Task$succeed(
+								resultToMessage(
+									_elm_lang$core$Result$Ok(_p9)));
+						},
+						task))));
+	});
+var _elm_lang$core$Task$cmdMap = F2(
+	function (tagger, _p10) {
+		var _p11 = _p10;
+		return _elm_lang$core$Task$Perform(
+			A2(_elm_lang$core$Task$map, tagger, _p11._0));
+	});
+_elm_lang$core$Native_Platform.effectManagers['Task'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Task$init, onEffects: _elm_lang$core$Task$onEffects, onSelfMsg: _elm_lang$core$Task$onSelfMsg, tag: 'cmd', cmdMap: _elm_lang$core$Task$cmdMap};
+
+var _elm_lang$dom$Dom$blur = _elm_lang$dom$Native_Dom.blur;
+var _elm_lang$dom$Dom$focus = _elm_lang$dom$Native_Dom.focus;
+var _elm_lang$dom$Dom$NotFound = function (a) {
+	return {ctor: 'NotFound', _0: a};
+};
 
 var _elm_lang$core$Native_Bitwise = function() {
 
@@ -12493,6 +13220,25 @@ var _1602$json_form$ErrorMessages$stringifyError = function (e) {
 	}
 };
 
+var _1602$json_form$Json_Form_Config$Config = function (a) {
+	return {textFieldStyle: a};
+};
+var _1602$json_form$Json_Form_Config$Outlined = {ctor: 'Outlined'};
+var _1602$json_form$Json_Form_Config$defaultConfig = {textFieldStyle: _1602$json_form$Json_Form_Config$Outlined};
+var _1602$json_form$Json_Form_Config$Filled = {ctor: 'Filled'};
+var _1602$json_form$Json_Form_Config$decoder = A2(
+	_elm_lang$core$Json_Decode$map,
+	_1602$json_form$Json_Form_Config$Config,
+	A2(
+		_elm_lang$core$Json_Decode$field,
+		'textFieldStyle',
+		A2(
+			_elm_lang$core$Json_Decode$andThen,
+			function (x) {
+				return _elm_lang$core$Native_Utils.eq(x, 'filled') ? _elm_lang$core$Json_Decode$succeed(_1602$json_form$Json_Form_Config$Filled) : (_elm_lang$core$Native_Utils.eq(x, 'outlined') ? _elm_lang$core$Json_Decode$succeed(_1602$json_form$Json_Form_Config$Outlined) : _elm_lang$core$Json_Decode$fail('Unknown text field style'));
+			},
+			_elm_lang$core$Json_Decode$string)));
+
 var _1602$json_schema$Json_Schema_Helpers$debugSubSchema = F2(
 	function (msg, schema) {
 		var a = function () {
@@ -13267,8 +14013,8 @@ var _1602$json_form$Json_Form_Definitions$dictFromListErrors = function (list) {
 		_elm_lang$core$Dict$empty,
 		list);
 };
-var _1602$json_form$Json_Form_Definitions$init = F2(
-	function (schema, v) {
+var _1602$json_form$Json_Form_Definitions$init = F3(
+	function (config, schema, v) {
 		var someValue = _1602$json_value$Json_Value$encode(
 			A2(_elm_lang$core$Maybe$withDefault, _1602$json_value$Json_Value$NullValue, v));
 		var _p1 = function (res) {
@@ -13298,16 +14044,19 @@ var _1602$json_form$Json_Form_Definitions$init = F2(
 		return {
 			schema: schema,
 			focused: _elm_lang$core$Maybe$Nothing,
+			config: config,
 			value: value,
 			errors: _elm_lang$core$Dict$empty,
 			beingEdited: {ctor: '[]'},
-			editedNumber: ''
+			editedNumber: '',
+			showPassword: false
 		};
 	});
-var _1602$json_form$Json_Form_Definitions$Model = F6(
-	function (a, b, c, d, e, f) {
-		return {schema: a, focused: b, value: c, errors: d, beingEdited: e, editedNumber: f};
+var _1602$json_form$Json_Form_Definitions$Model = F8(
+	function (a, b, c, d, e, f, g, h) {
+		return {schema: a, focused: b, config: c, value: d, errors: e, beingEdited: f, editedNumber: g, showPassword: h};
 	});
+var _1602$json_form$Json_Form_Definitions$ToggleShowPassword = {ctor: 'ToggleShowPassword'};
 var _1602$json_form$Json_Form_Definitions$AddItem = F2(
 	function (a, b) {
 		return {ctor: 'AddItem', _0: a, _1: b};
@@ -13322,9 +14071,13 @@ var _1602$json_form$Json_Form_Definitions$EditValue = F2(
 var _1602$json_form$Json_Form_Definitions$FocusNumericInput = function (a) {
 	return {ctor: 'FocusNumericInput', _0: a};
 };
+var _1602$json_form$Json_Form_Definitions$FocusTextInput = function (a) {
+	return {ctor: 'FocusTextInput', _0: a};
+};
 var _1602$json_form$Json_Form_Definitions$FocusInput = function (a) {
 	return {ctor: 'FocusInput', _0: a};
 };
+var _1602$json_form$Json_Form_Definitions$NoOp = {ctor: 'NoOp'};
 var _1602$json_form$Json_Form_Definitions$Array = {ctor: 'Array'};
 var _1602$json_form$Json_Form_Definitions$Object = {ctor: 'Object'};
 var _1602$json_form$Json_Form_Definitions$JsonEditor = {ctor: 'JsonEditor'};
@@ -13935,12 +14688,246 @@ var _1602$json_form$Json_Form_Selection$switch = F5(
 			});
 	});
 
+var _elm_lang$svg$Svg_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$svg$Svg_Events$simpleOn = F2(
+	function (name, msg) {
+		return A2(
+			_elm_lang$svg$Svg_Events$on,
+			name,
+			_elm_lang$core$Json_Decode$succeed(msg));
+	});
+var _elm_lang$svg$Svg_Events$onBegin = _elm_lang$svg$Svg_Events$simpleOn('begin');
+var _elm_lang$svg$Svg_Events$onEnd = _elm_lang$svg$Svg_Events$simpleOn('end');
+var _elm_lang$svg$Svg_Events$onRepeat = _elm_lang$svg$Svg_Events$simpleOn('repeat');
+var _elm_lang$svg$Svg_Events$onAbort = _elm_lang$svg$Svg_Events$simpleOn('abort');
+var _elm_lang$svg$Svg_Events$onError = _elm_lang$svg$Svg_Events$simpleOn('error');
+var _elm_lang$svg$Svg_Events$onResize = _elm_lang$svg$Svg_Events$simpleOn('resize');
+var _elm_lang$svg$Svg_Events$onScroll = _elm_lang$svg$Svg_Events$simpleOn('scroll');
+var _elm_lang$svg$Svg_Events$onLoad = _elm_lang$svg$Svg_Events$simpleOn('load');
+var _elm_lang$svg$Svg_Events$onUnload = _elm_lang$svg$Svg_Events$simpleOn('unload');
+var _elm_lang$svg$Svg_Events$onZoom = _elm_lang$svg$Svg_Events$simpleOn('zoom');
+var _elm_lang$svg$Svg_Events$onActivate = _elm_lang$svg$Svg_Events$simpleOn('activate');
+var _elm_lang$svg$Svg_Events$onClick = _elm_lang$svg$Svg_Events$simpleOn('click');
+var _elm_lang$svg$Svg_Events$onFocusIn = _elm_lang$svg$Svg_Events$simpleOn('focusin');
+var _elm_lang$svg$Svg_Events$onFocusOut = _elm_lang$svg$Svg_Events$simpleOn('focusout');
+var _elm_lang$svg$Svg_Events$onMouseDown = _elm_lang$svg$Svg_Events$simpleOn('mousedown');
+var _elm_lang$svg$Svg_Events$onMouseMove = _elm_lang$svg$Svg_Events$simpleOn('mousemove');
+var _elm_lang$svg$Svg_Events$onMouseOut = _elm_lang$svg$Svg_Events$simpleOn('mouseout');
+var _elm_lang$svg$Svg_Events$onMouseOver = _elm_lang$svg$Svg_Events$simpleOn('mouseover');
+var _elm_lang$svg$Svg_Events$onMouseUp = _elm_lang$svg$Svg_Events$simpleOn('mouseup');
+
+var _1602$json_form$Icons$svgFeatherIcon = F2(
+	function (className, onClickHandler) {
+		var attrs = {
+			ctor: '::',
+			_0: _elm_lang$svg$Svg_Attributes$class(
+				A2(_elm_lang$core$Basics_ops['++'], 'feather feather-', className)),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$fill('none'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$height('24'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$stroke('currentColor'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$strokeLinecap('round'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$strokeLinejoin('round'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$strokeWidth('2'),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$svg$Svg_Attributes$viewBox('0 0 24 24'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$svg$Svg_Attributes$width('24'),
+											_1: {ctor: '[]'}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		};
+		var _p0 = onClickHandler;
+		if (_p0.ctor === 'Just') {
+			return _elm_lang$svg$Svg$svg(
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Events$onClick(_p0._0),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$style('cursor: pointer'),
+						_1: attrs
+					}
+				});
+		} else {
+			return _elm_lang$svg$Svg$svg(attrs);
+		}
+	});
+var _1602$json_form$Icons$errorIcon = A3(
+	_1602$json_form$Icons$svgFeatherIcon,
+	'alert-circle',
+	_elm_lang$core$Maybe$Nothing,
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$svg$Svg$circle,
+			{
+				ctor: '::',
+				_0: _elm_lang$svg$Svg_Attributes$cx('12'),
+				_1: {
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$cy('12'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$r('10'),
+						_1: {ctor: '[]'}
+					}
+				}
+			},
+			{ctor: '[]'}),
+		_1: {
+			ctor: '::',
+			_0: A2(
+				_elm_lang$svg$Svg$line,
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$x1('12'),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$y1('8'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$x2('12'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$y2('12'),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$svg$Svg$line,
+					{
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$x1('12'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$y1('16'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$x2('12'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$y2('16'),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {ctor: '[]'}
+			}
+		}
+	});
+var _1602$json_form$Icons$eye = function (msg) {
+	return A3(
+		_1602$json_form$Icons$svgFeatherIcon,
+		'eye',
+		_elm_lang$core$Maybe$Just(msg),
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$svg$Svg$path,
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$d('M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'),
+					_1: {ctor: '[]'}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$svg$Svg$circle,
+					{
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$cx('12'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$cy('12'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$r('3'),
+								_1: {ctor: '[]'}
+							}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _1602$json_form$Icons$eyeOff = function (msg) {
+	return A3(
+		_1602$json_form$Icons$svgFeatherIcon,
+		'eye-off',
+		_elm_lang$core$Maybe$Just(msg),
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$svg$Svg$path,
+				{
+					ctor: '::',
+					_0: _elm_lang$svg$Svg_Attributes$d('M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24'),
+					_1: {ctor: '[]'}
+				},
+				{ctor: '[]'}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$svg$Svg$line,
+					{
+						ctor: '::',
+						_0: _elm_lang$svg$Svg_Attributes$x1('1'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$svg$Svg_Attributes$y1('1'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$svg$Svg_Attributes$x2('23'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$svg$Svg_Attributes$y2('23'),
+									_1: {ctor: '[]'}
+								}
+							}
+						}
+					},
+					{ctor: '[]'}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+
 var _1602$json_form$Json_Form_TextField$viewNumeric = F5(
 	function (model, schema, isRequired, isDisabled, path) {
 		var uiSpec = _1602$json_form$JsonFormUtil$getUiSpec(schema);
 		var _p0 = A3(_1602$json_form$Json_Form_UiSpec$applyRule, model.value, path, uiSpec.rule);
 		var disabled = _p0._0;
 		var hidden = _p0._1;
+		var actuallyDisabled = isDisabled || disabled;
 		var _p1 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
 		var hasError = _p1._0;
 		var helperText = _p1._1;
@@ -13977,24 +14964,32 @@ var _1602$json_form$Json_Form_TextField$viewNumeric = F5(
 						_0: {ctor: '_Tuple2', _0: 'jf-textfield', _1: true},
 						_1: {
 							ctor: '::',
-							_0: {ctor: '_Tuple2', _0: 'jf-textfield--focused', _1: isFocused},
+							_0: {
+								ctor: '_Tuple2',
+								_0: 'jf-textfield--outlined',
+								_1: _elm_lang$core$Native_Utils.eq(model.config.textFieldStyle, _1602$json_form$Json_Form_Config$Outlined)
+							},
 							_1: {
 								ctor: '::',
-								_0: {
-									ctor: '_Tuple2',
-									_0: 'jf-textfield--empty',
-									_1: _elm_lang$core$Native_Utils.eq(editedValue, '')
-								},
+								_0: {ctor: '_Tuple2', _0: 'jf-textfield--focused', _1: isFocused},
 								_1: {
 									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'jf-textfield--invalid', _1: hasError},
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'jf-textfield--empty',
+										_1: _elm_lang$core$Native_Utils.eq(editedValue, '')
+									},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: isDisabled || disabled},
+										_0: {ctor: '_Tuple2', _0: 'jf-textfield--invalid', _1: hasError},
 										_1: {
 											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'jf-textfield--hidden', _1: hidden},
-											_1: {ctor: '[]'}
+											_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: actuallyDisabled},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'jf-textfield--hidden', _1: hidden},
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -14030,7 +15025,7 @@ var _1602$json_form$Json_Form_TextField$viewNumeric = F5(
 											_0: _elm_lang$html$Html_Attributes$type_('number'),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$disabled(isDisabled || disabled),
+												_0: _elm_lang$html$Html_Attributes$disabled(actuallyDisabled),
 												_1: {ctor: '[]'}
 											}
 										}
@@ -14083,9 +15078,11 @@ var _1602$json_form$Json_Form_TextField$view = F5(
 		var _p2 = A3(_1602$json_form$Json_Form_UiSpec$applyRule, model.value, path, uiSpec.rule);
 		var disabled = _p2._0;
 		var hidden = _p2._1;
+		var actuallyDisabled = isDisabled || disabled;
 		var _p3 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
 		var hasError = _p3._0;
 		var helperText = _p3._1;
+		var icon = isPassword ? (model.showPassword ? _1602$json_form$Icons$eyeOff(_1602$json_form$Json_Form_Definitions$ToggleShowPassword) : _1602$json_form$Icons$eye(_1602$json_form$Json_Form_Definitions$ToggleShowPassword)) : (hasError ? _1602$json_form$Icons$errorIcon : _elm_lang$html$Html$text(''));
 		var editedValue = A2(
 			_elm_lang$core$Maybe$withDefault,
 			'',
@@ -14099,6 +15096,7 @@ var _1602$json_form$Json_Form_TextField$view = F5(
 						_elm_lang$core$Maybe$map,
 						_1602$json_value$Json_Value$getIn(path),
 						model.value))));
+		var id = A2(_elm_lang$core$String$join, '_', path);
 		return A2(
 			_elm_lang$html$Html$div,
 			{
@@ -14111,35 +15109,43 @@ var _1602$json_form$Json_Form_TextField$view = F5(
 							ctor: '::',
 							_0: {
 								ctor: '_Tuple2',
-								_0: 'jf-textfield--focused',
-								_1: A2(
-									_elm_lang$core$Maybe$withDefault,
-									false,
-									A2(
-										_elm_lang$core$Maybe$map,
-										F2(
-											function (x, y) {
-												return _elm_lang$core$Native_Utils.eq(x, y);
-											})(path),
-										model.focused))
+								_0: 'jf-textfield--outlined',
+								_1: _elm_lang$core$Native_Utils.eq(model.config.textFieldStyle, _1602$json_form$Json_Form_Config$Outlined)
 							},
 							_1: {
 								ctor: '::',
 								_0: {
 									ctor: '_Tuple2',
-									_0: 'jf-textfield--empty',
-									_1: _elm_lang$core$Native_Utils.eq(editedValue, '')
+									_0: 'jf-textfield--focused',
+									_1: A2(
+										_elm_lang$core$Maybe$withDefault,
+										false,
+										A2(
+											_elm_lang$core$Maybe$map,
+											F2(
+												function (x, y) {
+													return _elm_lang$core$Native_Utils.eq(x, y);
+												})(path),
+											model.focused))
 								},
 								_1: {
 									ctor: '::',
-									_0: {ctor: '_Tuple2', _0: 'jf-textfield--invalid', _1: hasError},
+									_0: {
+										ctor: '_Tuple2',
+										_0: 'jf-textfield--empty',
+										_1: _elm_lang$core$Native_Utils.eq(editedValue, '')
+									},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: isDisabled || disabled},
+										_0: {ctor: '_Tuple2', _0: 'jf-textfield--invalid', _1: hasError},
 										_1: {
 											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'jf-textfield--hidden', _1: hidden},
-											_1: {ctor: '[]'}
+											_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: actuallyDisabled},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'jf-textfield--hidden', _1: hidden},
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -14178,11 +15184,19 @@ var _1602$json_form$Json_Form_TextField$view = F5(
 										_0: _elm_lang$html$Html_Attributes$value(editedValue),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$disabled(isDisabled || disabled),
+											_0: _elm_lang$html$Html_Attributes$id(id),
 											_1: {
 												ctor: '::',
-												_0: isPassword ? _elm_lang$html$Html_Attributes$type_('password') : _elm_lang$html$Html_Attributes$type_('text'),
-												_1: {ctor: '[]'}
+												_0: _elm_lang$html$Html_Attributes$autocomplete(false),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$disabled(actuallyDisabled),
+													_1: {
+														ctor: '::',
+														_0: (isPassword && (!model.showPassword)) ? _elm_lang$html$Html_Attributes$type_('password') : _elm_lang$html$Html_Attributes$type_('text'),
+														_1: {ctor: '[]'}
+													}
+												}
 											}
 										}
 									}
@@ -14193,34 +15207,38 @@ var _1602$json_form$Json_Form_TextField$view = F5(
 					{ctor: '[]'}),
 				_1: {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$label,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('jf-textfield__label'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text(
-								A2(_1602$json_form$JsonFormUtil$getTitle, isRequired, schema)),
-							_1: {ctor: '[]'}
-						}),
+					_0: icon,
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$div,
+							_elm_lang$html$Html$label,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('jf-textfield__helper-text'),
+								_0: _elm_lang$html$Html_Attributes$class('jf-textfield__label'),
 								_1: {ctor: '[]'}
 							},
 							{
 								ctor: '::',
-								_0: helperText,
+								_0: _elm_lang$html$Html$text(
+									A2(_1602$json_form$JsonFormUtil$getTitle, isRequired, schema)),
 								_1: {ctor: '[]'}
 							}),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('jf-textfield__helper-text'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: helperText,
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			});
@@ -14588,6 +15606,14 @@ var _1602$json_form$Json_Form$update = F2(
 	function (msg, model) {
 		var _p20 = msg;
 		switch (_p20.ctor) {
+			case 'NoOp':
+				return A2(
+					_1602$json_form$JsonFormUtil_ops['=>'],
+					A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'}),
+					_1602$json_form$Json_Form$None);
 			case 'AddItem':
 				var _p23 = _p20._0;
 				var updatedModel = function () {
@@ -14637,26 +15663,54 @@ var _1602$json_form$Json_Form$update = F2(
 							}),
 						{ctor: '[]'}),
 					_1602$json_form$Json_Form$None);
+			case 'FocusTextInput':
+				var _p26 = _p20._0;
+				return A2(
+					_1602$json_form$JsonFormUtil_ops['=>'],
+					A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{
+								focused: _elm_lang$core$Maybe$Just(_p26),
+								beingEdited: A3(
+									_1602$json_form$Json_Form$touch,
+									_elm_lang$core$Maybe$Just(_p26),
+									model.focused,
+									model.beingEdited)
+							}),
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$core$Task$attempt,
+								function (_p25) {
+									return _1602$json_form$Json_Form_Definitions$NoOp;
+								},
+								_elm_lang$dom$Dom$focus(
+									A2(_elm_lang$core$String$join, '_', _p26))),
+							_1: {ctor: '[]'}
+						}),
+					_1602$json_form$Json_Form$None);
 			case 'FocusNumericInput':
-				var _p27 = _p20._0;
-				var _p25 = _p27;
-				if (_p25.ctor === 'Nothing') {
+				var _p29 = _p20._0;
+				var _p27 = _p29;
+				if (_p27.ctor === 'Nothing') {
 					return A3(
 						_1602$json_form$Json_Form$editValue,
 						_elm_lang$core$Native_Utils.update(
 							model,
 							{
-								beingEdited: A3(_1602$json_form$Json_Form$touch, _p27, model.focused, model.beingEdited),
-								focused: _p27
+								beingEdited: A3(_1602$json_form$Json_Form$touch, _p29, model.focused, model.beingEdited),
+								focused: _p29
 							}),
 						A2(
 							_elm_lang$core$Maybe$withDefault,
 							{ctor: '[]'},
 							model.focused),
 						function () {
-							var _p26 = _elm_lang$core$String$toFloat(model.editedNumber);
-							if (_p26.ctor === 'Ok') {
-								return _1602$json_value$Json_Value$NumericValue(_p26._0);
+							var _p28 = _elm_lang$core$String$toFloat(model.editedNumber);
+							if (_p28.ctor === 'Ok') {
+								return _1602$json_value$Json_Value$NumericValue(_p28._0);
 							} else {
 								return _1602$json_value$Json_Value$StringValue(model.editedNumber);
 							}
@@ -14669,7 +15723,7 @@ var _1602$json_form$Json_Form$update = F2(
 							_elm_lang$core$Native_Utils.update(
 								model,
 								{
-									focused: _p27,
+									focused: _p29,
 									editedNumber: A2(
 										_elm_lang$core$Maybe$withDefault,
 										'',
@@ -14681,7 +15735,7 @@ var _1602$json_form$Json_Form$update = F2(
 												_elm_lang$core$Result$toMaybe,
 												A2(
 													_elm_lang$core$Maybe$map,
-													_1602$json_value$Json_Value$getIn(_p25._0),
+													_1602$json_value$Json_Value$getIn(_p27._0),
 													model.value))))
 								}),
 							{ctor: '[]'}),
@@ -14689,20 +15743,20 @@ var _1602$json_form$Json_Form$update = F2(
 				}
 			case 'EditValue':
 				return A3(_1602$json_form$Json_Form$editValue, model, _p20._0, _p20._1);
-			default:
-				var _p29 = _p20._0;
-				var _p28 = _elm_lang$core$String$toFloat(_p29);
-				if (_p28.ctor === 'Ok') {
+			case 'EditNumber':
+				var _p31 = _p20._0;
+				var _p30 = _elm_lang$core$String$toFloat(_p31);
+				if (_p30.ctor === 'Ok') {
 					return A3(
 						_1602$json_form$Json_Form$editValue,
 						_elm_lang$core$Native_Utils.update(
 							model,
-							{editedNumber: _p29}),
+							{editedNumber: _p31}),
 						A2(
 							_elm_lang$core$Maybe$withDefault,
 							{ctor: '[]'},
 							model.focused),
-						_1602$json_value$Json_Value$NumericValue(_p28._0));
+						_1602$json_value$Json_Value$NumericValue(_p30._0));
 				} else {
 					return A2(
 						_1602$json_form$JsonFormUtil_ops['=>'],
@@ -14710,10 +15764,20 @@ var _1602$json_form$Json_Form$update = F2(
 							_elm_lang$core$Platform_Cmd_ops['!'],
 							_elm_lang$core$Native_Utils.update(
 								model,
-								{editedNumber: _p29}),
+								{editedNumber: _p31}),
 							{ctor: '[]'}),
 						_1602$json_form$Json_Form$None);
 				}
+			default:
+				return A2(
+					_1602$json_form$JsonFormUtil_ops['=>'],
+					A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model,
+							{showPassword: !model.showPassword}),
+						{ctor: '[]'}),
+					_1602$json_form$Json_Form$None);
 		}
 	});
 
@@ -17006,8 +18070,9 @@ var _1602$json_form$Demo$init = A2(
 	_elm_lang$core$Platform_Cmd_ops['!'],
 	{
 		showcase: _1602$json_form$Demo$initialShowcase,
-		form: A2(
+		form: A3(
 			_1602$json_form$Json_Form$init,
+			_1602$json_form$Json_Form_Config$defaultConfig,
 			_1602$json_form$Snippets$getSnippet(_1602$json_form$Demo$initialShowcase),
 			_elm_lang$core$Maybe$Nothing),
 		editedValue: _elm_lang$core$Maybe$Nothing,
@@ -17074,8 +18139,9 @@ var _1602$json_form$Demo$update = F2(
 						model,
 						{
 							showcase: _p3,
-							form: A2(
+							form: A3(
 								_1602$json_form$Json_Form$init,
+								_1602$json_form$Json_Form_Config$defaultConfig,
 								_1602$json_form$Snippets$getSnippet(_p3),
 								_elm_lang$core$Maybe$Nothing),
 							editedValue: _elm_lang$core$Maybe$Nothing
