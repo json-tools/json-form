@@ -1,6 +1,6 @@
-
 .jf-textfield {
     position: relative;
+    height: 56px;
     font-size: 16px;
     display: inline-block;
     box-sizing: border-box;
@@ -8,7 +8,6 @@
     max-width: 100%;
     margin: 0;
     padding: 0;
-    padding-top: 20px;
     margin-top: 16px;
     margin-left: 16px;
     margin-bottom: 16px;
@@ -17,6 +16,13 @@
     cursor: pointer;
     background-color: #e8e8e8;
     color: #00000099;
+    outline: none;
+}
+
+.jf-textfield--outlined {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
 .jf-textfield:hover {
@@ -24,14 +30,24 @@
     color: #000000de;
 }
 
+.jf-textfield--focused.jf-textfield--outlined {
+    box-shadow: inset 0 0 0 2px var(--color-active);
+}
+
 .jf-textfield--focused:hover {
     background-color: #e8e8e8;
     color: #00000099;
 }
 
+.jf-textfield--outlined:hover {
+    background: white;
+}
+
 .jf-textfield__input {
     border: none;
     border-radius: 0;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
     outline: none;
     display: block;
     font-size: 16px;
@@ -39,13 +55,17 @@
     margin: 0;
     padding-left: 12px;
     padding-right: 12px;
-    padding-top: 6px;
+    padding-top: 20px;
     padding-bottom: 12px;
-    width: calc(100% - 24px);
+    width: calc(100% - 26px);
     background: 0 0;
     text-align: left;
     color: inherit;
     caret-color: var(--color-active);
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    left: 1px;
 }
 
 .jf-textfield--focused .jf-textfield__input {
@@ -53,8 +73,8 @@
     color: inherit;
 }
 
-.jf-textfield--empty .jf-textfield__label {
-    top: 24px;
+.jf-textfield--outlined.jf-textfield--empty .jf-textfield__label, .jf-textfield--empty .jf-textfield__label {
+    top: 21px;
     font-size: 16px;
 }
 
@@ -76,13 +96,54 @@
     position: absolute;
     display: block;
     bottom: 0;
-    top: 10px;
+    top: 6px;
     width: 100%;
     overflow: hidden;
     white-space: nowrap;
     text-align: left;
     transition-duration: .2s;
     transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+    box-sizing: border-box;
+}
+
+.jf-textfield--empty .jf-textfield__label {
+    font-size: 16px;
+}
+
+.jf-textfield--outlined .jf-textfield__label {
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 12px;
+    left: 12px;
+    bottom: auto;
+    right: auto;
+    width: auto;
+    background-color: white;
+}
+
+.jf-textfield--focused.jf-textfield--outlined .jf-textfield__label {
+    top: -6px;
+    font-size: 12px;
+}
+
+.jf-textfield--focused .jf-textfield__label {
+    top: 6px;
+    font-size: 12px;
+}
+
+.jf-textfield--outlined .jf-textfield__label {
+    top: -6px;
+}
+
+.jf-textfield--outlined .jf-textfield__input {
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 20px;
+    padding-bottom: 18px;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    border-radius: 4px;
 }
 
 /*
@@ -113,10 +174,19 @@
     width: 10px;
 }
 
+.jf-textfield--focused {
+    cursor: auto;
+}
+
 .jf-textfield--focused .jf-textfield__label:after {
     left: 0;
     visibility: visible;
     width: 100%;
+}
+
+.jf-textfield--outlined .jf-textfield__label:after {
+    background-color: transparent;
+    display: none;
 }
 
 /*
@@ -143,6 +213,10 @@
     /* background-color: transparent; */
     transition-duration: .2s;
     transition-timing-function: cubic-bezier(.4,0,.2,1);
+}
+
+.jf-textfield--outlined.jf-textfield:after {
+    display: none;
 }
 
 .jf-textfield:after:hover {
@@ -176,26 +250,57 @@
     color: rgba(0, 0, 0, 0.54);
 }
 
+.jf-textfield svg {
+    position: absolute;
+    top: 16px;
+    right: 12px;
+}
+
+.jf-textfield--invalid svg {
+    color: var(--color-invalid);
+}
+
+
+/*
+.jf-textfield--outlined .jf-textfield__helper-text {
+    padding-left: 12px;
+}
+*/
+
+.jf-textfield--outlined .jf-textfield__label:after {
+    display: none;
+}
+
+
+/* INVALID */
+
 
 .jf-textfield--invalid .jf-textfield__label:after {
-    background-color: var(--color-red--500);
+    background-color: var(--color-invalid);
 }
 
 .jf-textfield--invalid .jf-textfield__helper-text {
-    color: var(--color-red--500);
+    color: var(--color-invalid);
 }
 
 .jf-textfield--invalid .jf-textfield__label {
-    color: var(--color-red--500);
+    color: var(--color-invalid);
 }
 
 .jf-textfield--invalid:after {
-    background-color: var(--color-red--500) !important;
+    background-color: var(--color-invalid) !important;
 }
 
 .jf-textfield--invalid .jf-textfield__input {
-    caret-color: var(--color-red--500);
+    caret-color: var(--color-invalid);
 }
+
+.jf-textfield--outlined.jf-textfield--invalid {
+    box-shadow: inset 0 0 0 2px var(--color-invalid);
+}
+
+/* DISABLED */
+
 
 .jf-textfield--disabled {
     color: var(--color-inactive);
@@ -216,6 +321,19 @@
     border-bottom: 1px dotted var(--color-inactive);
 }
 
+.jf-textfield--outlined.jf-textfield--disabled:hover {
+    background: white;
+}
+
 .jf-textfield--hidden {
     display: none;
+}
+
+.jf-textfield--outlined.jf-textfield--disabled:after {
+    display: none;
+}
+
+.jf-textfield--outlined.jf-textfield--disabled {
+    background-color: white;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
 }

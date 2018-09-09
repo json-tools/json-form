@@ -35,7 +35,7 @@
 
 .jf-switch__track {
     background-color: lightgrey;
-    width: 40px;
+    width: 36px;
     height: 14px;
     position: absolute;
     top: calc(50% - 7px);
@@ -58,12 +58,47 @@
     box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);
 }
 
-.jf-switch--on .jf-switch__thumb {
-    left: 20px;
+.jf-switch .jf-switch__thumb:after {
+    background-color: lightgrey;
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: calc(50% - 10px);
+    left: 0px;
+    opacity: 0;
+    border-radius: 50%;
+    transition-duration: .2s;
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+}
+
+.jf-switch:hover .jf-switch__thumb:after {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: calc(50% - 20px);
+    left: -10px;
+    opacity: 0.2;
+}
+
+.jf-switch:active .jf-switch__thumb:after {
+    opacity: 0.4;
+}
+
+.jf-switch--on .jf-switch__thumb:after {
+    background-color: var(--color-active);
 }
 
 .jf-switch--on .jf-switch__thumb {
-    background-color: var(--color-swatch--500);
+    left: 18px;
+}
+
+.jf-switch--on .jf-switch__thumb {
+    background-color: var(--color-active);
+}
+
+.jf-switch--on .jf-switch__track {
+    background-color: var(--color-active--054);
 }
 
 .jf-switch__helper-text {
@@ -83,14 +118,21 @@
     color: var(--color-red--500);
 }
 
+
+.jf-switch--disabled {
+    opacity: 0.54;
+}
+
+.jf-switch--disabled:hover .jf-switch__thumb:after {
+    opacity: 0;
+}
+
 .jf-switch--disabled .jf-switch__label,
 .jf-switch--disabled .jf-checkbox__helper-text {
-    color: var(--color-inactive);
     cursor: default;
 }
 
 .jf-switch--disabled .jf-switch__thumb {
-    background-color: var(--color-inactive);
     cursor: default;
 }
 

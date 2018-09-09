@@ -76,6 +76,7 @@ view model schema isRequired isDisabled path =
             , onInput <| \str -> EditValue path (JsonValue.StringValue str)
             , value <| editedValue
             , Html.Attributes.id id
+            , Html.Attributes.name id
             , Html.Attributes.autocomplete False
             , Html.Attributes.disabled actuallyDisabled
             , if isPassword && not model.showPassword then
@@ -85,6 +86,7 @@ view model schema isRequired isDisabled path =
                 type_ "text"
             ]
             []
+        , icon
         , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
         , div [ class "jf-textfield__helper-text" ] [ helperText ]
         ]
@@ -93,6 +95,9 @@ view model schema isRequired isDisabled path =
 viewNumeric : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
 viewNumeric model schema isRequired isDisabled path =
     let
+        id =
+            path |> String.join "_"
+
         isFocused =
             model.focused
                 |> Maybe.map ((==) path)
@@ -137,6 +142,8 @@ viewNumeric model schema isRequired isDisabled path =
             , onFocus <| FocusNumericInput (Just path)
             , onBlur <| FocusNumericInput Nothing
             , onInput <| EditNumber
+            , Html.Attributes.id id
+            , Html.Attributes.name id
             , value <| editedValue
             , type_ "number"
             , Html.Attributes.disabled actuallyDisabled

@@ -64,6 +64,7 @@ type Msg
     | EditValue Path JsonValue
     | EditNumber String
     | AddItem Path Int
+    | ToggleShowPassword
 
 
 type EditingMode

@@ -297,6 +297,9 @@ update msg model =
                 _ ->
                     { model | editedNumber = str } ! [] => None
 
+        ToggleShowPassword ->
+            { model | showPassword = not model.showPassword } ! [] => None
+
 
 touch : Maybe Path -> Maybe Path -> List Path -> List Path
 touch path focused beingEdited =
