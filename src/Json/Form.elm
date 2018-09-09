@@ -4,15 +4,18 @@ module Json.Form exposing
     , Msg
     , init
     , update
+    , updateConfig
     , view
     )
 
 import Dict exposing (Dict)
+import Dom
 import ErrorMessages exposing (stringifyError)
 import Html exposing (..)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 import Json.Decode as Decode exposing (decodeValue)
+import Json.Form.Config exposing (Config)
 import Json.Form.Definitions as Definitions exposing (EditingMode(..), Msg(..), Path)
 import Json.Form.Selection as Selection
 import Json.Form.TextField as TextField
@@ -22,6 +25,7 @@ import Json.Schema.Definitions exposing (..)
 import Json.Schema.Validation exposing (Error)
 import Json.Value as JsonValue exposing (JsonValue(..))
 import JsonFormUtil as Util exposing ((=>), getUiSpec, jsonValueToString)
+import Task
 
 
 type ExternalMsg
@@ -37,7 +41,7 @@ type alias Msg =
     Definitions.Msg
 
 
-init : Schema -> Maybe JsonValue -> Model
+init : Config -> Schema -> Maybe JsonValue -> Model
 init =
     Definitions.init
 
@@ -207,9 +211,17 @@ viewObject model schema isRequired isDisabled path =
                 text ""
 
 
+updateConfig : Config -> Model -> Model
+updateConfig config model =
+    { model | config = config }
+
+
 update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )
 update msg model =
     case msg of
+        NoOp ->
+            model ! [] => None
+
         AddItem path index ->
             let
                 newPropPath =

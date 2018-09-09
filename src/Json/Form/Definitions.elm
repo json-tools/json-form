@@ -2,6 +2,7 @@ module Json.Form.Definitions exposing (EditingMode(..), Model, Msg(..), Path, in
 
 import Dict exposing (Dict)
 import ErrorMessages exposing (stringifyError)
+import Json.Form.Config exposing (Config)
 import Json.Schema
 import Json.Schema.Definitions exposing (..)
 import Json.Schema.Validation exposing (Error)
@@ -11,15 +12,17 @@ import Json.Value as JsonValue exposing (JsonValue)
 type alias Model =
     { schema : Schema
     , focused : Maybe Path
+    , config : Config
     , value : Maybe JsonValue
     , errors : Dict Path (List String)
     , beingEdited : List Path
     , editedNumber : String
+    , showPassword : Bool
     }
 
 
-init : Schema -> Maybe JsonValue -> Model
-init schema v =
+init : Config -> Schema -> Maybe JsonValue -> Model
+init config schema v =
     let
         someValue =
             v

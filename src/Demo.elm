@@ -5,6 +5,7 @@ import Html.Attributes exposing (class, classList, style)
 import Html.Events exposing (onClick)
 import Json.Encode
 import Json.Form
+import Json.Form.Config
 import Json.Schema.Definitions
 import Json.Value as JsonValue exposing (JsonValue)
 import JsonViewer
@@ -27,7 +28,7 @@ initialShowcase =
 init : ( Model, Cmd Msg )
 init =
     { showcase = initialShowcase
-    , form = Json.Form.init (getSnippet initialShowcase) Nothing
+    , form = Json.Form.init Json.Form.Config.defaultConfig (getSnippet initialShowcase) Nothing
     , editedValue = Nothing
     , expandedNodes = [ [] ]
     }
@@ -69,7 +70,7 @@ update message model =
                 ! []
 
         SetShowcase s ->
-            { model | showcase = s, form = Json.Form.init (getSnippet s) Nothing, editedValue = Nothing } ! []
+            { model | showcase = s, form = Json.Form.init Json.Form.Config.defaultConfig (getSnippet s) Nothing, editedValue = Nothing } ! []
 
 
 view : Model -> Html Msg

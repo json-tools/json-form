@@ -3,6 +3,8 @@ module Json.Form.TextField exposing (view, viewNumeric)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onBlur, onFocus, onInput)
+import Icons exposing (errorIcon, eye, eyeOff)
+import Json.Form.Config exposing (TextFieldStyle(Outlined))
 import Json.Form.Definitions exposing (..)
 import Json.Form.Helper as Helper
 import Json.Form.UiSpec exposing (Rule(..), UiSpec, WidgetType(..), applyRule)
