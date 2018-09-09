@@ -1,7 +1,22 @@
 .jf-textfield {
+    --field-height: 56px;
+    --label-top: 21px;
+    --large-font-size: 16px;
+    --side-padding: 12px;
+    --filled-background: #f5f5f5;
+}
+
+.jf-textfield--dense {
+    --field-height: 44px;
+    --label-top: 17px;
+    --large-font-size: 12px;
+    --side-padding: 8px;
+}
+
+.jf-textfield {
     position: relative;
-    height: 56px;
-    font-size: 16px;
+    height: var(--field-height);
+    font-size: var(--large-font-size);
     display: inline-block;
     box-sizing: border-box;
     width: 280px;
@@ -14,7 +29,7 @@
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
     cursor: pointer;
-    background-color: #e8e8e8;
+    background-color: var(--filled-background);
     color: #00000099;
     outline: none;
 }
@@ -50,14 +65,14 @@
     border-top-left-radius: 4px;
     outline: none;
     display: block;
-    font-size: 16px;
+    font-size: var(--large-font-size);
     font-family: var(--font-family);
     margin: 0;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: var(--side-padding);
+    padding-right: var(--side-padding);
     padding-top: 20px;
     padding-bottom: 12px;
-    width: calc(100% - 26px);
+    width: calc(100% - var(--side-padding) * 2 - 2px);
     background: 0 0;
     text-align: left;
     color: inherit;
@@ -74,8 +89,8 @@
 }
 
 .jf-textfield--outlined.jf-textfield--empty .jf-textfield__label, .jf-textfield--empty .jf-textfield__label {
-    top: 21px;
-    font-size: 16px;
+    top: var(--label-top);
+    font-size: var(--large-font-size);
 }
 
 .jf-textfield--focused .jf-textfield__label {
@@ -87,8 +102,8 @@
 
 .jf-textfield__label {
     color: var(--color-inactive);
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: var(--side-padding);
+    padding-right: var(--side-padding);
     font-size: 12px;
     left: 0;
     right: 0;
@@ -107,14 +122,14 @@
 }
 
 .jf-textfield--empty .jf-textfield__label {
-    font-size: 16px;
+    font-size: var(--large-font-size);
 }
 
 .jf-textfield--outlined .jf-textfield__label {
     padding-left: 4px;
     padding-right: 4px;
     font-size: 12px;
-    left: 12px;
+    left: var(--side-padding);
     bottom: auto;
     right: auto;
     width: auto;
@@ -136,8 +151,8 @@
 }
 
 .jf-textfield--outlined .jf-textfield__input {
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: var(--side-padding);
+    padding-right: var(--side-padding);
     padding-top: 20px;
     padding-bottom: 18px;
     top: 2px;
@@ -245,15 +260,15 @@
     position: absolute;
     bottom: -16px;
     font-size: 12px;
-    padding-left: 12px;
-    padding-right: 12px;
+    padding-left: var(--side-padding);
+    padding-right: var(--side-padding);
     color: rgba(0, 0, 0, 0.54);
 }
 
 .jf-textfield svg {
     position: absolute;
     top: 16px;
-    right: 12px;
+    right: var(--side-padding);
 }
 
 .jf-textfield--invalid svg {

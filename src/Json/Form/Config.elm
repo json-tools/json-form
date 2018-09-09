@@ -1,10 +1,11 @@
 module Json.Form.Config exposing (Config, TextFieldStyle(..), decoder, defaultConfig)
 
-import Json.Decode as Decode exposing (Decoder, fail, field, string, succeed)
+import Json.Decode as Decode exposing (Decoder, bool, fail, field, string, succeed)
 
 
 type alias Config =
     { textFieldStyle : TextFieldStyle
+    , dense : Bool
     }
 
 
@@ -16,12 +17,13 @@ type TextFieldStyle
 defaultConfig : Config
 defaultConfig =
     { textFieldStyle = Filled
+    , dense = False
     }
 
 
 decoder : Decoder Config
 decoder =
-    Decode.map Config
+    Decode.map2 Config
         (field "textFieldStyle" <|
             Decode.andThen
                 (\x ->
@@ -37,3 +39,4 @@ decoder =
             <|
                 string
         )
+        (field "dense" bool)

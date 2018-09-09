@@ -38,6 +38,9 @@ view model schema isRequired isDisabled path =
         ( disabled, hidden ) =
             applyRule model.value path uiSpec.rule
 
+        actuallyDisabled =
+            isDisabled || disabled
+
         icon =
             if isPassword then
                 if model.showPassword then
@@ -51,14 +54,12 @@ view model schema isRequired isDisabled path =
 
             else
                 text ""
-
-        actuallyDisabled =
-            isDisabled || disabled
     in
     div
         [ classList
             [ ( "jf-textfield", True )
             , ( "jf-textfield--outlined", model.config.textFieldStyle == Outlined )
+            , ( "jf-textfield--dense", model.config.dense )
             , ( "jf-textfield--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
             , ( "jf-textfield--empty", editedValue == "" )
             , ( "jf-textfield--invalid", hasError )
@@ -130,6 +131,7 @@ viewNumeric model schema isRequired isDisabled path =
         [ classList
             [ ( "jf-textfield", True )
             , ( "jf-textfield--outlined", model.config.textFieldStyle == Outlined )
+            , ( "jf-textfield--dense", model.config.dense )
             , ( "jf-textfield--focused", isFocused )
             , ( "jf-textfield--empty", editedValue == "" )
             , ( "jf-textfield--invalid", hasError )
