@@ -1,3 +1,11 @@
+:root {
+    --color-active: #27b9cc;
+    --color-inactive: #8a8a8a;
+    --color-invalid: #d95559;
+    --color-active--054: #8fd9e3;
+    box-sizing: border-box;
+}
+
 .app-topbar {
   background-color: var(--color-mono--700);
   color: var(--color-mono--300);

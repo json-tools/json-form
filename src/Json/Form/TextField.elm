@@ -16,6 +16,9 @@ import JsonFormUtil as Util exposing (getTitle, getUiSpec, jsonValueToString)
 view : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
 view model schema isRequired isDisabled path =
     let
+        id =
+            path |> String.join "_"
+
         editedValue =
             model.value
                 |> Maybe.map (JsonValue.getIn path)
@@ -34,16 +37,37 @@ view model schema isRequired isDisabled path =
 
         ( disabled, hidden ) =
             applyRule model.value path uiSpec.rule
+
+        icon =
+            if isPassword then
+                if model.showPassword then
+                    eyeOff ToggleShowPassword
+
+                else
+                    eye ToggleShowPassword
+
+            else if hasError then
+                errorIcon
+
+            else
+                text ""
+
+        actuallyDisabled =
+            isDisabled || disabled
     in
     div
         [ classList
             [ ( "jf-textfield", True )
+            , ( "jf-textfield--outlined", model.config.textFieldStyle == Outlined )
             , ( "jf-textfield--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
             , ( "jf-textfield--empty", editedValue == "" )
             , ( "jf-textfield--invalid", hasError )
-            , ( "jf-textfield--disabled", isDisabled || disabled )
+            , ( "jf-textfield--disabled", actuallyDisabled )
             , ( "jf-textfield--hidden", hidden )
             ]
+
+        -- , onFocus <| FocusTextInput path
+        -- , Html.Attributes.tabindex -1
         ]
         [ input
             [ class "jf-textfield__input"
@@ -51,8 +75,10 @@ view model schema isRequired isDisabled path =
             , onBlur <| FocusInput Nothing
             , onInput <| \str -> EditValue path (JsonValue.StringValue str)
             , value <| editedValue
-            , Html.Attributes.disabled (isDisabled || disabled)
-            , if isPassword then
+            , Html.Attributes.id id
+            , Html.Attributes.autocomplete False
+            , Html.Attributes.disabled actuallyDisabled
+            , if isPassword && not model.showPassword then
                 type_ "password"
 
               else
@@ -91,14 +117,18 @@ viewNumeric model schema isRequired isDisabled path =
 
         ( disabled, hidden ) =
             applyRule model.value path uiSpec.rule
+
+        actuallyDisabled =
+            isDisabled || disabled
     in
     div
         [ classList
             [ ( "jf-textfield", True )
+            , ( "jf-textfield--outlined", model.config.textFieldStyle == Outlined )
             , ( "jf-textfield--focused", isFocused )
             , ( "jf-textfield--empty", editedValue == "" )
             , ( "jf-textfield--invalid", hasError )
-            , ( "jf-textfield--disabled", isDisabled || disabled )
+            , ( "jf-textfield--disabled", actuallyDisabled )
             , ( "jf-textfield--hidden", hidden )
             ]
         ]
@@ -109,7 +139,7 @@ viewNumeric model schema isRequired isDisabled path =
             , onInput <| EditNumber
             , value <| editedValue
             , type_ "number"
-            , Html.Attributes.disabled (isDisabled || disabled)
+            , Html.Attributes.disabled actuallyDisabled
             ]
             []
         , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]

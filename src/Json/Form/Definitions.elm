@@ -47,15 +47,19 @@ init config schema v =
     in
     { schema = schema
     , focused = Nothing
+    , config = config
     , value = value
     , errors = Dict.empty
     , beingEdited = []
     , editedNumber = ""
+    , showPassword = False
     }
 
 
 type Msg
-    = FocusInput (Maybe Path)
+    = NoOp
+    | FocusInput (Maybe Path)
+    | FocusTextInput Path
     | FocusNumericInput (Maybe Path)
     | EditValue Path JsonValue
     | EditNumber String

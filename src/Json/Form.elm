@@ -251,6 +251,14 @@ update msg model =
                 ! []
                 => None
 
+        FocusTextInput focused ->
+            { model
+                | focused = Just focused
+                , beingEdited = touch (Just focused) model.focused model.beingEdited
+            }
+                ! [ focused |> String.join "_" |> Dom.focus |> Task.attempt (\_ -> NoOp) ]
+                => None
+
         FocusNumericInput focused ->
             case focused of
                 Nothing ->

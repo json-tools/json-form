@@ -1,7 +1,11 @@
 
 :host {
     --font-family: helvetica, sans-serif;
-    --color-active: #2a79ff;
+    --color-active: #27b9cc;
+    --color-active--054: #8fd9e3;
     --color-inactive: #8a8a8a;
+    --color-invalid: #c72227;
     --color-swatch--500: #009688;
+    box-sizing: border-box;
 }
+
