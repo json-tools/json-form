@@ -164,7 +164,9 @@ viewArray model schema isRequired isDisabled path =
                                     viewNode model itemSchema isRequired (isDisabled || disabled) (path ++ [ propName ])
                                 )
                             |> div []
-                        , button [ class "button", onClick <| AddItem path (List.length list) ] [ text "ADD ITEM" ]
+                        , div [ class "array-item-add" ]
+                            [ button [ class "button", onClick <| AddItem path (List.length list) ] [ text "ADD ITEM" ]
+                            ]
                         ]
                             |> div []
 

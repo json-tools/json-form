@@ -1,3 +1,11 @@
 @import './textfield.css';
 @import './switch.css';
 @import './checkbox.css';
+
+.array-item-add {
+    padding: 16px;
+}
+
+.array-item-add .button {
+    font-size: 16px;
+}
