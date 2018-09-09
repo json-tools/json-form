@@ -14,6 +14,9 @@ import JsonFormUtil as Util exposing (getTitle, getUiSpec, jsonValueToString)
 switch : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
 switch model schema isRequired isDisabled path =
     let
+        id =
+            path |> String.join "_"
+
         isChecked =
             case model.value |> Maybe.andThen (JsonValue.getIn path >> Result.toMaybe) of
                 Just (BoolValue x) ->
@@ -30,6 +33,9 @@ switch model schema isRequired isDisabled path =
                 |> getUiSpec
                 |> .rule
                 |> applyRule model.value path
+
+        actuallyDisabled =
+            isDisabled || disabled
     in
     label
         [ classList
@@ -37,7 +43,7 @@ switch model schema isRequired isDisabled path =
             , ( "jf-switch--on", isChecked )
             , ( "jf-switch--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
             , ( "jf-switch--invalid", hasError )
-            , ( "jf-switch--disabled", isDisabled || disabled )
+            , ( "jf-switch--disabled", actuallyDisabled )
             , ( "jf-switch--hidden", hidden )
             ]
         ]
@@ -48,7 +54,9 @@ switch model schema isRequired isDisabled path =
             , onFocus <| FocusInput (Just path)
             , onBlur <| FocusInput Nothing
             , onCheck <| (JsonValue.BoolValue >> EditValue path)
-            , Html.Attributes.disabled (isDisabled || disabled)
+            , Html.Attributes.id id
+            , Html.Attributes.name id
+            , Html.Attributes.disabled actuallyDisabled
             ]
             []
         , span [ class "jf-switch__label" ] [ schema |> getTitle isRequired |> text ]
@@ -61,6 +69,9 @@ switch model schema isRequired isDisabled path =
 checkbox : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
 checkbox model schema isRequired isDisabled path =
     let
+        id =
+            path |> String.join "_"
+
         isChecked =
             case model.value |> Maybe.andThen (JsonValue.getIn path >> Result.toMaybe) of
                 Just (BoolValue x) ->
@@ -77,6 +88,9 @@ checkbox model schema isRequired isDisabled path =
                 |> getUiSpec
                 |> .rule
                 |> applyRule model.value path
+
+        actuallyDisabled =
+            isDisabled || disabled
     in
     label
         [ classList
@@ -84,7 +98,7 @@ checkbox model schema isRequired isDisabled path =
             , ( "jf-checkbox--on", isChecked )
             , ( "jf-checkbox--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
             , ( "jf-checkbox--invalid", hasError )
-            , ( "jf-checkbox--disabled", isDisabled || disabled )
+            , ( "jf-checkbox--disabled", actuallyDisabled )
             , ( "jf-checkbox--hidden", hidden )
             ]
         ]
@@ -92,10 +106,12 @@ checkbox model schema isRequired isDisabled path =
             [ type_ "checkbox"
             , class "jf-checkbox__input"
             , checked isChecked
+            , Html.Attributes.id id
+            , Html.Attributes.name id
+            , Html.Attributes.disabled actuallyDisabled
             , onFocus <| FocusInput (Just path)
             , onBlur <| FocusInput Nothing
             , onCheck <| (JsonValue.BoolValue >> EditValue path)
-            , Html.Attributes.disabled (isDisabled || disabled)
             ]
             []
         , span [ class "jf-checkbox__label" ] [ schema |> getTitle isRequired |> text ]

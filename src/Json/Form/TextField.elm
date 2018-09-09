@@ -73,7 +73,7 @@ view model schema isRequired isDisabled path =
             [ class "jf-textfield__input"
             , onFocus <| FocusInput (Just path)
             , onBlur <| FocusInput Nothing
-            , onInput <| \str -> EditValue path (JsonValue.StringValue str)
+            , onInput <| \str -> EditValue path <| JsonValue.StringValue str
             , value <| editedValue
             , Html.Attributes.id id
             , Html.Attributes.name id
