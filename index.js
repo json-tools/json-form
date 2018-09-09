@@ -89,7 +89,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ":root {\n    --color-active: #27b9cc;\n    --color-inactive: #8a8a8a;\n    --color-invalid: #d95559;\n}\n\n.app-topbar {\n  background-color: var(--color-mono--700);\n  color: var(--color-mono--300);\n  font-size: 14px;\n}\n\n.app-content {\n  padding: 16px;\n}\n", ""]);
+exports.push([module.i, ":root {\n    --color-active: #27b9cc;\n    --color-inactive: #8a8a8a;\n    --color-invalid: #d95559;\n    --color-active--054: #8fd9e3;\n    box-sizing: border-box;\n}\n\n.app-topbar {\n  background-color: var(--color-mono--700);\n  color: var(--color-mono--300);\n  font-size: 14px;\n}\n\n.app-content {\n  padding: 16px;\n}\n", ""]);
 
 // exports
 
@@ -104,7 +104,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.jf-checkbox {\n    width: 280px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-checkbox__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-checkbox__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 44px;\n    cursor: pointer;\n}\n\n.jf-checkbox__box-outline {\n    width: 16px;\n    height: 16px;\n    position: absolute;\n    top: calc(50% - 8px);\n    left: 12px;\n    border-radius: 2px;\n    border: 2px solid #0000008a;\n    cursor: pointer;\n    z-index: 2;\n}\n\n.jf-checkbox__tick-outline {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iY2xpcCI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Ik0gMCwwIDAsMSAxLDEgMSwwIDAsMCB6IE0gMC44NTM0Mzc1LDAuMTY3MTg3NSAwLjk1OTY4NzUsMC4yNzMxMjUgMC40MjkzNzUsMC44MDM0Mzc1IDAuMzIzMTI1LDAuOTA5Njg3NSAwLjIxNzE4NzUsMC44MDM0Mzc1IDAuMDQwMzEyNSwwLjYyNjg3NSAwLjE0NjU2MjUsMC41MjA2MjUgMC4zMjMxMjUsMC42OTc1IDAuODUzNDM3NSwwLjE2NzE4NzUgeiIKICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KICAgIDwvY2xpcFBhdGg+CiAgICA8bWFzayBpZD0ibWFzayIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgbWFza0NvbnRlbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICA8cGF0aAogICAgICAgICBkPSJNIDAsMCAwLDEgMSwxIDEsMCAwLDAgeiBNIDAuODUzNDM3NSwwLjE2NzE4NzUgMC45NTk2ODc1LDAuMjczMTI1IDAuNDI5Mzc1LDAuODAzNDM3NSAwLjMyMzEyNSwwLjkwOTY4NzUgMC4yMTcxODc1LDAuODAzNDM3NSAwLjA0MDMxMjUsMC42MjY4NzUgMC4xNDY1NjI1LDAuNTIwNjI1IDAuMzIzMTI1LDAuNjk3NSAwLjg1MzQzNzUsMC4xNjcxODc1IHoiCiAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmUiIC8+CiAgICA8L21hc2s+CiAgPC9kZWZzPgogIDxyZWN0CiAgICAgd2lkdGg9IjEiCiAgICAgaGVpZ2h0PSIxIgogICAgIHg9IjAiCiAgICAgeT0iMCIKICAgICBjbGlwLXBhdGg9InVybCgjY2xpcCkiCiAgICAgc3R5bGU9ImZpbGw6IzAwMDAwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KPC9zdmc+Cg==);\n    background: 0 0;\n    transition-duration: .28s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    transition-property: background;\n}\n\n\n.jf-checkbox--on .jf-checkbox__tick-outline {\n    background: var(--color-active) url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8cGF0aAogICAgIGQ9Ik0gMC4wNDAzODA1OSwwLjYyNjc3NjcgMC4xNDY0NDY2MSwwLjUyMDcxMDY4IDAuNDI5Mjg5MzIsMC44MDM1NTMzOSAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IE0gMC4yMTcxNTcyOSwwLjgwMzU1MzM5IDAuODUzNTUzMzksMC4xNjcxNTcyOSAwLjk1OTYxOTQxLDAuMjczMjIzMyAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IgogICAgIGlkPSJyZWN0Mzc4MCIKICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiAvPgo8L3N2Zz4K);\n}\n\n\n.jf-checkbox--on .jf-checkbox__box-outline {\n    border: 2px solid var(--color-active);\n}\n\n\n.jf-checkbox__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-checkbox--invalid .jf-checkbox__helper-text {\n    color: var(--color-red--500);\n}\n\n\n.jf-checkbox--disabled .jf-checkbox__label,\n.jf-checkbox--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--disabled .jf-checkbox__tick-outline {\n    background-color: var(--color-inactive);\n}\n\n.jf-checkbox--disabled .jf-checkbox__box-outline {\n    border-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--hidden {\n    display: none;\n}\n", ""]);
+exports.push([module.i, "\n.jf-checkbox {\n    width: 280px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-checkbox__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-checkbox__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 44px;\n    cursor: pointer;\n}\n\n.jf-checkbox__box-outline {\n    width: 16px;\n    height: 16px;\n    position: absolute;\n    top: calc(50% - 8px);\n    left: 12px;\n    border-radius: 2px;\n    border: 2px solid #0000008a;\n    cursor: pointer;\n    z-index: 2;\n}\n\n.jf-checkbox__tick-outline {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 100%;\n    width: 100%;\n    mask: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8ZGVmcz4KICAgIDxjbGlwUGF0aCBpZD0iY2xpcCI+CiAgICAgIDxwYXRoCiAgICAgICAgIGQ9Ik0gMCwwIDAsMSAxLDEgMSwwIDAsMCB6IE0gMC44NTM0Mzc1LDAuMTY3MTg3NSAwLjk1OTY4NzUsMC4yNzMxMjUgMC40MjkzNzUsMC44MDM0Mzc1IDAuMzIzMTI1LDAuOTA5Njg3NSAwLjIxNzE4NzUsMC44MDM0Mzc1IDAuMDQwMzEyNSwwLjYyNjg3NSAwLjE0NjU2MjUsMC41MjA2MjUgMC4zMjMxMjUsMC42OTc1IDAuODUzNDM3NSwwLjE2NzE4NzUgeiIKICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZjtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KICAgIDwvY2xpcFBhdGg+CiAgICA8bWFzayBpZD0ibWFzayIgbWFza1VuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgbWFza0NvbnRlbnRVbml0cz0ib2JqZWN0Qm91bmRpbmdCb3giPgogICAgICA8cGF0aAogICAgICAgICBkPSJNIDAsMCAwLDEgMSwxIDEsMCAwLDAgeiBNIDAuODUzNDM3NSwwLjE2NzE4NzUgMC45NTk2ODc1LDAuMjczMTI1IDAuNDI5Mzc1LDAuODAzNDM3NSAwLjMyMzEyNSwwLjkwOTY4NzUgMC4yMTcxODc1LDAuODAzNDM3NSAwLjA0MDMxMjUsMC42MjY4NzUgMC4xNDY1NjI1LDAuNTIwNjI1IDAuMzIzMTI1LDAuNjk3NSAwLjg1MzQzNzUsMC4xNjcxODc1IHoiCiAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmY7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmUiIC8+CiAgICA8L21hc2s+CiAgPC9kZWZzPgogIDxyZWN0CiAgICAgd2lkdGg9IjEiCiAgICAgaGVpZ2h0PSIxIgogICAgIHg9IjAiCiAgICAgeT0iMCIKICAgICBjbGlwLXBhdGg9InVybCgjY2xpcCkiCiAgICAgc3R5bGU9ImZpbGw6IzAwMDAwMDtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgLz4KPC9zdmc+Cg==);\n    background: 0 0;\n    transition-duration: .28s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    transition-property: background;\n}\n\n\n.jf-checkbox--on .jf-checkbox__tick-outline {\n    background: var(--color-active) url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmVyc2lvbj0iMS4xIgogICB2aWV3Qm94PSIwIDAgMSAxIgogICBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWluWU1pbiBtZWV0Ij4KICA8cGF0aAogICAgIGQ9Ik0gMC4wNDAzODA1OSwwLjYyNjc3NjcgMC4xNDY0NDY2MSwwLjUyMDcxMDY4IDAuNDI5Mjg5MzIsMC44MDM1NTMzOSAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IE0gMC4yMTcxNTcyOSwwLjgwMzU1MzM5IDAuODUzNTUzMzksMC4xNjcxNTcyOSAwLjk1OTYxOTQxLDAuMjczMjIzMyAwLjMyMzIyMzMsMC45MDk2MTk0MSB6IgogICAgIGlkPSJyZWN0Mzc4MCIKICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lIiAvPgo8L3N2Zz4K);\n}\n\n\n.jf-checkbox--on .jf-checkbox__box-outline {\n    border: 2px solid var(--color-active);\n}\n\n\n.jf-checkbox__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-checkbox--invalid .jf-checkbox__helper-text {\n    color: var(--color-red--500);\n}\n\n\n.jf-checkbox--disabled .jf-checkbox__label,\n.jf-checkbox--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-checkbox--disabled .jf-checkbox__tick-outline {\n    background-color: var(--color-inactive);\n}\n\n.jf-checkbox--disabled .jf-checkbox__box-outline {\n    border-color: var(--color-inactive);\n    cursor: default;\n}\n\n/* HOVER */\n\n.jf-checkbox__box-outline:after {\n    background-color: lightgrey;\n    content: '';\n    width: 20px;\n    height: 20px;\n    position: absolute;\n    top: calc(50% - 10px);\n    left: calc(50% - 10px);\n    opacity: 0;\n    border-radius: 50%;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n}\n\n.jf-checkbox:hover .jf-checkbox__box-outline:after {\n    width: 40px;\n    height: 40px;\n    position: absolute;\n    top: calc(50% - 20px);\n    left: calc(50% - 20px);\n    opacity: 0.2;\n}\n\n.jf-checkbox:active .jf-checkbox__box-outline:after {\n    opacity: 0.4;\n}\n\n.jf-checkbox--on .jf-checkbox__box-outline:after {\n    background-color: var(--color-active);\n}\n\n.jf-checkbox--disabled:hover .jf-checkbox__box-outline:after {\n    opacity: 0;\n}\n\n.jf-checkbox--hidden {\n    display: none;\n}\n\n.jf-checkbox--disabled {\n    opacity: 0.54;\n}\n\n", ""]);
 
 // exports
 
@@ -123,7 +123,7 @@ exports.i(__webpack_require__("./node_modules/css-loader/index.js!./stylesheets/
 exports.i(__webpack_require__("./node_modules/css-loader/index.js!./stylesheets/json-form.css"), "");
 
 // module
-exports.push([module.i, "/* @import './test-builder.css' */\n", ""]);
+exports.push([module.i, "\n", ""]);
 
 // exports
 
@@ -140,7 +140,7 @@ exports.i(__webpack_require__("./node_modules/css-loader/index.js!./stylesheets/
 exports.i(__webpack_require__("./node_modules/css-loader/index.js!./stylesheets/checkbox.css"), "");
 
 // module
-exports.push([module.i, "\n", ""]);
+exports.push([module.i, ".array-item-add {\n    padding: 16px;\n}\n\n.array-item-add .button {\n    font-size: 16px;\n}\n", ""]);
 
 // exports
 
@@ -170,7 +170,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "\n.jf-switch {\n    width: 280px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-switch__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-switch__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 50px;\n    cursor: pointer;\n}\n\n.jf-switch__track {\n    background-color: lightgrey;\n    width: 40px;\n    height: 14px;\n    position: absolute;\n    top: calc(50% - 7px);\n    left: 0;\n    border-radius: 14px;\n    cursor: pointer;\n}\n\n.jf-switch__thumb {\n    background-color: #fafafa;\n    width: 20px;\n    height: 20px;\n    position: absolute;\n    top: calc(50% - 10px);\n    left: 0;\n    cursor: pointer;\n    border-radius: 50%;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);\n}\n\n.jf-switch--on .jf-switch__thumb {\n    left: 20px;\n}\n\n.jf-switch--on .jf-switch__thumb {\n    background-color: var(--color-active);\n}\n\n.jf-switch__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-switch--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n\n.jf-switch--disabled .jf-switch__label,\n.jf-switch--disabled .jf-checkbox__helper-text {\n    color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__thumb {\n    background-color: var(--color-inactive);\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__track {\n    cursor: default;\n}\n\n.jf-switch--hidden {\n    display: none;\n}\n", ""]);
+exports.push([module.i, "\n.jf-switch {\n    width: 280px;\n    max-width: 100%;\n    position: relative;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    margin: 0;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    height: 75px;\n    padding: 20px 0;\n    font-size: 16px;\n    vertical-align: top;\n}\n\n.jf-switch__input {\n    margin: 0;\n    padding: 0;\n    width: 0;\n    height: 0;\n    position: absolute;\n    border: 0;\n    appearance: none;\n    opacity: 0;\n}\n\n.jf-switch__label {\n    top: calc(50% - 8px);\n    position: absolute;\n    left: 50px;\n    cursor: pointer;\n}\n\n.jf-switch__track {\n    background-color: lightgrey;\n    width: 36px;\n    height: 14px;\n    position: absolute;\n    top: calc(50% - 7px);\n    left: 0;\n    border-radius: 14px;\n    cursor: pointer;\n}\n\n.jf-switch__thumb {\n    background-color: #fafafa;\n    width: 20px;\n    height: 20px;\n    position: absolute;\n    top: calc(50% - 10px);\n    left: 0;\n    cursor: pointer;\n    border-radius: 50%;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    box-shadow: 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.2), 0 1px 8px 0 rgba(0,0,0,.12);\n}\n\n.jf-switch .jf-switch__thumb:after {\n    background-color: lightgrey;\n    content: '';\n    width: 20px;\n    height: 20px;\n    position: absolute;\n    top: calc(50% - 10px);\n    left: 0px;\n    opacity: 0;\n    border-radius: 50%;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n}\n\n.jf-switch:hover .jf-switch__thumb:after {\n    width: 40px;\n    height: 40px;\n    position: absolute;\n    top: calc(50% - 20px);\n    left: -10px;\n    opacity: 0.2;\n}\n\n.jf-switch:active .jf-switch__thumb:after {\n    opacity: 0.4;\n}\n\n.jf-switch--on .jf-switch__thumb:after {\n    background-color: var(--color-active);\n}\n\n.jf-switch--on .jf-switch__thumb {\n    left: 18px;\n}\n\n.jf-switch--on .jf-switch__thumb {\n    background-color: var(--color-active);\n}\n\n.jf-switch--on .jf-switch__track {\n    background-color: var(--color-active--054);\n}\n\n.jf-switch__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: 0;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-switch--invalid .jf-textfield__helper-text {\n    color: var(--color-red--500);\n}\n\n\n.jf-switch--disabled {\n    opacity: 0.54;\n}\n\n.jf-switch--disabled:hover .jf-switch__thumb:after {\n    opacity: 0;\n}\n\n.jf-switch--disabled .jf-switch__label,\n.jf-switch--disabled .jf-checkbox__helper-text {\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__thumb {\n    cursor: default;\n}\n\n.jf-switch--disabled .jf-switch__track {\n    cursor: default;\n}\n\n.jf-switch--hidden {\n    display: none;\n}\n", ""]);
 
 // exports
 
@@ -200,7 +200,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".jf-textfield {\n    position: relative;\n    height: 56px;\n    font-size: 16px;\n    display: inline-block;\n    box-sizing: border-box;\n    width: 280px;\n    max-width: 100%;\n    margin: 0;\n    padding: 0;\n    margin-top: 16px;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    border-top-left-radius: 4px;\n    border-top-right-radius: 4px;\n    cursor: pointer;\n    background-color: #e8e8e8;\n    color: #00000099;\n    outline: none;\n}\n\n.jf-textfield--outlined {\n    background-color: white;\n    border-radius: 4px;\n    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5);\n}\n\n.jf-textfield:hover {\n    background-color: #dedede;\n    color: #000000de;\n}\n\n.jf-textfield--focused.jf-textfield--outlined {\n    box-shadow: inset 0 0 0 2px var(--color-active);\n}\n\n.jf-textfield--focused:hover {\n    background-color: #e8e8e8;\n    color: #00000099;\n}\n\n.jf-textfield--outlined:hover {\n    background: white;\n}\n\n.jf-textfield__input {\n    border: none;\n    border-radius: 0;\n    border-top-right-radius: 4px;\n    border-top-left-radius: 4px;\n    outline: none;\n    display: block;\n    font-size: 16px;\n    font-family: var(--font-family);\n    margin: 0;\n    padding-left: 12px;\n    padding-right: 12px;\n    padding-top: 20px;\n    padding-bottom: 12px;\n    width: calc(100% - 26px);\n    background: 0 0;\n    text-align: left;\n    color: inherit;\n    caret-color: var(--color-active);\n    position: absolute;\n    top: 1px;\n    bottom: 1px;\n    left: 1px;\n}\n\n.jf-textfield--focused .jf-textfield__input {\n    /* color: var(--color-active); */\n    color: inherit;\n}\n\n.jf-textfield--outlined.jf-textfield--empty .jf-textfield__label, .jf-textfield--empty .jf-textfield__label {\n    top: 21px;\n    font-size: 16px;\n}\n\n.jf-textfield--focused .jf-textfield__label {\n    color: var(--color-active);\n    visibility: visible;\n    font-size: 12px;\n    top: 10px;\n}\n\n.jf-textfield__label {\n    color: var(--color-inactive);\n    padding-left: 12px;\n    padding-right: 12px;\n    font-size: 12px;\n    left: 0;\n    right: 0;\n    pointer-events: none;\n    position: absolute;\n    display: block;\n    bottom: 0;\n    top: 6px;\n    width: 100%;\n    overflow: hidden;\n    white-space: nowrap;\n    text-align: left;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4, 0, .2, 1);\n}\n\n.jf-textfield--empty .jf-textfield__label {\n    font-size: 16px;\n}\n\n.jf-textfield--outlined .jf-textfield__label {\n    padding-left: 4px;\n    padding-right: 4px;\n    font-size: 12px;\n    left: 12px;\n    bottom: auto;\n    right: auto;\n    width: auto;\n    background-color: white;\n}\n\n.jf-textfield--focused.jf-textfield--outlined .jf-textfield__label {\n    top: -6px;\n    font-size: 12px;\n}\n\n.jf-textfield--focused .jf-textfield__label {\n    top: 6px;\n    font-size: 12px;\n}\n\n.jf-textfield--outlined .jf-textfield__label {\n    top: -6px;\n}\n\n.jf-textfield--outlined .jf-textfield__input {\n    padding-left: 12px;\n    padding-right: 12px;\n    padding-top: 20px;\n    padding-bottom: 18px;\n    top: 2px;\n    bottom: 2px;\n    left: 2px;\n    border-radius: 4px;\n}\n\n/*\n.jf-textfield__bottom-border  {\n    border-bottom: 2px solid var(--color-active);\n    height: 0;\n    position: absolute;\n    top: 46px;\n    transition: width .1s ease-in 0s;\n    width: 0;\n}\n\n.jf-textfield--focused .jf-textfield__bottom-border {\n    width: 100%;\n}\n*/\n\n.jf-textfield__label:after {\n    background-color: var(--color-active);\n    bottom: 0;\n    content: '';\n    height: 2px;\n    left: 45%;\n    position: absolute;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    visibility: hidden;\n    width: 10px;\n}\n\n.jf-textfield--focused {\n    cursor: auto;\n}\n\n.jf-textfield--focused .jf-textfield__label:after {\n    left: 0;\n    visibility: visible;\n    width: 100%;\n}\n\n.jf-textfield--outlined .jf-textfield__label:after {\n    background-color: transparent;\n    display: none;\n}\n\n/*\n.jf-textfield:before {\n  content: '';\n  background-color: rgba(0,0,0,0.06);\n  position: absolute;\n  top: 0;\n  bottom: 20px;\n  width: calc(100% + 32px);\n  z-index: -1;\n  border-radius: 4px;\n  margin-left: -16px;\n}\n*/\n\n.jf-textfield:after {\n    content: '';\n    position: absolute;\n    width: 100%;\n    height: 1px;\n    bottom: 0;\n    background-color: var(--color-inactive);\n    /* background-color: transparent; */\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n}\n\n.jf-textfield--outlined.jf-textfield:after {\n    display: none;\n}\n\n.jf-textfield:after:hover {\n    background-color: var(--color-inactive);\n}\n\n.jf-textfield--focused:after {\n    background-color: transparent;\n}\n\n.jf-textfield:hover:after {\n    background-color: #222;\n    height: 2px;\n}\n\n.jf-textfield--focused:hover:after {\n    background-color: transparent;\n}\n\n\n.jf-textfield__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: -16px;\n    font-size: 12px;\n    padding-left: 12px;\n    padding-right: 12px;\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-textfield svg {\n    position: absolute;\n    top: 16px;\n    right: 12px;\n}\n\n.jf-textfield--invalid svg {\n    color: var(--color-invalid);\n}\n\n\n/*\n.jf-textfield--outlined .jf-textfield__helper-text {\n    padding-left: 12px;\n}\n*/\n\n.jf-textfield--outlined .jf-textfield__label:after {\n    display: none;\n}\n\n\n/* INVALID */\n\n\n.jf-textfield--invalid .jf-textfield__label:after {\n    background-color: var(--color-invalid);\n}\n\n.jf-textfield--invalid .jf-textfield__helper-text {\n    color: var(--color-invalid);\n}\n\n.jf-textfield--invalid .jf-textfield__label {\n    color: var(--color-invalid);\n}\n\n.jf-textfield--invalid:after {\n    background-color: var(--color-invalid) !important;\n}\n\n.jf-textfield--invalid .jf-textfield__input {\n    caret-color: var(--color-invalid);\n}\n\n.jf-textfield--outlined.jf-textfield--invalid {\n    box-shadow: inset 0 0 0 2px var(--color-invalid);\n}\n\n/* DISABLED */\n\n\n.jf-textfield--disabled {\n    color: var(--color-inactive);\n    background-color: #e0e0e0;\n    cursor: default;\n}\n\n.jf-textfield--disabled:hover {\n    background-color: #e0e0e0;\n}\n\n.jf-textfield--disabled:hover:after {\n    background-color: transparent;\n}\n\n.jf-textfield--disabled:after {\n    background-color: transparent;\n    border-bottom: 1px dotted var(--color-inactive);\n}\n\n.jf-textfield--outlined.jf-textfield--disabled:hover {\n    background: white;\n}\n\n.jf-textfield--hidden {\n    display: none;\n}\n\n.jf-textfield--outlined.jf-textfield--disabled:after {\n    display: none;\n}\n\n.jf-textfield--outlined.jf-textfield--disabled {\n    background-color: white;\n    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);\n}\n", ""]);
+exports.push([module.i, ".jf-textfield {\n    --field-height: 56px;\n    --label-top: 21px;\n    --large-font-size: 16px;\n    --side-padding: 12px;\n    --filled-background: #f5f5f5;\n}\n\n.jf-textfield--dense {\n    --field-height: 44px;\n    --label-top: 17px;\n    --large-font-size: 12px;\n    --side-padding: 8px;\n}\n\n.jf-textfield {\n    position: relative;\n    height: var(--field-height);\n    font-size: var(--large-font-size);\n    display: inline-block;\n    box-sizing: border-box;\n    width: 280px;\n    max-width: 100%;\n    margin: 0;\n    padding: 0;\n    margin-top: 16px;\n    margin-left: 16px;\n    margin-bottom: 16px;\n    border-top-left-radius: 4px;\n    border-top-right-radius: 4px;\n    cursor: pointer;\n    background-color: var(--filled-background);\n    color: #00000099;\n    outline: none;\n}\n\n.jf-textfield--outlined {\n    background-color: white;\n    border-radius: 4px;\n    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.5);\n}\n\n.jf-textfield:hover {\n    background-color: #dedede;\n    color: #000000de;\n}\n\n.jf-textfield--focused.jf-textfield--outlined {\n    box-shadow: inset 0 0 0 2px var(--color-active);\n}\n\n.jf-textfield--focused:hover {\n    background-color: #e8e8e8;\n    color: #00000099;\n}\n\n.jf-textfield--outlined:hover {\n    background: white;\n}\n\n.jf-textfield__input {\n    border: none;\n    border-radius: 0;\n    border-top-right-radius: 4px;\n    border-top-left-radius: 4px;\n    outline: none;\n    display: block;\n    font-size: var(--large-font-size);\n    font-family: var(--font-family);\n    margin: 0;\n    padding-left: var(--side-padding);\n    padding-right: var(--side-padding);\n    padding-top: 20px;\n    padding-bottom: 12px;\n    width: calc(100% - var(--side-padding) * 2 - 2px);\n    background: 0 0;\n    text-align: left;\n    color: inherit;\n    caret-color: var(--color-active);\n    position: absolute;\n    top: 1px;\n    bottom: 1px;\n    left: 1px;\n}\n\n.jf-textfield--focused .jf-textfield__input {\n    /* color: var(--color-active); */\n    color: inherit;\n}\n\n.jf-textfield--outlined.jf-textfield--empty .jf-textfield__label, .jf-textfield--empty .jf-textfield__label {\n    top: var(--label-top);\n    font-size: var(--large-font-size);\n}\n\n.jf-textfield--focused .jf-textfield__label {\n    color: var(--color-active);\n    visibility: visible;\n    font-size: 12px;\n    top: 10px;\n}\n\n.jf-textfield__label {\n    color: var(--color-inactive);\n    padding-left: var(--side-padding);\n    padding-right: var(--side-padding);\n    font-size: 12px;\n    left: 0;\n    right: 0;\n    pointer-events: none;\n    position: absolute;\n    display: block;\n    bottom: 0;\n    top: 6px;\n    width: 100%;\n    overflow: hidden;\n    white-space: nowrap;\n    text-align: left;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4, 0, .2, 1);\n    box-sizing: border-box;\n}\n\n.jf-textfield--empty .jf-textfield__label {\n    font-size: var(--large-font-size);\n}\n\n.jf-textfield--outlined .jf-textfield__label {\n    padding-left: 4px;\n    padding-right: 4px;\n    font-size: 12px;\n    left: var(--side-padding);\n    bottom: auto;\n    right: auto;\n    width: auto;\n    background-color: white;\n}\n\n.jf-textfield--focused.jf-textfield--outlined .jf-textfield__label {\n    top: -6px;\n    font-size: 12px;\n}\n\n.jf-textfield--focused .jf-textfield__label {\n    top: 6px;\n    font-size: 12px;\n}\n\n.jf-textfield--outlined .jf-textfield__label {\n    top: -6px;\n}\n\n.jf-textfield--outlined .jf-textfield__input {\n    padding-left: var(--side-padding);\n    padding-right: var(--side-padding);\n    padding-top: 20px;\n    padding-bottom: 18px;\n    top: 2px;\n    bottom: 2px;\n    left: 2px;\n    border-radius: 4px;\n}\n\n/*\n.jf-textfield__bottom-border  {\n    border-bottom: 2px solid var(--color-active);\n    height: 0;\n    position: absolute;\n    top: 46px;\n    transition: width .1s ease-in 0s;\n    width: 0;\n}\n\n.jf-textfield--focused .jf-textfield__bottom-border {\n    width: 100%;\n}\n*/\n\n.jf-textfield__label:after {\n    background-color: var(--color-active);\n    bottom: 0;\n    content: '';\n    height: 2px;\n    left: 45%;\n    position: absolute;\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n    visibility: hidden;\n    width: 10px;\n}\n\n.jf-textfield--focused {\n    cursor: auto;\n}\n\n.jf-textfield--focused .jf-textfield__label:after {\n    left: 0;\n    visibility: visible;\n    width: 100%;\n}\n\n.jf-textfield--outlined .jf-textfield__label:after {\n    background-color: transparent;\n    display: none;\n}\n\n/*\n.jf-textfield:before {\n  content: '';\n  background-color: rgba(0,0,0,0.06);\n  position: absolute;\n  top: 0;\n  bottom: 20px;\n  width: calc(100% + 32px);\n  z-index: -1;\n  border-radius: 4px;\n  margin-left: -16px;\n}\n*/\n\n.jf-textfield:after {\n    content: '';\n    position: absolute;\n    width: 100%;\n    height: 1px;\n    bottom: 0;\n    background-color: var(--color-inactive);\n    /* background-color: transparent; */\n    transition-duration: .2s;\n    transition-timing-function: cubic-bezier(.4,0,.2,1);\n}\n\n.jf-textfield--outlined.jf-textfield:after {\n    display: none;\n}\n\n.jf-textfield:after:hover {\n    background-color: var(--color-inactive);\n}\n\n.jf-textfield--focused:after {\n    background-color: transparent;\n}\n\n.jf-textfield:hover:after {\n    background-color: #222;\n    height: 2px;\n}\n\n.jf-textfield--focused:hover:after {\n    background-color: transparent;\n}\n\n\n.jf-textfield__helper-text {\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 100%;\n    position: absolute;\n    bottom: -16px;\n    font-size: 12px;\n    padding-left: var(--side-padding);\n    padding-right: var(--side-padding);\n    color: rgba(0, 0, 0, 0.54);\n}\n\n.jf-textfield svg {\n    position: absolute;\n    top: 16px;\n    right: var(--side-padding);\n}\n\n.jf-textfield--invalid svg {\n    color: var(--color-invalid);\n}\n\n\n/*\n.jf-textfield--outlined .jf-textfield__helper-text {\n    padding-left: 12px;\n}\n*/\n\n.jf-textfield--outlined .jf-textfield__label:after {\n    display: none;\n}\n\n\n/* INVALID */\n\n\n.jf-textfield--invalid .jf-textfield__label:after {\n    background-color: var(--color-invalid);\n}\n\n.jf-textfield--invalid .jf-textfield__helper-text {\n    color: var(--color-invalid);\n}\n\n.jf-textfield--invalid .jf-textfield__label {\n    color: var(--color-invalid);\n}\n\n.jf-textfield--invalid:after {\n    background-color: var(--color-invalid) !important;\n}\n\n.jf-textfield--invalid .jf-textfield__input {\n    caret-color: var(--color-invalid);\n}\n\n.jf-textfield--outlined.jf-textfield--invalid {\n    box-shadow: inset 0 0 0 2px var(--color-invalid);\n}\n\n/* DISABLED */\n\n\n.jf-textfield--disabled {\n    color: var(--color-inactive);\n    background-color: #e0e0e0;\n    cursor: default;\n}\n\n.jf-textfield--disabled:hover {\n    background-color: #e0e0e0;\n}\n\n.jf-textfield--disabled:hover:after {\n    background-color: transparent;\n}\n\n.jf-textfield--disabled:after {\n    background-color: transparent;\n    border-bottom: 1px dotted var(--color-inactive);\n}\n\n.jf-textfield--outlined.jf-textfield--disabled:hover {\n    background: white;\n}\n\n.jf-textfield--hidden {\n    display: none;\n}\n\n.jf-textfield--outlined.jf-textfield--disabled:after {\n    display: none;\n}\n\n.jf-textfield--outlined.jf-textfield--disabled {\n    background-color: white;\n    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);\n}\n", ""]);
 
 // exports
 
@@ -13220,14 +13220,15 @@ var _1602$json_form$ErrorMessages$stringifyError = function (e) {
 	}
 };
 
-var _1602$json_form$Json_Form_Config$Config = function (a) {
-	return {textFieldStyle: a};
-};
+var _1602$json_form$Json_Form_Config$Config = F2(
+	function (a, b) {
+		return {textFieldStyle: a, dense: b};
+	});
 var _1602$json_form$Json_Form_Config$Outlined = {ctor: 'Outlined'};
-var _1602$json_form$Json_Form_Config$defaultConfig = {textFieldStyle: _1602$json_form$Json_Form_Config$Outlined};
 var _1602$json_form$Json_Form_Config$Filled = {ctor: 'Filled'};
-var _1602$json_form$Json_Form_Config$decoder = A2(
-	_elm_lang$core$Json_Decode$map,
+var _1602$json_form$Json_Form_Config$defaultConfig = {textFieldStyle: _1602$json_form$Json_Form_Config$Filled, dense: false};
+var _1602$json_form$Json_Form_Config$decoder = A3(
+	_elm_lang$core$Json_Decode$map2,
 	_1602$json_form$Json_Form_Config$Config,
 	A2(
 		_elm_lang$core$Json_Decode$field,
@@ -13237,7 +13238,8 @@ var _1602$json_form$Json_Form_Config$decoder = A2(
 			function (x) {
 				return _elm_lang$core$Native_Utils.eq(x, 'filled') ? _elm_lang$core$Json_Decode$succeed(_1602$json_form$Json_Form_Config$Filled) : (_elm_lang$core$Native_Utils.eq(x, 'outlined') ? _elm_lang$core$Json_Decode$succeed(_1602$json_form$Json_Form_Config$Outlined) : _elm_lang$core$Json_Decode$fail('Unknown text field style'));
 			},
-			_elm_lang$core$Json_Decode$string)));
+			_elm_lang$core$Json_Decode$string)),
+	A2(_elm_lang$core$Json_Decode$field, 'dense', _elm_lang$core$Json_Decode$bool));
 
 var _1602$json_schema$Json_Schema_Helpers$debugSubSchema = F2(
 	function (msg, schema) {
@@ -14353,6 +14355,7 @@ var _1602$json_form$Json_Form_Selection$checkbox = F5(
 				_1602$json_form$JsonFormUtil$getUiSpec(schema)));
 		var disabled = _p0._0;
 		var hidden = _p0._1;
+		var actuallyDisabled = isDisabled || disabled;
 		var _p1 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
 		var hasError = _p1._0;
 		var helperText = _p1._1;
@@ -14370,6 +14373,7 @@ var _1602$json_form$Json_Form_Selection$checkbox = F5(
 				return false;
 			}
 		}();
+		var id = A2(_elm_lang$core$String$join, '_', path);
 		return A2(
 			_elm_lang$html$Html$label,
 			{
@@ -14402,7 +14406,7 @@ var _1602$json_form$Json_Form_Selection$checkbox = F5(
 									_0: {ctor: '_Tuple2', _0: 'jf-checkbox--invalid', _1: hasError},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'jf-checkbox--disabled', _1: isDisabled || disabled},
+										_0: {ctor: '_Tuple2', _0: 'jf-checkbox--disabled', _1: actuallyDisabled},
 										_1: {
 											ctor: '::',
 											_0: {ctor: '_Tuple2', _0: 'jf-checkbox--hidden', _1: hidden},
@@ -14430,26 +14434,34 @@ var _1602$json_form$Json_Form_Selection$checkbox = F5(
 								_0: _elm_lang$html$Html_Attributes$checked(isChecked),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Events$onFocus(
-										_1602$json_form$Json_Form_Definitions$FocusInput(
-											_elm_lang$core$Maybe$Just(path))),
+									_0: _elm_lang$html$Html_Attributes$id(id),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Events$onBlur(
-											_1602$json_form$Json_Form_Definitions$FocusInput(_elm_lang$core$Maybe$Nothing)),
+										_0: _elm_lang$html$Html_Attributes$name(id),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onCheck(
-												function (_p4) {
-													return A2(
-														_1602$json_form$Json_Form_Definitions$EditValue,
-														path,
-														_1602$json_value$Json_Value$BoolValue(_p4));
-												}),
+											_0: _elm_lang$html$Html_Attributes$disabled(actuallyDisabled),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$disabled(isDisabled || disabled),
-												_1: {ctor: '[]'}
+												_0: _elm_lang$html$Html_Events$onFocus(
+													_1602$json_form$Json_Form_Definitions$FocusInput(
+														_elm_lang$core$Maybe$Just(path))),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onBlur(
+														_1602$json_form$Json_Form_Definitions$FocusInput(_elm_lang$core$Maybe$Nothing)),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Events$onCheck(
+															function (_p4) {
+																return A2(
+																	_1602$json_form$Json_Form_Definitions$EditValue,
+																	path,
+																	_1602$json_value$Json_Value$BoolValue(_p4));
+															}),
+														_1: {ctor: '[]'}
+													}
+												}
 											}
 										}
 									}
@@ -14526,6 +14538,7 @@ var _1602$json_form$Json_Form_Selection$switch = F5(
 				_1602$json_form$JsonFormUtil$getUiSpec(schema)));
 		var disabled = _p5._0;
 		var hidden = _p5._1;
+		var actuallyDisabled = isDisabled || disabled;
 		var _p6 = A3(_1602$json_form$Json_Form_Helper$view, model, schema, path);
 		var hasError = _p6._0;
 		var helperText = _p6._1;
@@ -14543,6 +14556,7 @@ var _1602$json_form$Json_Form_Selection$switch = F5(
 				return false;
 			}
 		}();
+		var id = A2(_elm_lang$core$String$join, '_', path);
 		return A2(
 			_elm_lang$html$Html$label,
 			{
@@ -14575,7 +14589,7 @@ var _1602$json_form$Json_Form_Selection$switch = F5(
 									_0: {ctor: '_Tuple2', _0: 'jf-switch--invalid', _1: hasError},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'jf-switch--disabled', _1: isDisabled || disabled},
+										_0: {ctor: '_Tuple2', _0: 'jf-switch--disabled', _1: actuallyDisabled},
 										_1: {
 											ctor: '::',
 											_0: {ctor: '_Tuple2', _0: 'jf-switch--hidden', _1: hidden},
@@ -14621,8 +14635,16 @@ var _1602$json_form$Json_Form_Selection$switch = F5(
 												}),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$disabled(isDisabled || disabled),
-												_1: {ctor: '[]'}
+												_0: _elm_lang$html$Html_Attributes$id(id),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$name(id),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$disabled(actuallyDisabled),
+														_1: {ctor: '[]'}
+													}
+												}
 											}
 										}
 									}
@@ -14954,6 +14976,7 @@ var _1602$json_form$Json_Form_TextField$viewNumeric = F5(
 						_elm_lang$core$Maybe$map,
 						_1602$json_value$Json_Value$getIn(path),
 						model.value))));
+		var id = A2(_elm_lang$core$String$join, '_', path);
 		return A2(
 			_elm_lang$html$Html$div,
 			{
@@ -14971,24 +14994,28 @@ var _1602$json_form$Json_Form_TextField$viewNumeric = F5(
 							},
 							_1: {
 								ctor: '::',
-								_0: {ctor: '_Tuple2', _0: 'jf-textfield--focused', _1: isFocused},
+								_0: {ctor: '_Tuple2', _0: 'jf-textfield--dense', _1: model.config.dense},
 								_1: {
 									ctor: '::',
-									_0: {
-										ctor: '_Tuple2',
-										_0: 'jf-textfield--empty',
-										_1: _elm_lang$core$Native_Utils.eq(editedValue, '')
-									},
+									_0: {ctor: '_Tuple2', _0: 'jf-textfield--focused', _1: isFocused},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'jf-textfield--invalid', _1: hasError},
+										_0: {
+											ctor: '_Tuple2',
+											_0: 'jf-textfield--empty',
+											_1: _elm_lang$core$Native_Utils.eq(editedValue, '')
+										},
 										_1: {
 											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: actuallyDisabled},
+											_0: {ctor: '_Tuple2', _0: 'jf-textfield--invalid', _1: hasError},
 											_1: {
 												ctor: '::',
-												_0: {ctor: '_Tuple2', _0: 'jf-textfield--hidden', _1: hidden},
-												_1: {ctor: '[]'}
+												_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: actuallyDisabled},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'jf-textfield--hidden', _1: hidden},
+													_1: {ctor: '[]'}
+												}
 											}
 										}
 									}
@@ -15019,14 +15046,22 @@ var _1602$json_form$Json_Form_TextField$viewNumeric = F5(
 									_0: _elm_lang$html$Html_Events$onInput(_1602$json_form$Json_Form_Definitions$EditNumber),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$value(editedValue),
+										_0: _elm_lang$html$Html_Attributes$id(id),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$type_('number'),
+											_0: _elm_lang$html$Html_Attributes$name(id),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$disabled(actuallyDisabled),
-												_1: {ctor: '[]'}
+												_0: _elm_lang$html$Html_Attributes$value(editedValue),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$type_('number'),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$disabled(actuallyDisabled),
+														_1: {ctor: '[]'}
+													}
+												}
 											}
 										}
 									}
@@ -15114,37 +15149,41 @@ var _1602$json_form$Json_Form_TextField$view = F5(
 							},
 							_1: {
 								ctor: '::',
-								_0: {
-									ctor: '_Tuple2',
-									_0: 'jf-textfield--focused',
-									_1: A2(
-										_elm_lang$core$Maybe$withDefault,
-										false,
-										A2(
-											_elm_lang$core$Maybe$map,
-											F2(
-												function (x, y) {
-													return _elm_lang$core$Native_Utils.eq(x, y);
-												})(path),
-											model.focused))
-								},
+								_0: {ctor: '_Tuple2', _0: 'jf-textfield--dense', _1: model.config.dense},
 								_1: {
 									ctor: '::',
 									_0: {
 										ctor: '_Tuple2',
-										_0: 'jf-textfield--empty',
-										_1: _elm_lang$core$Native_Utils.eq(editedValue, '')
+										_0: 'jf-textfield--focused',
+										_1: A2(
+											_elm_lang$core$Maybe$withDefault,
+											false,
+											A2(
+												_elm_lang$core$Maybe$map,
+												F2(
+													function (x, y) {
+														return _elm_lang$core$Native_Utils.eq(x, y);
+													})(path),
+												model.focused))
 									},
 									_1: {
 										ctor: '::',
-										_0: {ctor: '_Tuple2', _0: 'jf-textfield--invalid', _1: hasError},
+										_0: {
+											ctor: '_Tuple2',
+											_0: 'jf-textfield--empty',
+											_1: _elm_lang$core$Native_Utils.eq(editedValue, '')
+										},
 										_1: {
 											ctor: '::',
-											_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: actuallyDisabled},
+											_0: {ctor: '_Tuple2', _0: 'jf-textfield--invalid', _1: hasError},
 											_1: {
 												ctor: '::',
-												_0: {ctor: '_Tuple2', _0: 'jf-textfield--hidden', _1: hidden},
-												_1: {ctor: '[]'}
+												_0: {ctor: '_Tuple2', _0: 'jf-textfield--disabled', _1: actuallyDisabled},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'jf-textfield--hidden', _1: hidden},
+													_1: {ctor: '[]'}
+												}
 											}
 										}
 									}
@@ -15187,14 +15226,18 @@ var _1602$json_form$Json_Form_TextField$view = F5(
 											_0: _elm_lang$html$Html_Attributes$id(id),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$autocomplete(false),
+												_0: _elm_lang$html$Html_Attributes$name(id),
 												_1: {
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$disabled(actuallyDisabled),
+													_0: _elm_lang$html$Html_Attributes$autocomplete(false),
 													_1: {
 														ctor: '::',
-														_0: (isPassword && (!model.showPassword)) ? _elm_lang$html$Html_Attributes$type_('password') : _elm_lang$html$Html_Attributes$type_('text'),
-														_1: {ctor: '[]'}
+														_0: _elm_lang$html$Html_Attributes$disabled(actuallyDisabled),
+														_1: {
+															ctor: '::',
+															_0: (isPassword && (!model.showPassword)) ? _elm_lang$html$Html_Attributes$type_('password') : _elm_lang$html$Html_Attributes$type_('text'),
+															_1: {ctor: '[]'}
+														}
 													}
 												}
 											}
@@ -15291,6 +15334,12 @@ var _1602$json_form$Json_Form$touch = F3(
 				{ctor: '[]'},
 				focused),
 			beingEdited) : beingEdited;
+	});
+var _1602$json_form$Json_Form$updateConfig = F2(
+	function (config, model) {
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{config: config});
 	});
 var _1602$json_form$Json_Form$getBooleanUiWidget = function (schema) {
 	var _p1 = function (_) {
@@ -15440,23 +15489,34 @@ var _1602$json_form$Json_Form$viewArray = F5(
 							_1: {
 								ctor: '::',
 								_0: A2(
-									_elm_lang$html$Html$button,
+									_elm_lang$html$Html$div,
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$class('button'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onClick(
-												A2(
-													_1602$json_form$Json_Form_Definitions$AddItem,
-													path,
-													_elm_lang$core$List$length(list))),
-											_1: {ctor: '[]'}
-										}
+										_0: _elm_lang$html$Html_Attributes$class('array-item-add'),
+										_1: {ctor: '[]'}
 									},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html$text('ADD ITEM'),
+										_0: A2(
+											_elm_lang$html$Html$button,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('button'),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onClick(
+														A2(
+															_1602$json_form$Json_Form_Definitions$AddItem,
+															path,
+															_elm_lang$core$List$length(list))),
+													_1: {ctor: '[]'}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('ADD ITEM'),
+												_1: {ctor: '[]'}
+											}),
 										_1: {ctor: '[]'}
 									}),
 								_1: {ctor: '[]'}
