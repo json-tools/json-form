@@ -26,7 +26,7 @@ init config schema v =
     let
         someValue =
             v
-                |> Maybe.withDefault JsonValue.NullValue
+                |> Maybe.withDefault (JsonValue.ObjectValue [])
                 |> JsonValue.encode
 
         ( value, errors ) =
@@ -49,7 +49,7 @@ init config schema v =
     , focused = Nothing
     , config = config
     , value = value
-    , errors = Dict.empty
+    , errors = errors
     , beingEdited = []
     , editedNumber = ""
     , showPassword = False

@@ -16,6 +16,7 @@ type alias UiSpec =
 type WidgetType
     = PasswordField
     | Switch
+    | MultilineTextField
 
 
 type Rule
@@ -43,6 +44,9 @@ decoder =
 
                     else if widget == "switch" then
                         succeed <| Switch
+
+                    else if widget == "multiline" then
+                        succeed <| MultilineTextField
 
                     else
                         fail ""

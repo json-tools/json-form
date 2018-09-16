@@ -8,7 +8,6 @@
   "author": "Anatoliy <mail@anatoliy.in>",
   "license": "GNU GENERAL PUBLIC LICENSE v3",
   "scripts": {
-    "start": "npm run dev",
     "dev": "webpack-dev-server --hot --port 4000 --colors",
     "build": "webpack",
     "deploy": "gh-pages -d dist",

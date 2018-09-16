@@ -22,14 +22,18 @@ type alias Model =
 
 initialShowcase : Snippet
 initialShowcase =
-    Rules
+    SimpleField
 
 
 init : ( Model, Cmd Msg )
 init =
+    let
+        form =
+            Json.Form.init Json.Form.Config.defaultConfig (getSnippet initialShowcase) Nothing
+    in
     { showcase = initialShowcase
-    , form = Json.Form.init Json.Form.Config.defaultConfig (getSnippet initialShowcase) Nothing
-    , editedValue = Nothing
+    , form = form
+    , editedValue = form.value
     , expandedNodes = [ [] ]
     }
         ! []

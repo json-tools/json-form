@@ -139,10 +139,6 @@
     opacity: 0;
 }
 
-.jf-checkbox--hidden {
-    display: none;
-}
-
 .jf-checkbox--disabled {
     opacity: 0.54;
 }

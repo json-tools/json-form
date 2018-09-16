@@ -35,6 +35,9 @@ view model schema isRequired isDisabled path =
         isPassword =
             uiSpec.widgetType == Just PasswordField
 
+        isMultiline =
+            uiSpec.widgetType == Just MultilineTextField
+
         ( disabled, hidden ) =
             applyRule model.value path uiSpec.rule
 
@@ -54,23 +57,8 @@ view model schema isRequired isDisabled path =
 
             else
                 text ""
-    in
-    div
-        [ classList
-            [ ( "jf-textfield", True )
-            , ( "jf-textfield--outlined", model.config.textFieldStyle == Outlined )
-            , ( "jf-textfield--dense", model.config.dense )
-            , ( "jf-textfield--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
-            , ( "jf-textfield--empty", editedValue == "" )
-            , ( "jf-textfield--invalid", hasError )
-            , ( "jf-textfield--disabled", actuallyDisabled )
-            , ( "jf-textfield--hidden", hidden )
-            ]
 
-        -- , onFocus <| FocusTextInput path
-        -- , Html.Attributes.tabindex -1
-        ]
-        [ input
+        baseAttributes =
             [ class "jf-textfield__input"
             , onFocus <| FocusInput (Just path)
             , onBlur <| FocusInput Nothing
@@ -80,16 +68,47 @@ view model schema isRequired isDisabled path =
             , Html.Attributes.name id
             , Html.Attributes.autocomplete False
             , Html.Attributes.disabled actuallyDisabled
-            , if isPassword && not model.showPassword then
-                type_ "password"
-
-              else
-                type_ "text"
             ]
-            []
-        , icon
-        , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
-        , div [ class "jf-textfield__helper-text" ] [ helperText ]
+
+        textInput =
+            if isMultiline then
+                textarea baseAttributes []
+
+            else
+                input
+                    (baseAttributes
+                        ++ [ if isPassword && not model.showPassword then
+                                type_ "password"
+
+                             else
+                                type_ "text"
+                           ]
+                    )
+                    []
+    in
+    div
+        [ classList [ ( "jf-element", True ), ( "jf-element--hidden", hidden ) ]
+        ]
+        [ div
+            [ classList
+                [ ( "jf-textfield", True )
+                , ( "jf-textfield--outlined", model.config.textFieldStyle == Outlined )
+                , ( "jf-textfield--dense", model.config.dense )
+                , ( "jf-textfield--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
+                , ( "jf-textfield--empty", editedValue == "" )
+                , ( "jf-textfield--invalid", hasError )
+                , ( "jf-textfield--disabled", actuallyDisabled )
+                , ( "jf-textfield--multiline", isMultiline )
+                ]
+
+            -- , onFocus <| FocusTextInput path
+            -- , Html.Attributes.tabindex -1
+            ]
+            [ textInput
+            , icon
+            , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
+            ]
+        , div [ class "jf-helper-text" ] [ helperText ]
         ]
 
 
@@ -128,29 +147,33 @@ viewNumeric model schema isRequired isDisabled path =
             isDisabled || disabled
     in
     div
-        [ classList
-            [ ( "jf-textfield", True )
-            , ( "jf-textfield--outlined", model.config.textFieldStyle == Outlined )
-            , ( "jf-textfield--dense", model.config.dense )
-            , ( "jf-textfield--focused", isFocused )
-            , ( "jf-textfield--empty", editedValue == "" )
-            , ( "jf-textfield--invalid", hasError )
-            , ( "jf-textfield--disabled", actuallyDisabled )
-            , ( "jf-textfield--hidden", hidden )
-            ]
+        [ classList [ ( "jf-element", True ), ( "jf-element--hidden", hidden ) ]
         ]
-        [ input
-            [ class "jf-textfield__input"
-            , onFocus <| FocusNumericInput (Just path)
-            , onBlur <| FocusNumericInput Nothing
-            , onInput <| EditNumber
-            , Html.Attributes.id id
-            , Html.Attributes.name id
-            , value <| editedValue
-            , type_ "number"
-            , Html.Attributes.disabled actuallyDisabled
+        [ div
+            [ classList
+                [ ( "jf-textfield", True )
+                , ( "jf-textfield--outlined", model.config.textFieldStyle == Outlined )
+                , ( "jf-textfield--dense", model.config.dense )
+                , ( "jf-textfield--focused", isFocused )
+                , ( "jf-textfield--empty", editedValue == "" )
+                , ( "jf-textfield--invalid", hasError )
+                , ( "jf-textfield--disabled", actuallyDisabled )
+                , ( "jf-textfield--hidden", hidden )
+                ]
             ]
-            []
-        , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
-        , div [ class "jf-textfield__helper-text" ] [ helperText ]
+            [ input
+                [ class "jf-textfield__input"
+                , onFocus <| FocusNumericInput (Just path)
+                , onBlur <| FocusNumericInput Nothing
+                , onInput <| EditNumber
+                , Html.Attributes.id id
+                , Html.Attributes.name id
+                , value <| editedValue
+                , type_ "number"
+                , Html.Attributes.disabled actuallyDisabled
+                ]
+                []
+            , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
+            ]
+        , div [ class "jf-helper-text" ] [ helperText ]
         ]

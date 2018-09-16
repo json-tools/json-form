@@ -46,12 +46,14 @@ getSnippet : Snippet -> Schema
 getSnippet ds =
     case ds of
         SimpleField ->
-            ObjectSchema
-                { blankSubSchema
-                    | type_ = SingleType StringType
-                    , title = Just "First name"
-                    , description = Just "First (given) name of a travelling person"
-                }
+            buildSchema
+                |> withType "string"
+                |> withTitle "Text field"
+                |> withDescription "Helper text"
+                |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "multiline" ) ])
+                |> toSchema
+                |> Result.mapError (Debug.log "SimpleField")
+                |> Result.withDefault blankSchema
 
         FlatObject ->
             buildSchema
@@ -154,7 +156,7 @@ getSnippet ds =
                     [ ( "enabled"
                       , buildSchema
                             |> withType "boolean"
-                            -- |> withDefault (Encode.bool True)
+                            |> withDefault (Encode.bool False)
                             |> withTitle "enable"
                             |> withDescription "Enable editing"
                             |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])

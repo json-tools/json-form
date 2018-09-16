@@ -1,0 +1,16 @@
+.jf-element {
+    display: flex;
+    flex-direction: column;
+    margin-top: 16px;
+    margin-left: 16px;
+    margin-bottom: 16px;
+}
+
+.jf-element--hidden {
+    display: none;
+}
+
+.jf-helper-text {
+    margin-top: 8px;
+    margin-left: 12px;
+}
