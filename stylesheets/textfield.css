@@ -169,10 +169,17 @@
     max-width: calc(100% - var(--side-padding) * 2 - 4px);
     min-width: calc(100% - var(--side-padding) * 2 - 4px);
     position: initial;
-    margin-top: 2px;
-    margin-bottom: 4px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    line-height: 18px;
+    box-sizing: padding-box;
+    display: block;
+}
+
+.jf-textfield--json textarea {
+    font-family: menlo, monospace;
 }
 
 

@@ -11,28 +11,28 @@ pluralize n name =
             "1 " ++ name
 
         _ ->
-            toString n ++ " " ++ name ++ "s"
+            String.fromInt n ++ " " ++ name ++ "s"
 
 
 stringifyError : Validation.ValidationError -> String
 stringifyError e =
     case e of
         MultipleOf multiplier actual ->
-            toString actual
+            String.fromFloat actual
                 ++ " is not a multiple of "
-                ++ toString multiplier
+                ++ String.fromFloat multiplier
 
         Maximum max actual ->
-            toString actual ++ " is more than maximum " ++ toString max
+            String.fromFloat actual ++ " is more than maximum " ++ String.fromFloat max
 
         Minimum min actual ->
-            toString actual ++ " is less than minimum " ++ toString min
+            String.fromFloat actual ++ " is less than minimum " ++ String.fromFloat min
 
         ExclusiveMaximum max actual ->
-            toString actual ++ " is not less than exclusive maximum " ++ toString max
+            String.fromFloat actual ++ " is not less than exclusive maximum " ++ String.fromFloat max
 
         ExclusiveMinimum min actual ->
-            toString actual ++ " is not more than exclusive minimum " ++ toString min
+            String.fromFloat actual ++ " is not more than exclusive minimum " ++ String.fromFloat min
 
         MaxLength expected actual ->
             "Not longer than "
@@ -89,8 +89,7 @@ stringifyError e =
                ++ (extraPropertyNames |> List.map toString |> String.join ", ")
         -}
         InvalidPropertyName invalidPropertyNames ->
-            "Some property names are not passing validation: "
-                ++ (invalidPropertyNames |> List.map toString |> String.join ", ")
+            "Some property names are not passing validation"
 
         Enum ->
             "Value does not match enumeration defined in the schema"
@@ -105,7 +104,7 @@ stringifyError e =
             "Value does not pass the validation with none of the schemata listed in '.oneOf'"
 
         OneOfManySucceed int ->
-            "Value should pass validation with exactly one schema, but " ++ toString int ++ " return a positive result"
+            "Value should pass validation with exactly one schema, but " ++ String.fromInt int ++ " return a positive result"
 
         Not ->
             "This value expected to fail validation"
@@ -114,4 +113,4 @@ stringifyError e =
             "This is not expected to succeed"
 
         UnresolvableReference ref ->
-            "Reference " ++ toString ref ++ " can not be resolved"
+            "Reference " ++ ref ++ " can not be resolved"

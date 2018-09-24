@@ -8,23 +8,24 @@ module Json.Form exposing
     , view
     )
 
+import Browser.Dom
 import Dict exposing (Dict)
-import Dom
 import ErrorMessages exposing (stringifyError)
 import Html exposing (..)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
 import Json.Decode as Decode exposing (decodeValue)
+import Json.Encode as Encode
 import Json.Form.Config exposing (Config)
 import Json.Form.Definitions as Definitions exposing (EditingMode(..), Msg(..), Path)
 import Json.Form.Selection as Selection
 import Json.Form.TextField as TextField
-import Json.Form.UiSpec as UiSpec exposing (applyRule)
+import Json.Form.UiSpec as UiSpec exposing (Widget(..), applyRule)
 import Json.Schema
 import Json.Schema.Definitions exposing (..)
 import Json.Schema.Validation exposing (Error)
 import Json.Value as JsonValue exposing (JsonValue(..))
-import JsonFormUtil as Util exposing ((=>), getUiSpec, jsonValueToString)
+import JsonFormUtil as Util exposing (getUiSpec, jsonValueToString)
 import Task
 
 
@@ -41,26 +42,21 @@ type alias Msg =
     Definitions.Msg
 
 
-init : Config -> Schema -> Maybe JsonValue -> Model
-init =
-    Definitions.init
-
-
 view : Model -> Html Msg
 view model =
-    viewNode model model.schema False False []
+    Html.form [] [ viewNode model model.schema False False [] ]
 
 
 viewNode : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
 viewNode model schema isRequired isDisabled path =
     case editingMode model schema of
         TextField ->
-            TextField.view model schema isRequired isDisabled path
+            TextField.view model schema False isRequired isDisabled path
 
         NumberField ->
             TextField.viewNumeric model schema isRequired isDisabled path
 
-        Switch ->
+        Definitions.Switch ->
             Selection.switch model schema isRequired isDisabled path
 
         Checkbox ->
@@ -72,8 +68,8 @@ viewNode model schema isRequired isDisabled path =
         Array ->
             viewArray model schema isRequired isDisabled path
 
-        x ->
-            text (toString x ++ ": not implemented")
+        JsonEditor ->
+            TextField.view model schema True isRequired isDisabled path
 
 
 editingMode : Model -> Schema -> EditingMode
@@ -105,9 +101,9 @@ editingMode model schema =
 
 getBooleanUiWidget : Schema -> EditingMode
 getBooleanUiWidget schema =
-    case schema |> getUiSpec |> .widgetType of
+    case schema |> getUiSpec |> .widget of
         Just UiSpec.Switch ->
-            Switch
+            Definitions.Switch
 
         _ ->
             Checkbox
@@ -127,8 +123,8 @@ viewArray model schema isRequired isDisabled path =
                 |> Maybe.withDefault JsonValue.NullValue
                 |> JsonValue.getIn path
                 |> Result.withDefault (JsonValue.ArrayValue [])
-                |> (\list ->
-                        case list of
+                |> (\l ->
+                        case l of
                             ArrayValue items ->
                                 items
 
@@ -149,9 +145,9 @@ viewArray model schema isRequired isDisabled path =
                                 (\index item ->
                                     let
                                         propName =
-                                            index |> toString
+                                            index |> String.fromInt
 
-                                        isRequired =
+                                        isRequiredLocal =
                                             case itemSchema of
                                                 ObjectSchema itemSchemaObject ->
                                                     itemSchemaObject.required
@@ -161,7 +157,7 @@ viewArray model schema isRequired isDisabled path =
                                                 _ ->
                                                     False
                                     in
-                                    viewNode model itemSchema isRequired (isDisabled || disabled) (path ++ [ propName ])
+                                    viewNode model itemSchema isRequiredLocal (isDisabled || disabled) (path ++ [ propName ])
                                 )
                             |> div []
                         , div [ class "array-item-add" ]
@@ -222,12 +218,15 @@ update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )
 update msg model =
     case msg of
         NoOp ->
-            model ! [] => None
+            ( model
+            , Cmd.none
+            )
+                |> withExMsg None
 
         AddItem path index ->
             let
                 newPropPath =
-                    path ++ [ index |> toString ]
+                    path ++ [ index |> String.fromInt ]
 
                 updatedModel =
                     case model.value |> Maybe.andThen (JsonValue.getIn path >> Result.toMaybe) of
@@ -246,61 +245,114 @@ update msg model =
             editValue updatedModel newPropPath JsonValue.NullValue
 
         FocusInput focused ->
-            { model
+            ( { model
                 | focused = focused
                 , beingEdited = touch focused model.focused model.beingEdited
-            }
-                ! []
-                => None
+              }
+            , Cmd.none
+            )
+                |> withExMsg None
 
         FocusTextInput focused ->
-            { model
+            ( { model
                 | focused = Just focused
                 , beingEdited = touch (Just focused) model.focused model.beingEdited
-            }
-                ! [ focused |> String.join "_" |> Dom.focus |> Task.attempt (\_ -> NoOp) ]
-                => None
+              }
+            , focused |> String.join "_" |> Browser.Dom.focus |> Task.attempt (\_ -> NoOp)
+            )
+                |> withExMsg None
 
-        FocusNumericInput focused ->
+        FocusFragileInput isNumber focused ->
             case focused of
                 Nothing ->
-                    editValue
-                        { model | beingEdited = touch focused model.focused model.beingEdited, focused = focused }
-                        (model.focused |> Maybe.withDefault [])
-                        (case model.editedNumber |> String.toFloat of
-                            Ok num ->
-                                JsonValue.NumericValue num
+                    if isNumber then
+                        editValue
+                            { model | beingEdited = touch focused model.focused model.beingEdited, focused = Nothing }
+                            (model.focused |> Maybe.withDefault [])
+                            (case model.editedJson |> String.toFloat of
+                                Just num ->
+                                    JsonValue.NumericValue num
 
-                            _ ->
-                                JsonValue.StringValue model.editedNumber
+                                _ ->
+                                    JsonValue.StringValue model.editedJson
+                            )
+
+                    else
+                        ( { model | beingEdited = touch focused model.focused model.beingEdited, focused = Nothing }
+                        , Cmd.none
                         )
+                            |> withExMsg None
 
                 Just somePath ->
-                    { model
+                    ( { model
                         | focused = focused
-                        , editedNumber =
-                            model.value
-                                |> Maybe.map (JsonValue.getIn somePath)
-                                |> Maybe.andThen Result.toMaybe
-                                |> Maybe.map jsonValueToString
-                                |> Maybe.withDefault ""
-                    }
-                        ! []
-                        => None
+                        , editedJson =
+                            if isNumber then
+                                model.value
+                                    |> Maybe.map (JsonValue.getIn somePath)
+                                    |> Maybe.andThen Result.toMaybe
+                                    |> Maybe.map jsonValueToString
+                                    |> Maybe.withDefault ""
+
+                            else
+                                model.value
+                                    |> Maybe.withDefault (JsonValue.ObjectValue [])
+                                    |> JsonValue.getIn somePath
+                                    |> Result.toMaybe
+                                    |> Maybe.map (JsonValue.encode >> Encode.encode 4)
+                                    |> Maybe.withDefault ""
+                      }
+                    , Cmd.none
+                    )
+                        |> withExMsg None
 
         EditValue path val ->
             editValue model path val
 
         EditNumber str ->
             case str |> String.toFloat of
-                Ok num ->
-                    editValue { model | editedNumber = str } (model.focused |> Maybe.withDefault []) (JsonValue.NumericValue num)
+                Just num ->
+                    editValue { model | editedJson = str } (model.focused |> Maybe.withDefault []) (JsonValue.NumericValue num)
 
                 _ ->
-                    { model | editedNumber = str } ! [] => None
+                    ( { model | editedJson = str }
+                    , Cmd.none
+                    )
+                        |> withExMsg None
+
+        EditJson path height str ->
+            case str |> Decode.decodeString JsonValue.decoder of
+                Ok jv ->
+                    editValue { model | editedJson = str, fieldHeights = model.fieldHeights |> Dict.insert path height } path jv
+
+                _ ->
+                    ( { model | editedJson = str }
+                    , Cmd.none
+                    )
+                        |> withExMsg None
+
+        EditMultiline path height str ->
+            editValue { model | fieldHeights = model.fieldHeights |> Dict.insert path height } path (StringValue str)
 
         ToggleShowPassword ->
-            { model | showPassword = not model.showPassword } ! [] => None
+            ( { model | showPassword = not model.showPassword }
+            , Cmd.none
+            )
+                |> withExMsg None
+
+        GetViewport path res ->
+            (case res of
+                Ok viewport ->
+                    ( { model | fieldHeights = model.fieldHeights |> Dict.insert path viewport.scene.height }
+                    , Cmd.none
+                    )
+
+                Err _ ->
+                    ( model
+                    , Cmd.none
+                    )
+            )
+                |> withExMsg None
 
 
 touch : Maybe Path -> Maybe Path -> List Path -> List Path
@@ -333,23 +385,25 @@ editValue model path val =
     in
     case validationResult of
         Ok v ->
-            { model
+            ( { model
                 | value =
                     v
                         |> decodeValue JsonValue.decoder
                         |> Result.toMaybe
                 , errors = Dict.empty
-            }
-                ! []
-                => UpdateValue (Just updatedJsonValue) True
+              }
+            , Cmd.none
+            )
+                |> withExMsg (UpdateValue (Just updatedJsonValue) True)
 
         Err e ->
-            { model
+            ( { model
                 | value = Just updatedJsonValue
                 , errors = dictFromListErrors e
-            }
-                ! []
-                => UpdateValue (Just updatedJsonValue) False
+              }
+            , Cmd.none
+            )
+                |> withExMsg (UpdateValue (Just updatedJsonValue) False)
 
 
 dictFromListErrors : List Error -> Dict Path (List String)
@@ -371,3 +425,102 @@ dictFromListErrors list =
                         )
             )
             Dict.empty
+
+
+withExMsg : a -> b -> ( b, a )
+withExMsg a b =
+    ( b, a )
+
+
+init : Config -> Schema -> Maybe JsonValue -> ( Model, Cmd Msg )
+init config schema v =
+    let
+        someValue =
+            case v of
+                Just something ->
+                    something |> JsonValue.encode
+
+                Nothing ->
+                    case schema of
+                        ObjectSchema os ->
+                            case os.default of
+                                Just def ->
+                                    def
+
+                                Nothing ->
+                                    Encode.string ""
+
+                        _ ->
+                            Encode.string ""
+
+        ( value, errors ) =
+            schema
+                |> Json.Schema.validateValue { applyDefaults = True } someValue
+                |> (\res ->
+                        case res of
+                            Ok updValue ->
+                                ( updValue
+                                    |> JsonValue.decodeValue
+                                    |> Just
+                                , Dict.empty
+                                )
+
+                            Err x ->
+                                ( v, dictFromListErrors x )
+                   )
+
+        multilineFieldsPaths =
+            collectMultilinePaths [] [] schema
+    in
+    ( { schema = schema
+      , focused = Nothing
+      , config = config
+      , value = value
+      , errors = errors
+      , beingEdited = []
+      , editedJson = ""
+      , showPassword = False
+      , fieldHeights = Dict.empty
+      }
+    , multilineFieldsPaths
+        |> List.map (\path -> Browser.Dom.getViewportOf (config.name ++ "_" ++ String.join "_" path) |> Task.attempt (GetViewport path))
+        |> Cmd.batch
+    )
+
+
+collectMultilinePaths : List Path -> Path -> Schema -> List Path
+collectMultilinePaths paths path schema =
+    case schema of
+        ObjectSchema os ->
+            case os.type_ of
+                SingleType NumberType ->
+                    paths
+
+                SingleType StringType ->
+                    case schema |> getUiSpec |> .widget of
+                        Just (UiSpec.MultilineTextField _) ->
+                            path :: paths
+
+                        _ ->
+                            paths
+
+                SingleType BooleanType ->
+                    paths
+
+                SingleType ObjectType ->
+                    case os.properties of
+                        Just (Schemata listProps) ->
+                            listProps
+                                |> List.foldl (\( key, propSchema ) res -> collectMultilinePaths res (path ++ [ key ]) propSchema) paths
+
+                        _ ->
+                            path :: paths
+
+                SingleType ArrayType ->
+                    paths
+
+                _ ->
+                    path :: paths
+
+        _ ->
+            path :: paths

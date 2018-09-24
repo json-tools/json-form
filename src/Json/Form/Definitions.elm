@@ -1,12 +1,15 @@
-module Json.Form.Definitions exposing (EditingMode(..), Model, Msg(..), Path, init)
+module Json.Form.Definitions exposing (EditingMode(..), Model, Msg(..), Path)
 
+import Browser.Dom exposing (Viewport)
 import Dict exposing (Dict)
 import ErrorMessages exposing (stringifyError)
+import Json.Encode as Encode
 import Json.Form.Config exposing (Config)
 import Json.Schema
 import Json.Schema.Definitions exposing (..)
 import Json.Schema.Validation exposing (Error)
 import Json.Value as JsonValue exposing (JsonValue)
+import Task
 
 
 type alias Model =
@@ -16,43 +19,9 @@ type alias Model =
     , value : Maybe JsonValue
     , errors : Dict Path (List String)
     , beingEdited : List Path
-    , editedNumber : String
+    , editedJson : String
     , showPassword : Bool
-    }
-
-
-init : Config -> Schema -> Maybe JsonValue -> Model
-init config schema v =
-    let
-        someValue =
-            v
-                |> Maybe.withDefault (JsonValue.ObjectValue [])
-                |> JsonValue.encode
-
-        ( value, errors ) =
-            schema
-                |> Json.Schema.validateValue { applyDefaults = True } someValue
-                |> (\res ->
-                        case res of
-                            Ok updValue ->
-                                ( updValue
-                                    |> JsonValue.decodeValue
-                                    |> Just
-                                , Dict.empty
-                                )
-
-                            Err x ->
-                                ( v, dictFromListErrors x )
-                   )
-    in
-    { schema = schema
-    , focused = Nothing
-    , config = config
-    , value = value
-    , errors = errors
-    , beingEdited = []
-    , editedNumber = ""
-    , showPassword = False
+    , fieldHeights : Dict Path Float
     }
 
 
@@ -60,11 +29,14 @@ type Msg
     = NoOp
     | FocusInput (Maybe Path)
     | FocusTextInput Path
-    | FocusNumericInput (Maybe Path)
+    | FocusFragileInput Bool (Maybe Path)
     | EditValue Path JsonValue
     | EditNumber String
+    | EditJson Path Float String
+    | EditMultiline Path Float String
     | AddItem Path Int
     | ToggleShowPassword
+    | GetViewport Path (Result Browser.Dom.Error Viewport)
 
 
 type EditingMode

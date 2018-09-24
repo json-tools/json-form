@@ -7,7 +7,7 @@ import Json.Form.Definitions exposing (..)
 import Json.Form.Helper as Helper
 import Json.Form.UiSpec exposing (applyRule)
 import Json.Schema.Definitions exposing (Schema, getCustomKeywordValue)
-import Json.Value as JsonValue exposing (JsonValue(BoolValue))
+import Json.Value as JsonValue exposing (JsonValue(..))
 import JsonFormUtil as Util exposing (getTitle, getUiSpec, jsonValueToString)
 
 
@@ -15,7 +15,7 @@ switch : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
 switch model schema isRequired isDisabled path =
     let
         id =
-            path |> String.join "_"
+            model.config.name ++ "_" ++ (path |> String.join "_")
 
         isChecked =
             case model.value |> Maybe.andThen (JsonValue.getIn path >> Result.toMaybe) of
@@ -70,7 +70,7 @@ checkbox : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
 checkbox model schema isRequired isDisabled path =
     let
         id =
-            path |> String.join "_"
+            model.config.name ++ "_" ++ (path |> String.join "_")
 
         isChecked =
             case model.value |> Maybe.andThen (JsonValue.getIn path >> Result.toMaybe) of

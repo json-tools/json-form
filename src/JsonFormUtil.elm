@@ -1,4 +1,4 @@
-module JsonFormUtil exposing ((=>), getDescription, getTextProp, getTitle, getUiSpec, jsonValueToString)
+module JsonFormUtil exposing (getDescription, getTextProp, getTitle, getUiSpec, jsonValueToString)
 
 import Json.Decode as Decode
 import Json.Encode as Encode
@@ -14,7 +14,7 @@ jsonValueToString jv =
             s
 
         JsonValue.NumericValue n ->
-            toString n
+            String.fromFloat n
 
         _ ->
             ""
@@ -60,8 +60,3 @@ getUiSpec schema =
                     |> Result.toMaybe
             )
         |> Maybe.withDefault Json.Form.UiSpec.blank
-
-
-(=>) : a -> b -> ( a, b )
-(=>) a b =
-    ( a, b )

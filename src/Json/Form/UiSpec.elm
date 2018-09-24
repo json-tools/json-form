@@ -1,22 +1,34 @@
-module Json.Form.UiSpec exposing (Rule(..), UiSpec, WidgetType(..), applyRule, blank, decoder)
+module Json.Form.UiSpec exposing (MultilineTextFieldConfig, Rule(..), UiSpec, Widget(..), applyRule, blank, decoder, defaultMultilineTextFieldConfig)
 
-import Json.Decode as Decode exposing (Decoder, Value, fail, field, maybe, succeed)
+import Json.Decode as Decode exposing (Decoder, Value, fail, field, int, maybe, string, succeed)
 import Json.Encode as Encode
 import Json.Schema exposing (validateValue)
-import Json.Schema.Definitions exposing (Schema(ObjectSchema))
+import Json.Schema.Definitions exposing (Schema(..))
 import Json.Value as JsonValue exposing (JsonValue)
 
 
 type alias UiSpec =
-    { widgetType : Maybe WidgetType
+    { widget : Maybe Widget
     , rule : Maybe Rule
     }
 
 
-type WidgetType
+type Widget
     = PasswordField
     | Switch
-    | MultilineTextField
+    | MultilineTextField MultilineTextFieldConfig
+
+
+type alias MultilineTextFieldConfig =
+    { minRows : Int
+    , maxRows : Int
+    }
+
+
+defaultMultilineTextFieldConfig =
+    { minRows = 1
+    , maxRows = 5
+    }
 
 
 type Rule
@@ -28,7 +40,7 @@ type Rule
 
 blank : UiSpec
 blank =
-    { widgetType = Nothing
+    { widget = Nothing
     , rule = Nothing
     }
 
@@ -36,7 +48,14 @@ blank =
 decoder : Decoder UiSpec
 decoder =
     Decode.map2 UiSpec
-        (field "widget" Decode.string
+        (field "widget" widgetDecoder |> maybe)
+        (field "rule" ruleDecoder |> maybe)
+
+
+widgetDecoder : Decoder Widget
+widgetDecoder =
+    Decode.oneOf
+        [ string
             |> Decode.andThen
                 (\widget ->
                     if widget == "password" then
@@ -46,21 +65,38 @@ decoder =
                         succeed <| Switch
 
                     else if widget == "multiline" then
-                        succeed <| MultilineTextField
+                        succeed <| MultilineTextField defaultMultilineTextFieldConfig
 
                     else
                         fail ""
                 )
-            |> maybe
-        )
-        (field "rule" ruleDecoder |> maybe)
+        , Decode.field "type" string
+            |> Decode.andThen
+                (\t ->
+                    case t |> Debug.log "hha" of
+                        "multiline" ->
+                            Decode.map2 MultilineTextFieldConfig
+                                (Decode.field "minRows" int)
+                                (Decode.field "maxRows" int)
+                                |> Decode.map MultilineTextField
+
+                        "password" ->
+                            succeed PasswordField
+
+                        "switch" ->
+                            succeed Switch
+
+                        _ ->
+                            fail "Unknown widget"
+                )
+        ]
 
 
 ruleDecoder : Decoder Rule
 ruleDecoder =
     Decode.map3
         (\action ref condition -> action ref condition)
-        (Decode.field "action" Decode.string
+        (Decode.field "action" string
             |> Decode.andThen
                 (\action ->
                     if action == "enable" then
@@ -79,7 +115,7 @@ ruleDecoder =
                         fail <| "Expected one of 'disable', 'enabled', 'show', 'hide', but got unknown action: '" ++ action ++ "'"
                 )
         )
-        (Decode.field "path" Decode.string)
+        (Decode.field "path" string)
         (Decode.field "condition" Json.Schema.Definitions.decoder)
 
 

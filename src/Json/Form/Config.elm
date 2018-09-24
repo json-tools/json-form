@@ -6,6 +6,7 @@ import Json.Decode as Decode exposing (Decoder, bool, fail, field, maybe, string
 type alias Config =
     { textFieldStyle : TextFieldStyle
     , dense : Bool
+    , name : String
     }
 
 
@@ -18,12 +19,13 @@ defaultConfig : Config
 defaultConfig =
     { textFieldStyle = Outlined
     , dense = True
+    , name = ""
     }
 
 
 decoder : Decoder Config
 decoder =
-    Decode.map2 Config
+    Decode.map3 Config
         (field "textFieldStyle" <|
             Decode.andThen
                 (\x ->
@@ -40,3 +42,4 @@ decoder =
                 string
         )
         (field "dense" bool |> maybe |> Decode.map (Maybe.withDefault False))
+        (field "name" string |> maybe |> Decode.map (Maybe.withDefault ""))
