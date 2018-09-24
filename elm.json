@@ -27,5 +27,6 @@
     "test-dependencies": {
         "direct": {},
         "indirect": {}
-    }
+    },
+    "homepage": "https://json-tools.github.io/json-form"
 }
