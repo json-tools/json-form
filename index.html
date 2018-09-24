@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>JSON Form web-component demo</title><script src="https://unpkg.com/json-viewer-custom-element"></script><script src="/highlight.pack.js"></script><script>const q = document.querySelector.bind(document);
+<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>JSON Form web-component demo</title><script src="https://unpkg.com/json-viewer-custom-element"></script><script src="highlight.pack.js"></script><script>const q = document.querySelector.bind(document);
 
             window.addEventListener('load', () => {
                 const form = q('json-form');
@@ -26,7 +26,7 @@
                     const shadowRoot = this.attachShadow({ mode: 'open' });
                     const styles = document.createElement('link');
                     styles.setAttribute('rel', 'stylesheet');
-                    styles.setAttribute('href', '/solarized-dark.css');
+                    styles.setAttribute('href', 'solarized-dark.css');
                     shadowRoot.appendChild(styles);
                     shadowRoot.appendChild(appRoot);
                     this.appRoot = appRoot;
