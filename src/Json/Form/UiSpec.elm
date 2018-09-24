@@ -73,7 +73,7 @@ widgetDecoder =
         , Decode.field "type" string
             |> Decode.andThen
                 (\t ->
-                    case t |> Debug.log "hha" of
+                    case t of
                         "multiline" ->
                             Decode.map2 MultilineTextFieldConfig
                                 (Decode.field "minRows" int)
