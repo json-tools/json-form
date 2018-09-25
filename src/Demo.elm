@@ -4,7 +4,7 @@ import Browser exposing (Document)
 import Html exposing (Html, div, h3, h4, pre, text)
 import Html.Attributes exposing (class, classList, style)
 import Html.Events exposing (onClick)
-import Json.Encode exposing (Value)
+import Json.Encode as Encode exposing (Value)
 import Json.Form
 import Json.Form.Config exposing (TextFieldStyle(..))
 import Json.Schema.Definitions exposing (Schema)
@@ -74,7 +74,7 @@ update message model =
                                         , textFieldStyle = Outlined
                                         }
                                 in
-                                Json.Form.init config schema (Just <| StringValue "dd")
+                                Json.Form.init config schema Nothing
                                     |> Tuple.mapSecond (Cmd.map (JsonFormMsg index))
                             )
                         |> List.unzip
