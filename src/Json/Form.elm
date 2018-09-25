@@ -446,25 +446,30 @@ withExMsg a b =
 init : Config -> Schema -> Maybe JsonValue -> ( Model, Cmd Msg )
 init config schema v =
     let
-        someValue =
+        ( value, errors ) =
             case v of
                 Just something ->
-                    something |> JsonValue.encode
+                    something |> JsonValue.encode |> initValue
 
                 Nothing ->
                     case schema of
                         ObjectSchema os ->
                             case os.default of
                                 Just def ->
-                                    def
+                                    def |> initValue
 
                                 Nothing ->
-                                    Encode.string ""
+                                    case os.type_ of
+                                        SingleType ObjectType ->
+                                            Encode.object [] |> initValue
+
+                                        _ ->
+                                            ( Nothing, Dict.empty )
 
                         _ ->
-                            Encode.string ""
+                            ( Nothing, Dict.empty )
 
-        ( value, errors ) =
+        initValue someValue =
             schema
                 |> Json.Schema.validateValue { applyDefaults = True } someValue
                 |> (\res ->
@@ -477,7 +482,7 @@ init config schema v =
                                 )
 
                             Err x ->
-                                ( v, dictFromListErrors x )
+                                ( someValue |> JsonValue.decodeValue |> Just, dictFromListErrors x )
                    )
 
         multilineFieldsPaths =
