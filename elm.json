@@ -14,8 +14,8 @@
             "elm/random": "1.0.0",
             "elm/regex": "1.0.0",
             "elm/svg": "1.0.1",
-            "json-tools/json-schema": "1.0.0",
-            "json-tools/json-value": "1.0.0",
+            "json-tools/json-schema": "1.0.1",
+            "json-tools/json-value": "1.0.1",
             "zwilias/elm-utf-tools": "2.0.1"
         },
         "indirect": {
