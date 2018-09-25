@@ -109,65 +109,74 @@ getSnippet ds =
                             , ( "widget", string widget )
                             ]
                         )
+
+                enableToggle =
+                    ( "enabled"
+                    , buildSchema
+                        |> withType "boolean"
+                        |> withDefault (Encode.bool False)
+                        |> withTitle "enable"
+                        |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
+                    )
             in
             [ buildSchema
+                |> withType "object"
+                |> withProperties
+                    [ enableToggle
+                    , ( "disableDemo"
+                      , buildSchema
+                            |> withTitle "Rule: disable text field"
+                            |> withType "string"
+                            |> withDescription "Will be enabled when switch turned on"
+                            |> withRule "disable"
+                      )
+                    ]
+            , buildSchema
                 |> withType "object"
                 |> withProperties
                     [ ( "enabled"
                       , buildSchema
                             |> withType "boolean"
+                            |> withTitle "show"
                             |> withDefault (Encode.bool False)
-                            |> withTitle "enable"
-                            |> withDescription "Enable editing"
                             |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
                       )
+                    , ( "hideDemo"
+                      , buildSchema
+                            |> withTitle "Rule: hide text field"
+                            |> withType "string"
+                            |> withDescription "Will be shown when switch turned on"
+                            |> withRule "hide"
+                      )
+                    ]
+            , buildSchema
+                |> withType "object"
+                |> withProperties
+                    [ enableToggle
+                    , ( "disableCheckboxDemo"
+                      , buildSchema
+                            |> withTitle "Rule: disable checkbox"
+                            |> withType "boolean"
+                            |> withDescription "Will be enabled when switch turned on"
+                            |> withRuleAndWidget "disable" "checkbox"
+                      )
+                    , ( "disableSwitchDemo"
+                      , buildSchema
+                            |> withTitle "Rule: disable switch"
+                            |> withType "boolean"
+                            |> withDescription "Will be enabled when switch turned on"
+                            |> withRuleAndWidget "disable" "switch"
+                      )
+                    ]
+            , buildSchema
+                |> withType "object"
+                |> withProperties
+                    [ enableToggle
                     , ( "form"
                       , buildSchema
                             |> withType "object"
                             |> withProperties
-                                [ ( "disableDemo"
-                                  , buildSchema
-                                        |> withTitle "Rule: disable text field"
-                                        |> withType "string"
-                                        |> withDescription "Will be enabled when switch turned on"
-                                        |> withRule "disable"
-                                  )
-                                , ( "hideDemo"
-                                  , buildSchema
-                                        |> withTitle "Rule: hide text field"
-                                        |> withType "string"
-                                        |> withDescription "Will be shown when switch turned on"
-                                        |> withRule "hide"
-                                  )
-                                , ( "disableNumericDemo"
-                                  , buildSchema
-                                        |> withTitle "Rule: disable numeric"
-                                        |> withType "number"
-                                        |> withDescription "Will be enabled when switch turned on"
-                                        |> withRule "disable"
-                                  )
-                                , ( "hideNumericDemo"
-                                  , buildSchema
-                                        |> withTitle "Rule: hide numeric"
-                                        |> withType "number"
-                                        |> withDescription "Will be shown when switch turned on"
-                                        |> withRule "hide"
-                                  )
-                                , ( "disableCheckboxDemo"
-                                  , buildSchema
-                                        |> withTitle "Rule: disable checkbox"
-                                        |> withType "boolean"
-                                        |> withDescription "Will be enabled when switch turned on"
-                                        |> withRuleAndWidget "disable" "checkbox"
-                                  )
-                                , ( "disableSwitchDemo"
-                                  , buildSchema
-                                        |> withTitle "Rule: disable switch"
-                                        |> withType "boolean"
-                                        |> withDescription "Will be enabled when switch turned on"
-                                        |> withRuleAndWidget "disable" "switch"
-                                  )
-                                , ( "nestedForm"
+                                [ ( "nestedForm"
                                   , buildSchema
                                         |> withType "object"
                                         |> withProperties
@@ -180,65 +189,49 @@ getSnippet ds =
                                             ]
                                         |> withRule "disable"
                                   )
-                                , ( "otherNestedForm"
-                                  , buildSchema
-                                        |> withType "object"
-                                        |> withProperties
-                                            [ ( "hideDemo"
-                                              , buildSchema
-                                                    |> withTitle "Rule: hide nested form"
-                                                    |> withType "string"
-                                                    |> withDescription "Will be hidden when switch turned on"
-                                              )
-                                            ]
-                                        |> withRule "hide"
-                                  )
-                                , ( "array"
-                                  , buildSchema
-                                        |> withType "array"
-                                        |> withItem
-                                            (buildSchema
-                                                |> withType "object"
-                                                |> withProperties
-                                                    [ ( "enabled"
-                                                      , buildSchema
-                                                            |> withType "boolean"
-                                                            -- |> withDefault (Encode.bool True)
-                                                            |> withTitle "enable"
-                                                            |> withDescription "Enable editing"
-                                                            |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
-                                                      )
-                                                    , ( "hideDemo"
-                                                      , buildSchema
-                                                            |> withTitle "Rule: disable based on local condition"
-                                                            |> withType "string"
-                                                            |> withDescription "Local condition demo"
-                                                            |> withCustomKeyword "ui"
-                                                                (object
-                                                                    [ ( "rule"
-                                                                      , object
-                                                                            [ ( "action", string "disable" )
-                                                                            , ( "path", string "../enabled" )
-                                                                            , ( "condition"
-                                                                              , object
-                                                                                    [ ( "const", Encode.bool False )
-                                                                                    , ( "default", Encode.bool False )
-                                                                                    ]
-                                                                              )
-                                                                            ]
-                                                                      )
-                                                                    ]
-                                                                )
-                                                      )
-                                                    ]
-                                            )
-                                  )
                                 ]
                       )
                     ]
-                |> toSchema
-                |> Result.withDefault blankSchema
+            , buildSchema
+                |> withType "array"
+                |> withItem
+                    (buildSchema
+                        |> withType "object"
+                        |> withProperties
+                            [ ( "enabled"
+                              , buildSchema
+                                    |> withType "boolean"
+                                    -- |> withDefault (Encode.bool True)
+                                    |> withTitle "enable"
+                                    |> withDescription "Enable editing"
+                                    |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
+                              )
+                            , ( "hideDemo"
+                              , buildSchema
+                                    |> withTitle "Rule: disable based on local condition"
+                                    |> withType "string"
+                                    |> withDescription "Local condition demo"
+                                    |> withCustomKeyword "ui"
+                                        (object
+                                            [ ( "rule"
+                                              , object
+                                                    [ ( "action", string "disable" )
+                                                    , ( "path", string "../enabled" )
+                                                    , ( "condition"
+                                                      , object
+                                                            [ ( "const", Encode.bool False )
+                                                            , ( "default", Encode.bool False )
+                                                            ]
+                                                      )
+                                                    ]
+                                              )
+                                            ]
+                                        )
+                              )
+                            ]
+                    )
             ]
+                |> List.map (toSchema >> Result.withDefault blankSchema)
 
 
 

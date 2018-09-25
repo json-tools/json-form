@@ -44,7 +44,7 @@ type alias Msg =
 
 view : Model -> Html Msg
 view model =
-    Html.form [] [ viewNode model model.schema False False [] ]
+    Html.div [] [ viewNode model model.schema False False [] ]
 
 
 viewNode : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
@@ -62,8 +62,8 @@ viewNode model schema isRequired isDisabled path =
         Checkbox ->
             Selection.checkbox model schema isRequired isDisabled path
 
-        Object ->
-            viewObject model schema isRequired isDisabled path
+        Object properties ->
+            viewObject model schema properties isRequired isDisabled path
 
         Array ->
             viewArray model schema isRequired isDisabled path
@@ -87,7 +87,12 @@ editingMode model schema =
                     getBooleanUiWidget schema
 
                 SingleType ObjectType ->
-                    Object
+                    case os.properties of
+                        Just schemata ->
+                            Object schemata
+
+                        Nothing ->
+                            JsonEditor
 
                 SingleType ArrayType ->
                     Array
@@ -178,14 +183,18 @@ viewArray model schema isRequired isDisabled path =
                 text ""
 
 
-viewObject : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
-viewObject model schema isRequired isDisabled path =
+viewObject : Model -> Schema -> Schemata -> Bool -> Bool -> Path -> Html Msg
+viewObject model schema properties isRequired isDisabled path =
     let
-        iterateOverSchemata propsDict required (Schemata schemata) =
+        iterateOverSchemata (Schemata schemata) =
             schemata
                 |> List.map
                     (\( propName, subSchema ) ->
-                        viewNode model subSchema (required |> Maybe.withDefault [] |> List.member propName) (isDisabled || disabled) (path ++ [ propName ])
+                        viewNode model
+                            subSchema
+                            (required |> List.member propName)
+                            (isDisabled || disabled)
+                            (path ++ [ propName ])
                     )
 
         ( disabled, hidden ) =
@@ -193,20 +202,22 @@ viewObject model schema isRequired isDisabled path =
                 |> getUiSpec
                 |> .rule
                 |> applyRule model.value path
+
+        required =
+            case schema of
+                ObjectSchema os ->
+                    os.required |> Maybe.withDefault []
+
+                _ ->
+                    []
     in
     if hidden then
         text ""
 
     else
-        case schema of
-            ObjectSchema os ->
-                os.properties
-                    |> Maybe.map (iterateOverSchemata Dict.empty os.required)
-                    |> Maybe.withDefault []
-                    |> div []
-
-            _ ->
-                text ""
+        properties
+            |> iterateOverSchemata
+            |> div []
 
 
 updateConfig : Config -> Model -> Model

@@ -45,30 +45,9 @@ type EditingMode
     | Switch
     | Checkbox
     | JsonEditor
-    | Object
+    | Object Schemata
     | Array
 
 
 type alias Path =
     List String
-
-
-dictFromListErrors : List Error -> Dict Path (List String)
-dictFromListErrors list =
-    list
-        |> List.foldl
-            (\error dict ->
-                dict
-                    |> Dict.update error.jsonPointer.path
-                        (\listDetails ->
-                            (case listDetails of
-                                Just l ->
-                                    l ++ [ error.details |> stringifyError ]
-
-                                Nothing ->
-                                    [ error.details |> stringifyError ]
-                            )
-                                |> Just
-                        )
-            )
-            Dict.empty
