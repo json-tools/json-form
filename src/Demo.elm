@@ -128,6 +128,8 @@ content model =
                     [ form
                         |> Json.Form.view
                         |> Html.map (JsonFormMsg index)
+                    , form.value
+                        |> viewValue
                     ]
                 , form.schema |> viewSchema
                 ]
@@ -140,12 +142,26 @@ content model =
         ]
 
 
+viewValue : Maybe JsonValue -> Html msg
+viewValue v =
+    case v of
+        Just val ->
+            let
+                code =
+                    val |> Json.Value.encode |> Encode.encode 2
+            in
+            Html.node "code-sample" [ class "schema-source", Html.Attributes.attribute "code" code ] []
+
+        Nothing ->
+            text ""
+
+
 viewSchema : Schema -> Html msg
 viewSchema s =
     let
         code =
             s
                 |> Json.Schema.Definitions.encode
-                |> Json.Encode.encode 2
+                |> Encode.encode 2
     in
     Html.node "code-sample" [ class "schema-source", Html.Attributes.attribute "code" code ] []
