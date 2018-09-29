@@ -1,4 +1,4 @@
-module Snippets exposing (Snippet(..), getSnippet, getSnippetTitle, index)
+module Snippets exposing (Example, Snippet(..), getSnippet, getSnippetTitle, index)
 
 import Json.Encode as Encode exposing (int, list, object, string)
 import Json.Schema.Builder exposing (..)
@@ -8,6 +8,12 @@ import Json.Schema.Definitions exposing (Schema(..), SingleType(..), Type(..), b
 type Snippet
     = InputTypes
     | Rules
+
+
+type alias Example =
+    { schema : Schema
+    , title : String
+    }
 
 
 index : List Snippet
@@ -27,7 +33,17 @@ getSnippetTitle ds =
             "Rules"
 
 
-getSnippet : Snippet -> List Schema
+makeExample : String -> SchemaBuilder -> Example
+makeExample title sb =
+    { schema =
+        sb
+            |> toSchema
+            |> Result.withDefault blankSchema
+    , title = title
+    }
+
+
+getSnippet : Snippet -> List Example
 getSnippet ds =
     case ds of
         InputTypes ->
@@ -35,40 +51,34 @@ getSnippet ds =
                 |> withType "string"
                 |> withTitle "Text field"
                 |> withDescription "Single line text field"
-                |> toSchema
-                |> Result.withDefault blankSchema
+                |> makeExample "Single line text field"
             , buildSchema
                 |> withType "string"
                 |> withTitle "Multiline"
                 |> withDescription "Multi-line text field"
                 |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "multiline" ) ])
-                |> toSchema
-                |> Result.withDefault blankSchema
+                |> makeExample "Multiline text field"
             , buildSchema
                 |> withType "string"
                 |> withTitle "Multiline"
                 |> withDescription "Configurable multi-line text field"
                 |> withCustomKeyword "ui" (Encode.object [ ( "widget", object [ ( "type", string "multiline" ), ( "minRows", int 5 ), ( "maxRows", int 10 ) ] ) ])
-                |> toSchema
-                |> Result.withDefault blankSchema
+                |> makeExample "Configured multiline text field"
             , buildSchema
                 |> withType "string"
                 |> withTitle "Password"
                 |> withDescription "Must contain enough various symbols"
                 |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "password" ) ])
-                |> toSchema
-                |> Result.withDefault blankSchema
+                |> makeExample "Password field"
             , buildSchema
                 |> withType "boolean"
                 |> withTitle "Boolean as checkbox"
-                |> toSchema
-                |> Result.withDefault blankSchema
+                |> makeExample "Checkbox"
             , buildSchema
                 |> withType "boolean"
                 |> withTitle "Boolean as switch"
                 |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
-                |> toSchema
-                |> Result.withDefault blankSchema
+                |> makeExample "Switch"
             ]
 
         Rules ->
@@ -115,7 +125,7 @@ getSnippet ds =
                     , buildSchema
                         |> withType "boolean"
                         |> withDefault (Encode.bool False)
-                        |> withTitle "enable"
+                        |> withTitle "Enable"
                         |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
                     )
             in
@@ -131,13 +141,14 @@ getSnippet ds =
                             |> withRule "disable"
                       )
                     ]
+                |> makeExample "Disable input"
             , buildSchema
                 |> withType "object"
                 |> withProperties
                     [ ( "enabled"
                       , buildSchema
                             |> withType "boolean"
-                            |> withTitle "show"
+                            |> withTitle "Show"
                             |> withDefault (Encode.bool False)
                             |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
                       )
@@ -149,6 +160,7 @@ getSnippet ds =
                             |> withRule "hide"
                       )
                     ]
+                |> makeExample "Hide input"
             , buildSchema
                 |> withType "object"
                 |> withProperties
@@ -168,6 +180,7 @@ getSnippet ds =
                             |> withRuleAndWidget "disable" "switch"
                       )
                     ]
+                |> makeExample "Disable selection conrols"
             , buildSchema
                 |> withType "object"
                 |> withProperties
@@ -192,6 +205,7 @@ getSnippet ds =
                                 ]
                       )
                     ]
+                |> makeExample "Disable nested form"
             , buildSchema
                 |> withType "array"
                 |> withItem
@@ -230,8 +244,8 @@ getSnippet ds =
                               )
                             ]
                     )
+                |> makeExample "Local scope"
             ]
-                |> List.map (toSchema >> Result.withDefault blankSchema)
 
 
 

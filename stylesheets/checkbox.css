@@ -7,8 +7,6 @@
     display: inline-block;
     box-sizing: border-box;
     margin: 0;
-    margin-left: 16px;
-    margin-bottom: 16px;
     height: 75px;
     padding: 20px 0;
     font-size: 16px;
@@ -38,7 +36,7 @@
     height: 16px;
     position: absolute;
     top: calc(50% - 8px);
-    right: 12px;
+    right: 0px;
     border-radius: 2px;
     border: 2px solid #0000008a;
     cursor: pointer;

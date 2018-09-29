@@ -107,10 +107,17 @@ view model schema isJson isRequired isDisabled path =
             case multilineConfig of
                 Just mlConf ->
                     let
+                        paddings =
+                            if model.config.dense then
+                                25
+
+                            else
+                                37
+
                         rows =
                             case model.fieldHeights |> Dict.get path of
                                 Just height ->
-                                    Basics.min (height / 18 |> round) mlConf.maxRows
+                                    Basics.min ((height - paddings) / 18 |> round) mlConf.maxRows
 
                                 Nothing ->
                                     mlConf.minRows

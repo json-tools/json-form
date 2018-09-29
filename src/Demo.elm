@@ -1,7 +1,7 @@
 module Demo exposing (init, update, view)
 
 import Browser exposing (Document)
-import Html exposing (Html, div, h3, h4, pre, text)
+import Html exposing (Html, div, span, text)
 import Html.Attributes exposing (class, classList, style)
 import Html.Events exposing (onClick)
 import Json.Encode as Encode exposing (Value)
@@ -9,12 +9,18 @@ import Json.Form
 import Json.Form.Config exposing (TextFieldStyle(..))
 import Json.Schema.Definitions exposing (Schema)
 import Json.Value exposing (JsonValue(..))
-import Snippets exposing (Snippet(..), getSnippet, getSnippetTitle)
+import Snippets exposing (Example, Snippet(..), getSnippet, getSnippetTitle)
+
+
+type alias ExampleDemo =
+    { form : Json.Form.Model
+    , example : Example
+    }
 
 
 type alias Model =
     { showcase : Snippet
-    , forms : List Json.Form.Model
+    , examples : List ExampleDemo
     }
 
 
@@ -26,7 +32,7 @@ initialShowcase =
 init : Value -> ( Model, Cmd Msg )
 init _ =
     { showcase = initialShowcase
-    , forms = []
+    , examples = []
     }
         |> update (SetShowcase initialShowcase)
 
@@ -41,32 +47,33 @@ update message model =
     case message of
         JsonFormMsg index msg ->
             let
-                ( forms, cmds ) =
-                    model.forms
+                ( examples, cmds ) =
+                    model.examples
                         |> List.indexedMap
-                            (\i form ->
+                            (\i { form, example } ->
                                 if i == index then
                                     Json.Form.update msg form
                                         |> Tuple.first
-                                        |> Tuple.mapSecond (Cmd.map (JsonFormMsg index))
+                                        |> Tuple.mapFirst (\f -> { form = f, example = example })
+                                        |> Tuple.mapSecond (JsonFormMsg index |> Cmd.map)
 
                                 else
-                                    ( form, Cmd.none )
+                                    ( { form = form, example = example }, Cmd.none )
                             )
                         |> List.unzip
             in
             ( { model
-                | forms = forms
+                | examples = examples
               }
             , Cmd.batch cmds
             )
 
         SetShowcase s ->
             let
-                ( forms, cmds ) =
+                ( examples, cmds ) =
                     getSnippet s
                         |> List.indexedMap
-                            (\index schema ->
+                            (\index example ->
                                 let
                                     config =
                                         { name = "form" ++ String.fromInt index
@@ -74,14 +81,15 @@ update message model =
                                         , textFieldStyle = Outlined
                                         }
                                 in
-                                Json.Form.init config schema Nothing
-                                    |> Tuple.mapSecond (Cmd.map (JsonFormMsg index))
+                                Json.Form.init config example.schema Nothing
+                                    |> Tuple.mapFirst (\form -> { form = form, example = example })
+                                    |> Tuple.mapSecond (JsonFormMsg index |> Cmd.map)
                             )
                         |> List.unzip
             in
             ( { model
                 | showcase = s
-                , forms = forms
+                , examples = examples
               }
             , Cmd.batch cmds
             )
@@ -89,7 +97,7 @@ update message model =
 
 view : Model -> Document Msg
 view model =
-    { title = "Demo"
+    { title = "Json Form Demo"
     , body =
         [ topbar model
         , content model
@@ -122,38 +130,113 @@ snippetTab activeSnippet snippet =
 content : Model -> Html Msg
 content model =
     let
-        generatedForm index form =
+        viewExample index { form, example } =
             div [ class "example-section" ]
-                [ div [ style "width" "50%", style "display" "inline-block", style "max-width" "300px" ]
-                    [ form
-                        |> Json.Form.view
-                        |> Html.map (JsonFormMsg index)
-                    , form.value
-                        |> viewValue
+                [ Html.h3 [ class "example-section__heading" ] [ text example.title ]
+                , div [ class "example-section__content" ]
+                    [ div [ style "display" "inline-block", style "max-width" "300px", style "min-width" "300px" ]
+                        [ div [ style "padding" "10px", style "background" "var(--form-background)" ]
+                            [ form
+                                |> Json.Form.view
+                                |> Html.map (JsonFormMsg index)
+                            ]
+                            |> cardWithTitle "Form"
+                        , form.value
+                            |> Maybe.map viewValue
+                            |> Maybe.withDefault (text " ")
+                            |> (\x -> div [ class "json-view" ] [ x ])
+                            |> cardWithTitle "Data"
+                            |> (\x -> div [ style "margin-top" "20px" ] [ x ])
+                        ]
+                    , div [ style "width" "100%", style "min-width" "300px" ] [ example.schema |> viewSchema ]
                     ]
-                , form.schema |> viewSchema
                 ]
     in
     div [ class "app-content" ]
-        [ h3 [ style "padding" "8px", style "border-bottom" "1px solid #e8e8e8" ] [ text <| "Showcase: " ++ getSnippetTitle model.showcase ]
-        , div []
-            [ model.forms |> List.indexedMap generatedForm |> div []
-            ]
+        [ model.examples |> List.indexedMap viewExample |> div []
         ]
 
 
-viewValue : Maybe JsonValue -> Html msg
+viewValue : JsonValue -> Html msg
 viewValue v =
-    case v of
-        Just val ->
-            let
-                code =
-                    val |> Json.Value.encode |> Encode.encode 2
-            in
-            Html.node "code-sample" [ class "schema-source", Html.Attributes.attribute "code" code ] []
+    let
+        str c =
+            Encode.string >> Encode.encode 0 >> val c
 
-        Nothing ->
-            text ""
+        val c s =
+            span [ class <| "json-view__" ++ c ] [ text s ]
+    in
+    case v of
+        NumericValue n ->
+            n
+                |> String.fromFloat
+                |> val "number"
+
+        NullValue ->
+            "null"
+                |> val "null"
+
+        BoolValue b ->
+            (if b then
+                "true"
+
+             else
+                "false"
+            )
+                |> val "bool"
+
+        StringValue s ->
+            s |> str "string"
+
+        ObjectValue props ->
+            let
+                lastIndex =
+                    List.length props - 1
+            in
+            [ text "{"
+            , props
+                |> List.indexedMap
+                    (\index ( key, vv ) ->
+                        span []
+                            [ key |> str "attr"
+                            , text ": "
+                            , viewValue vv
+                            , if index == lastIndex then
+                                text "\n"
+
+                              else
+                                text ",\n"
+                            ]
+                    )
+                |> div [ class "json-view__nested-props" ]
+            , text "}"
+            ]
+                |> span []
+
+        ArrayValue items ->
+            let
+                lastIndex =
+                    List.length items - 1
+            in
+            [ text "["
+            , items
+                |> List.indexedMap
+                    (\index vv ->
+                        span []
+                            [ index |> String.fromInt |> val "attr"
+                            , text ": "
+                            , viewValue vv
+                            , if index == lastIndex then
+                                text "\n"
+
+                              else
+                                text ",\n"
+                            ]
+                    )
+                |> div [ class "json-view__nested-props" ]
+            , text "]"
+            ]
+                |> span []
 
 
 viewSchema : Schema -> Html msg
@@ -162,6 +245,16 @@ viewSchema s =
         code =
             s
                 |> Json.Schema.Definitions.encode
-                |> Encode.encode 2
+                |> Json.Value.decodeValue
     in
-    Html.node "code-sample" [ class "schema-source", Html.Attributes.attribute "code" code ] []
+    viewValue code
+        |> (\x -> div [ class "json-view" ] [ x ])
+        |> cardWithTitle "Schema"
+
+
+cardWithTitle : String -> Html msg -> Html msg
+cardWithTitle title cardContent =
+    div [ class "card", style "width" "100%" ]
+        [ span [ class "card__title" ] [ text title ]
+        , cardContent
+        ]

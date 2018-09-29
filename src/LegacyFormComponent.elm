@@ -1010,34 +1010,33 @@ viewObject model schema props isArray path =
                     |> el SourceCode [ paddingLeft 10 ]
                 ]
 
+            else if isArray then
+                case os.items of
+                    NoItems ->
+                        iterateOverProps False justProps blankSchema
+
+                    ItemDefinition s ->
+                        iterateOverProps False justProps s
+
+                    -- TODO: hande arrayOfItems
+                    _ ->
+                        iterateOverProps False justProps disallowEverythingSchema
+
             else
-                if isArray then
-                    case os.items of
-                        NoItems ->
-                            iterateOverProps False justProps blankSchema
+                [ os.properties
+                    |> Maybe.map (iterateOverSchemata (Dict.fromList props) os.required)
+                    |> Maybe.withDefault []
+                , case os.additionalProperties of
+                    Just (ObjectSchema os) ->
+                        iterateOverProps True extraProps (ObjectSchema os)
 
-                        ItemDefinition s ->
-                            iterateOverProps False justProps s
+                    Just (BooleanSchema False) ->
+                        iterateOverProps True extraProps disallowEverythingSchema
 
-                        -- TODO: hande arrayOfItems
-                        _ ->
-                            iterateOverProps False justProps disallowEverythingSchema
-
-                else
-                    [ os.properties
-                        |> Maybe.map (iterateOverSchemata (Dict.fromList props) os.required)
-                        |> Maybe.withDefault []
-                    , case os.additionalProperties of
-                        Just (ObjectSchema os) ->
-                            iterateOverProps True extraProps (ObjectSchema os)
-
-                        Just (BooleanSchema False) ->
-                            iterateOverProps True extraProps disallowEverythingSchema
-
-                        _ ->
-                            iterateOverProps True extraProps blankSchema
-                    ]
-                        |> List.concat
+                    _ ->
+                        iterateOverProps True extraProps blankSchema
+                ]
+                    |> List.concat
 
 
 disallowEverythingSchema : Schema

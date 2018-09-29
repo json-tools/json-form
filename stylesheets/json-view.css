@@ -1,0 +1,32 @@
+.json-view {
+    width: 100%;
+    line-height: 1.3;
+    padding: 10px;
+    /* background: #002b36; */
+    background: #fdf6e3;
+    /* color: #839496; */
+    color: #657b83;
+    white-space: pre-wrap;
+    font-family: var(--font-family--mono);
+    overflow: auto;
+}
+
+.json-view__attr {
+    color: #b58900;
+}
+
+.json-view__bool,
+.json-view__null,
+.json-view__string {
+    color: #2aa198;
+}
+
+.json-view__nested-props {
+    border-left: 2px solid transparent;
+    padding-left: 4ch;
+    margin-left: 2px;
+}
+
+.json-view__nested-props:hover {
+    border-left-color: rgba(0, 0, 0, 0.05);
+}
