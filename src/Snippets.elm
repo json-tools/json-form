@@ -8,6 +8,7 @@ import Json.Schema.Definitions exposing (Schema(..), SingleType(..), Type(..), b
 type Snippet
     = InputTypes
     | Rules
+    | Validation
 
 
 type alias Example =
@@ -20,6 +21,7 @@ index : List Snippet
 index =
     [ InputTypes
     , Rules
+    , Validation
     ]
 
 
@@ -31,6 +33,9 @@ getSnippetTitle ds =
 
         Rules ->
             "Rules"
+
+        Validation ->
+            "Validation"
 
 
 makeExample : String -> SchemaBuilder -> Example
@@ -73,11 +78,13 @@ getSnippet ds =
             , buildSchema
                 |> withType "boolean"
                 |> withTitle "Boolean as checkbox"
+                |> withDescription "Booleans default to checkboxes"
                 |> makeExample "Checkbox"
             , buildSchema
                 |> withType "boolean"
                 |> withTitle "Boolean as switch"
                 |> withCustomKeyword "ui" (Encode.object [ ( "widget", string "switch" ) ])
+                |> withDescription "Booleans can be configured to look like switch"
                 |> makeExample "Switch"
             ]
 
@@ -245,6 +252,24 @@ getSnippet ds =
                             ]
                     )
                 |> makeExample "Local scope"
+            ]
+
+        Validation ->
+            [ buildSchema
+                |> withType "string"
+                |> withTitle "Name"
+                |> withDescription "Enter name between 2 and 10 characters"
+                |> withMaxLength 10
+                |> withMinLength 2
+                |> withPattern "^\\D"
+                |> makeExample "Single field validation"
+            , buildSchema
+                |> withType "string"
+                |> withTitle "Bio"
+                |> withCustomKeyword "ui" (Encode.object [ ( "widget", object [ ( "type", string "multiline" ), ( "minRows", int 3 ), ( "maxRows", int 6 ) ] ) ])
+                |> withDescription "Enter you bio"
+                |> withMinLength 40
+                |> makeExample "Multiline field validation"
             ]
 
 

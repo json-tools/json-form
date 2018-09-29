@@ -26,7 +26,7 @@ type alias Model =
 
 initialShowcase : Snippet
 initialShowcase =
-    InputTypes
+    Validation
 
 
 init : Value -> ( Model, Cmd Msg )
