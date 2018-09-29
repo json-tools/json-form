@@ -158,7 +158,11 @@ view model schema isJson isRequired isDisabled path =
                         []
     in
     div
-        [ classList [ ( "jf-element", True ), ( "jf-element--hidden", hidden ) ]
+        [ classList
+            [ ( "jf-element", True )
+            , ( "jf-element--hidden", hidden )
+            , ( "jf-element--invalid", hasError )
+            ]
         ]
         [ div
             [ classList
@@ -219,7 +223,11 @@ viewNumeric model schema isRequired isDisabled path =
             isDisabled || disabled
     in
     div
-        [ classList [ ( "jf-element", True ), ( "jf-element--hidden", hidden ) ]
+        [ classList
+            [ ( "jf-element", True )
+            , ( "jf-element--hidden", hidden )
+            , ( "jf-element--invalid", hasError )
+            ]
         ]
         [ div
             [ classList

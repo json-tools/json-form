@@ -35,15 +35,12 @@ stringifyError e =
             String.fromFloat actual ++ " is not more than exclusive minimum " ++ String.fromFloat min
 
         MaxLength expected actual ->
-            "Not longer than "
+            "Longer than "
                 ++ pluralize expected "character"
-                ++ " but actual length is "
-                ++ pluralize actual "character"
 
         MinLength expected actual ->
-            "Less than "
+            "Shorter than "
                 ++ pluralize expected "character"
-                ++ " long"
 
         Pattern pattern string ->
             "Does not match pattern " ++ pattern

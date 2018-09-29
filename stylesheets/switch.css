@@ -7,7 +7,6 @@
     display: inline-block;
     box-sizing: border-box;
     margin: 0;
-    height: 75px;
     padding: 20px 0;
     font-size: 16px;
     vertical-align: top;
@@ -25,9 +24,6 @@
 }
 
 .jf-switch__label {
-    top: calc(50% - 8px);
-    position: absolute;
-    left: 0px;
     cursor: pointer;
 }
 
@@ -100,15 +96,8 @@
 }
 
 .jf-switch__helper-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    position: absolute;
-    bottom: 0;
+    max-width: calc(100% - 44px);
     font-size: 12px;
-    padding-left: 12px;
-    padding-right: 12px;
     color: rgba(0, 0, 0, 0.54);
 }
 

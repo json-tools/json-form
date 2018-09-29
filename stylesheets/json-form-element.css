@@ -12,4 +12,9 @@
 .jf-helper-text {
     margin-top: 8px;
     margin-left: 12px;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.jf-element--invalid .jf-helper-text {
+    color: var(--color-invalid);
 }

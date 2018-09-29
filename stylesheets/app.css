@@ -25,8 +25,7 @@
 
 .example-section__heading {
     font-size: 24px;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin: 30px 0;
     text-align: center;
 }
 

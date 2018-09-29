@@ -139,7 +139,7 @@
 }
 
 .jf-textfield--focused.jf-textfield--outlined .jf-textfield__label {
-    top: -6px;
+    top: -7px;
     font-size: 12px;
 }
 
@@ -149,7 +149,7 @@
 }
 
 .jf-textfield--outlined .jf-textfield__label {
-    top: -6px;
+    top: -7px;
 }
 
 .jf-textfield--outlined .jf-textfield__input {
@@ -276,26 +276,20 @@
 
 
 .jf-textfield__helper-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%;
-    position: absolute;
-    bottom: -16px;
-    font-size: 12px;
-    padding-left: var(--side-padding);
-    padding-right: var(--side-padding);
-    color: rgba(0, 0, 0, 0.54);
 }
 
 .jf-textfield svg {
     position: absolute;
-    top: calc(50% - 12px);
+    top: 10px;
     right: var(--side-padding);
 }
 
 .jf-textfield--invalid svg {
     color: var(--color-invalid);
+}
+
+.jf-textfield--invalid .jf-textfield__input {
+    padding-right: 40px;
 }
 
 
@@ -317,12 +311,9 @@
     background-color: var(--color-invalid);
 }
 
-.jf-textfield--invalid .jf-textfield__helper-text {
-    color: var(--color-invalid);
-}
-
 .jf-textfield--invalid .jf-textfield__label {
     color: var(--color-invalid);
+    animation: shake .5s linear;
 }
 
 .jf-textfield--invalid:after {
@@ -370,4 +361,22 @@
 .jf-textfield--outlined.jf-textfield--disabled {
     background-color: var(--form-background);
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+ @keyframes shake {
+    8%, 41% {
+        transform: translateX(-4px);
+    }
+    25%, 58% {
+        transform: translateX(4px);
+    }
+    75% {
+        transform: translateX(-1px);
+    }
+    92% {
+        transform: translateX(1px);
+    }
+    0%, 100% {
+        transform: translateX(0);
+    }
 }
