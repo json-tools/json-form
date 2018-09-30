@@ -18,7 +18,7 @@ type Route
 route : Parser (Route -> a) a
 route =
     oneOf
-        [ Url.Parser.map ShowcasePage (s "showcase" </> showcaseParser)
+        [ Url.Parser.map ShowcasePage <| s "json-form" </> s "showcase" </> showcaseParser
         ]
 
 
@@ -38,7 +38,7 @@ routeToString page =
                 ShowcasePage sc ->
                     [ "showcase", sc |> Showcase.getShowcaseId ]
     in
-    "/" ++ String.join "/" pieces
+    "/json-form/" ++ String.join "/" pieces
 
 
 
