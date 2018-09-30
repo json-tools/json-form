@@ -1,14 +1,17 @@
 module Main exposing (main)
 
 import Browser
-import Demo exposing (init, update, view)
+import Demo exposing (Msg(..), init, update, view)
 import Html
+import Route
 
 
 main =
-    Browser.document
-        { init = init
+    Browser.application
+        { view = view
+        , init = init
         , update = update
-        , view = view
         , subscriptions = \_ -> Sub.none
+        , onUrlRequest = UrlRequested
+        , onUrlChange = Route.fromLocation >> SetRoute
         }

@@ -1,6 +1,7 @@
-module Demo exposing (init, update, view)
+module Demo exposing (Msg(..), init, update, view)
 
-import Browser exposing (Document)
+import Browser exposing (Document, UrlRequest(..))
+import Browser.Navigation exposing (Key)
 import Html exposing (Html, div, span, text)
 import Html.Attributes exposing (class, classList, style)
 import Html.Events exposing (onClick)
@@ -9,7 +10,9 @@ import Json.Form
 import Json.Form.Config exposing (TextFieldStyle(..))
 import Json.Schema.Definitions exposing (Schema)
 import Json.Value exposing (JsonValue(..))
-import Snippets exposing (Example, Snippet(..), getSnippet, getSnippetTitle)
+import Route exposing (Route(..))
+import Showcase exposing (Example, Showcase(..), getShowcase, getShowcaseTitle)
+import Url exposing (Url)
 
 
 type alias ExampleDemo =
@@ -19,32 +22,56 @@ type alias ExampleDemo =
 
 
 type alias Model =
-    { showcase : Snippet
+    { showcase : Showcase
     , examples : List ExampleDemo
+    , key : Key
     }
 
 
-initialShowcase : Snippet
+initialShowcase : Showcase
 initialShowcase =
     Validation
 
 
-init : Value -> ( Model, Cmd Msg )
-init _ =
+init : Value -> Url -> Key -> ( Model, Cmd Msg )
+init _ url key =
     { showcase = initialShowcase
     , examples = []
+    , key = key
     }
-        |> update (SetShowcase initialShowcase)
+        |> update (url |> Route.fromLocation |> SetRoute)
 
 
 type Msg
-    = SetShowcase Snippet
+    = SetShowcase Showcase
     | JsonFormMsg Int Json.Form.Msg
+    | SetRoute (Maybe Route)
+    | UrlRequested UrlRequest
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update message model =
     case message of
+        UrlRequested urlRequest ->
+            case urlRequest of
+                Internal url ->
+                    ( model
+                    , Browser.Navigation.pushUrl model.key (Url.toString url)
+                    )
+
+                External url ->
+                    ( model
+                    , Browser.Navigation.load url
+                    )
+
+        SetRoute route ->
+            case route of
+                Just (ShowcasePage sc) ->
+                    model |> update (SetShowcase sc)
+
+                _ ->
+                    model |> update (SetShowcase initialShowcase)
+
         JsonFormMsg index msg ->
             let
                 ( examples, cmds ) =
@@ -71,7 +98,7 @@ update message model =
         SetShowcase s ->
             let
                 ( examples, cmds ) =
-                    getSnippet s
+                    getShowcase s
                         |> List.indexedMap
                             (\index example ->
                                 let
@@ -107,23 +134,24 @@ view model =
 
 topbar : Model -> Html Msg
 topbar model =
-    Snippets.index
+    Showcase.index
         |> List.map (snippetTab model.showcase)
         |> div [ class "app-topbar" ]
 
 
-snippetTab : Snippet -> Snippet -> Html Msg
-snippetTab activeSnippet snippet =
+snippetTab : Showcase -> Showcase -> Html Msg
+snippetTab activeShowcase showcase =
     div
         [ classList
             [ ( "tab", True )
-            , ( "tab--active", snippet == activeSnippet )
+            , ( "tab--active", showcase == activeShowcase )
             ]
-        , onClick <| SetShowcase snippet
         ]
-        [ snippet
-            |> getSnippetTitle
-            |> text
+        [ Html.a [ Route.href <| ShowcasePage showcase ]
+            [ showcase
+                |> getShowcaseTitle
+                |> text
+            ]
         ]
 
 

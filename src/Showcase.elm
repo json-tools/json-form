@@ -1,11 +1,11 @@
-module Snippets exposing (Example, Snippet(..), getSnippet, getSnippetTitle, index)
+module Showcase exposing (Example, Showcase(..), getShowcase, getShowcaseById, getShowcaseId, getShowcaseTitle, index)
 
 import Json.Encode as Encode exposing (int, list, object, string)
 import Json.Schema.Builder exposing (..)
 import Json.Schema.Definitions exposing (Schema(..), SingleType(..), Type(..), blankSchema, blankSubSchema)
 
 
-type Snippet
+type Showcase
     = InputTypes
     | Rules
     | Validation
@@ -17,7 +17,7 @@ type alias Example =
     }
 
 
-index : List Snippet
+index : List Showcase
 index =
     [ InputTypes
     , Rules
@@ -25,8 +25,37 @@ index =
     ]
 
 
-getSnippetTitle : Snippet -> String
-getSnippetTitle ds =
+getShowcaseById : String -> Maybe Showcase
+getShowcaseById id =
+    case id of
+        "types" ->
+            Just InputTypes
+
+        "rules" ->
+            Just Rules
+
+        "validation" ->
+            Just Validation
+
+        _ ->
+            Nothing
+
+
+getShowcaseId : Showcase -> String
+getShowcaseId s =
+    case s of
+        InputTypes ->
+            "types"
+
+        Rules ->
+            "rules"
+
+        Validation ->
+            "validation"
+
+
+getShowcaseTitle : Showcase -> String
+getShowcaseTitle ds =
     case ds of
         InputTypes ->
             "Types"
@@ -48,8 +77,8 @@ makeExample title sb =
     }
 
 
-getSnippet : Snippet -> List Example
-getSnippet ds =
+getShowcase : Showcase -> List Example
+getShowcase ds =
     case ds of
         InputTypes ->
             [ buildSchema
