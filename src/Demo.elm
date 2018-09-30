@@ -28,14 +28,14 @@ type alias Model =
     }
 
 
-initialShowcase : Showcase
-initialShowcase =
-    Validation
+defaultShowcase : Showcase
+defaultShowcase =
+    InputTypes
 
 
 init : Value -> Url -> Key -> ( Model, Cmd Msg )
 init _ url key =
-    { showcase = initialShowcase
+    { showcase = defaultShowcase
     , examples = []
     , key = key
     }
@@ -70,7 +70,7 @@ update message model =
                     model |> update (SetShowcase sc)
 
                 _ ->
-                    model |> update (SetShowcase initialShowcase)
+                    model |> update (SetShowcase defaultShowcase)
 
         JsonFormMsg index msg ->
             let
