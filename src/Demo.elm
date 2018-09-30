@@ -141,17 +141,16 @@ topbar model =
 
 snippetTab : Showcase -> Showcase -> Html Msg
 snippetTab activeShowcase showcase =
-    div
+    Html.a
         [ classList
             [ ( "tab", True )
             , ( "tab--active", showcase == activeShowcase )
             ]
+        , Route.href <| ShowcasePage showcase
         ]
-        [ Html.a [ Route.href <| ShowcasePage showcase ]
-            [ showcase
-                |> getShowcaseTitle
-                |> text
-            ]
+        [ showcase
+            |> getShowcaseTitle
+            |> text
         ]
 
 
