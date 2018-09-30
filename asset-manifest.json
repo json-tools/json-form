@@ -1,13 +1,13 @@
 {
-  "main.css": "/json-form/static/css/main.c35b79a4.chunk.css",
-  "main.js": "/json-form/static/js/main.c9342073.chunk.js",
-  "main.css.map": "/json-form/static/css/main.c35b79a4.chunk.css.map",
-  "main.js.map": "/json-form/static/js/main.c9342073.chunk.js.map",
-  "vendors~main.css": "/json-form/static/css/vendors~main.5b9726ba.chunk.css",
-  "vendors~main.js": "/json-form/static/js/vendors~main.fe1dbcb7.chunk.js",
-  "vendors~main.css.map": "/json-form/static/css/vendors~main.5b9726ba.chunk.css.map",
-  "vendors~main.js.map": "/json-form/static/js/vendors~main.fe1dbcb7.chunk.js.map",
-  "runtime~main.js": "/json-form/static/js/runtime~main.1af9ca37.js",
-  "runtime~main.js.map": "/json-form/static/js/runtime~main.1af9ca37.js.map",
-  "index.html": "/json-form/index.html"
+  "main.css": "/static/css/main.c35b79a4.chunk.css",
+  "main.js": "/static/js/main.15be5cac.chunk.js",
+  "main.css.map": "/static/css/main.c35b79a4.chunk.css.map",
+  "main.js.map": "/static/js/main.15be5cac.chunk.js.map",
+  "vendors~main.css": "/static/css/vendors~main.5b9726ba.chunk.css",
+  "vendors~main.js": "/static/js/vendors~main.fe1dbcb7.chunk.js",
+  "vendors~main.css.map": "/static/css/vendors~main.5b9726ba.chunk.css.map",
+  "vendors~main.js.map": "/static/js/vendors~main.fe1dbcb7.chunk.js.map",
+  "runtime~main.js": "/static/js/runtime~main.229c360f.js",
+  "runtime~main.js.map": "/static/js/runtime~main.229c360f.js.map",
+  "index.html": "/index.html"
 }
