@@ -2,32 +2,9 @@
 
 # json-form
 
-This module generates form based on JSON Schema, its keywords are documented in this spec: http://json-schema.org/latest/json-schema-validation.html
+This module generates form based on JSON Schema, its keywords are documented in this spec: http://json-schema.org/latest/json-schema-validation.html. It focuses on simplicity rather than completeness of JSON Schema spec coverage. For example, we don't try to guess style of `oneOf`.
 
-![image](https://user-images.githubusercontent.com/184172/38784098-c30536fe-4104-11e8-95bb-58c4f5eca24f.png)
-
-Published in gh-pages: https://1602.github.io/json-form/
-
-
-<!---
-```
-<custom-element-demo>
-  <template>
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@ubio/css@1.3.11/index.css">
-    <link rel="import" href="json-form.html">
-    <next-code-block></next-code-block>
-  </template>
-</custom-element-demo>
-```
--->
-```html
-<json-form
-    schema='{"type":"string","title":"Hello","description":"A brief but helpful description of value","maxLength":5}'
-    value='"world"'
-></json-form>
-```
-
+View demo: https://json-tools.github.io/json-form/
 
 Development progress:
 
@@ -37,41 +14,68 @@ Development progress:
 - [x] material design styles
 - [x] demo for two use-cases: text editing, flat object editing
 - [x] editing of number and boolean
-- [x] customizable widgets
+- [x] customizable widgets (extending json schema with ui schema)
 - [x] password field
 - [x] mark required fields with *
 - [x] basic array editing capabilities
 - [x] rules to disable or hide form elements based on conditions
+- [x] multiline editing
+- [x] editing as json
+- [x] dealing with `undefined` (erase optional property)
+- [x] editing array of items
+- [x] html5 autocomplete for enum
 
 Next steps will be some of those (not necessarily in this order):
 
-- [ ] multiline editing
-- [ ] range widget for numbers
+- [ ] expandable mode for large/nested forms
+- [ ] form layout customisation
+- [ ] custom widgets api (e.g. range)
 - [ ] radiogroup widget for enum
 - [ ] optional field indication (configurable alternative to required)
-- [ ] dealing with `undefined` (erase property)
-- [ ] editing as json
-- [ ] form layout customisation
-- [ ] editing array of items
 - [ ] editing dictionary (object with additionalItems = true)
 - [ ] display of object-level errors
-- [ ] expandable mode for large/nested forms
 
-## Setup for development
+## Development
 
-1. Install dependencies
+### Installation
+
+This module uses `create-elm-app` in order to not clutter project with unrelated dependencies.
+
 ```
-yarn
-```
-2. Run local dev server to facilitate hot module reloading
-```
-yarn dev
+npm install -g create-elm-app
 ```
 
-## Project structure
+### Local development server
 
-All sources live in `./src`, package code that will be published to the elm package registry is in `./src/Json/Form.elm`.
+You may want to run local dev server to facilitate hot module reloading.
 
-All [json-form-custom-element](https://www.webcomponents.org/element/json-form-custom-element) web-component related sources live in a different repo: https://github.com/1602/json-form-custom-element
+```
+elm-app start
+```
 
-Contributors welcome, submit an issue to open a discussion.
+### Build and deploy demo to github pages
+
+```
+elm-app build
+gh-pages -d build
+```
+
+## Design approach
+
+### JSON Schema
+
+A few notes on how json schema interpeted by form generator.
+
+#### Types
+
+For the sake of simpliticy form generator uses a "type" keyword of JSON Schema in order to identify type of the field. When "type" keyword is an array or types or missing then value edited as json string. Boolean renders toggle, but can be customized to render a checkbox.
+
+#### Title
+
+Title rendered as label for terminal input fields (leaf nodes of the value), and as h3 headers for objects.
+
+#### Required
+
+Keyword `required` of object type used to identify whether to display * near the label. Optional text fields also have button to erase value displayed.
+
+
