@@ -53,6 +53,9 @@ viewNode model schema isRequired isDisabled path =
         TextField ->
             TextField.view model schema False isRequired isDisabled path
 
+        JsonEditor ->
+            TextField.view model schema True isRequired isDisabled path
+
         NumberField ->
             TextField.viewNumeric model schema isRequired isDisabled path
 
@@ -68,9 +71,6 @@ viewNode model schema isRequired isDisabled path =
         Array ->
             viewArray model schema isRequired isDisabled path
 
-        JsonEditor ->
-            TextField.view model schema True isRequired isDisabled path
-
 
 editingMode : Model -> Schema -> EditingMode
 editingMode model schema =
@@ -78,6 +78,9 @@ editingMode model schema =
         ObjectSchema os ->
             case os.type_ of
                 SingleType NumberType ->
+                    NumberField
+
+                SingleType IntegerType ->
                     NumberField
 
                 SingleType StringType ->
