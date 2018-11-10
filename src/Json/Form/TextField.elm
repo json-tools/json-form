@@ -121,16 +121,23 @@ view model schema isJson isRequired isDisabled path =
                 (Decode.at [ "target", "scrollHeight" ] Decode.float)
                 (Decode.at [ "target", "value" ] Decode.string)
 
+        isOutlined =
+            model.config.textFieldStyle == Outlined
+
         textInput =
             case multilineConfig of
                 Just mlConf ->
                     let
                         paddings =
                             if model.config.dense then
-                                25
+                                if isOutlined then
+                                    13 + 13
+
+                                else
+                                    22 + 13
 
                             else
-                                37
+                                20 + 17
 
                         rows =
                             case model.fieldHeights |> Dict.get path of
@@ -185,7 +192,7 @@ view model schema isJson isRequired isDisabled path =
         [ div
             [ classList
                 [ ( "jf-textfield", True )
-                , ( "jf-textfield--outlined", model.config.textFieldStyle == Outlined )
+                , ( "jf-textfield--outlined", isOutlined )
                 , ( "jf-textfield--dense", model.config.dense )
                 , ( "jf-textfield--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
                 , ( "jf-textfield--empty", editedValue == "" )
