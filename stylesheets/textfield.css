@@ -4,8 +4,8 @@
     --large-font-size: 16px;
     --side-padding: 12px;
     --filled-background: rgba(0, 0, 0, 0.09);
-    --top-padding: 20px;
-    --bottom-padding: 17px;
+    --top-padding: 22px;
+    --bottom-padding: 13px;
 }
 
 .jf-textfield--dense {
@@ -13,9 +13,25 @@
     --label-top: 17px;
     --large-font-size: 12px;
     --side-padding: 8px;
+    --top-padding: 22px;
+    --bottom-padding: 13px;
+}
+
+.jf-textfield--dense.jf-textfield--outlined {
     --top-padding: 13px;
     --bottom-padding: 13px;
 }
+
+.jf-textfield--dense.jf-textfield--multiline {
+    --top-padding: 22px;
+    --bottom-padding: 6px;
+}
+
+.jf-textfield--multiline {
+    --top-padding: 23px;
+    --bottom-padding: 6px;
+}
+
 
 .jf-textfield {
     position: relative;
@@ -72,7 +88,7 @@
     padding-left: var(--side-padding);
     padding-right: var(--side-padding);
     padding-top: var(--top-padding);
-    padding-bottom: 12px;
+    padding-bottom: var(--bottom-padding);
     width: 100%;
     background: 0 0;
     text-align: left;
@@ -288,7 +304,7 @@
     color: var(--color-invalid);
 }
 
-.jf-textfield--invalid .jf-textfield__input {
+.jf-textfield--has-icon .jf-textfield__input {
     padding-right: 40px;
 }
 

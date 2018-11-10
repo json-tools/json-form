@@ -1,8 +1,9 @@
 .jf-element {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
-    margin-top: 16px;
     margin-bottom: 16px;
+    margin-right: 16px;
+    max-width: 300px;
 }
 
 .jf-element--hidden {
@@ -11,8 +12,9 @@
 
 .jf-helper-text {
     margin-top: 8px;
-    margin-left: 12px;
+    padding-left: 12px;
     color: rgba(0, 0, 0, 0.54);
+    box-sizing: border-box;
 }
 
 .jf-element--invalid .jf-helper-text {

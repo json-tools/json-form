@@ -99,6 +99,7 @@
     max-width: calc(100% - 44px);
     font-size: 12px;
     color: rgba(0, 0, 0, 0.54);
+    padding-top: 4px;
 }
 
 .jf-switch--invalid .jf-textfield__helper-text {
