@@ -1,4 +1,4 @@
-module Icons exposing (errorIcon, eye, eyeOff)
+module Icons exposing (deleteIcon, errorIcon, eye, eyeOff)
 
 import Html exposing (Html)
 import Svg exposing (..)
@@ -36,6 +36,16 @@ errorIcon =
         [ Svg.circle [ cx "12", cy "12", r "10" ] []
         , Svg.line [ x1 "12", y1 "8", x2 "12", y2 "12" ] []
         , Svg.line [ x1 "12", y1 "16", x2 "12", y2 "16" ] []
+        ]
+
+
+deleteIcon : msg -> Html msg
+deleteIcon msg =
+    svgFeatherIcon "x-circle"
+        (Just msg)
+        [ Svg.circle [ cx "12", cy "12", r "10" ] []
+        , Svg.line [ x1 "15", y1 "9", x2 "9", y2 "15" ] []
+        , Svg.line [ x1 "9", y1 "9", x2 "15", y2 "15" ] []
         ]
 
 
