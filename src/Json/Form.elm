@@ -31,7 +31,7 @@ import Task
 
 type ExternalMsg
     = None
-    | UpdateValue (Maybe JsonValue) Bool
+    | UpdateValue (Maybe JsonValue) (Dict Path (List String))
 
 
 type alias Model =
@@ -405,16 +405,20 @@ editValue model path val =
               }
             , Cmd.none
             )
-                |> withExMsg (UpdateValue (Just updatedJsonValue) True)
+                |> withExMsg (UpdateValue (Just updatedJsonValue) Dict.empty)
 
         Err e ->
+            let
+                errors =
+                    dictFromListErrors e
+            in
             ( { model
                 | value = Just updatedJsonValue
-                , errors = dictFromListErrors e
+                , errors = errors
               }
             , Cmd.none
             )
-                |> withExMsg (UpdateValue (Just updatedJsonValue) False)
+                |> withExMsg (UpdateValue (Just updatedJsonValue) errors)
 
 
 dictFromListErrors : List Error -> Dict Path (List String)
