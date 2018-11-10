@@ -22,6 +22,15 @@ view model schema isJson isRequired isDisabled path =
         id =
             (model.config.name ++ "_") ++ (path |> String.join "_")
 
+        enum =
+            case schema of
+                ObjectSchema os ->
+                    os.enum
+                        |> Maybe.map (List.map (\v -> v |> Decode.decodeValue Decode.string |> Result.withDefault ""))
+
+                _ ->
+                    Nothing
+
         isFocused =
             model.focused
                 |> Maybe.map ((==) path)
@@ -99,6 +108,12 @@ view model schema isJson isRequired isDisabled path =
             , Html.Attributes.autocomplete False
             , Html.Attributes.disabled actuallyDisabled
             ]
+                ++ (if enum /= Nothing then
+                        [ Html.Attributes.list <| id ++ "_enum" ]
+
+                    else
+                        []
+                   )
 
         editMultiline : (Float -> String -> msg) -> Decoder msg
         editMultiline fn =
@@ -185,10 +200,18 @@ view model schema isJson isRequired isDisabled path =
             -- , Html.Attributes.tabindex -1
             ]
             [ textInput
-            , icon
+            , icon |> Maybe.withDefault (text "")
             , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
             ]
         , div [ class "jf-helper-text" ] [ helperText ]
+        , case enum of
+            Just listStrings ->
+                listStrings
+                    |> List.map (\s -> Html.option [ Html.Attributes.value s ] [])
+                    |> Html.datalist [ Html.Attributes.id <| id ++ "_enum" ]
+
+            Nothing ->
+                text ""
         ]
 
 
