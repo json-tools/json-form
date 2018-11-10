@@ -37,32 +37,40 @@ switch model schema isRequired isDisabled path =
         actuallyDisabled =
             isDisabled || disabled
     in
-    label
+    div
         [ classList
-            [ ( "jf-switch", True )
-            , ( "jf-switch--on", isChecked )
-            , ( "jf-switch--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
-            , ( "jf-switch--invalid", hasError )
-            , ( "jf-switch--disabled", actuallyDisabled )
-            , ( "jf-switch--hidden", hidden )
+            [ ( "jf-element", True )
+            , ( "jf-element--hidden", hidden )
+            , ( "jf-element--invalid", hasError )
             ]
         ]
-        [ input
-            [ type_ "checkbox"
-            , class "jf-switch__input"
-            , checked isChecked
-            , onFocus <| FocusInput (Just path)
-            , onBlur <| FocusInput Nothing
-            , onCheck <| (JsonValue.BoolValue >> EditValue path)
-            , Html.Attributes.id id
-            , Html.Attributes.name id
-            , Html.Attributes.disabled actuallyDisabled
+        [ label
+            [ classList
+                [ ( "jf-switch", True )
+                , ( "jf-switch--on", isChecked )
+                , ( "jf-switch--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
+                , ( "jf-switch--invalid", hasError )
+                , ( "jf-switch--disabled", actuallyDisabled )
+                , ( "jf-switch--hidden", hidden )
+                ]
             ]
-            []
-        , span [ class "jf-switch__label" ] [ schema |> getTitle isRequired |> text ]
-        , div [ class "jf-switch__track" ] []
-        , div [ class "jf-switch__thumb" ] []
-        , div [ class "jf-switch__helper-text" ] [ helperText ]
+            [ input
+                [ type_ "checkbox"
+                , class "jf-switch__input"
+                , checked isChecked
+                , onFocus <| FocusInput (Just path)
+                , onBlur <| FocusInput Nothing
+                , onCheck <| (JsonValue.BoolValue >> EditValue path)
+                , Html.Attributes.id id
+                , Html.Attributes.name id
+                , Html.Attributes.disabled actuallyDisabled
+                ]
+                []
+            , span [ class "jf-switch__label" ] [ schema |> getTitle isRequired |> text ]
+            , div [ class "jf-switch__track" ] []
+            , div [ class "jf-switch__thumb" ] []
+            , div [ class "jf-switch__helper-text" ] [ helperText ]
+            ]
         ]
 
 
@@ -92,31 +100,39 @@ checkbox model schema isRequired isDisabled path =
         actuallyDisabled =
             isDisabled || disabled
     in
-    label
+    div
         [ classList
-            [ ( "jf-checkbox", True )
-            , ( "jf-checkbox--on", isChecked )
-            , ( "jf-checkbox--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
-            , ( "jf-checkbox--invalid", hasError )
-            , ( "jf-checkbox--disabled", actuallyDisabled )
-            , ( "jf-checkbox--hidden", hidden )
+            [ ( "jf-element", True )
+            , ( "jf-element--hidden", hidden )
+            , ( "jf-element--invalid", hasError )
             ]
         ]
-        [ input
-            [ type_ "checkbox"
-            , class "jf-checkbox__input"
-            , checked isChecked
-            , Html.Attributes.id id
-            , Html.Attributes.name id
-            , Html.Attributes.disabled actuallyDisabled
-            , onFocus <| FocusInput (Just path)
-            , onBlur <| FocusInput Nothing
-            , onCheck <| (JsonValue.BoolValue >> EditValue path)
+        [ label
+            [ classList
+                [ ( "jf-checkbox", True )
+                , ( "jf-checkbox--on", isChecked )
+                , ( "jf-checkbox--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
+                , ( "jf-checkbox--invalid", hasError )
+                , ( "jf-checkbox--disabled", actuallyDisabled )
+                , ( "jf-checkbox--hidden", hidden )
+                ]
             ]
-            []
-        , span [ class "jf-checkbox__label" ] [ schema |> getTitle isRequired |> text ]
-        , div [ class "jf-checkbox__box-outline" ]
-            [ div [ class "jf-checkbox__tick-outline" ] []
+            [ input
+                [ type_ "checkbox"
+                , class "jf-checkbox__input"
+                , checked isChecked
+                , Html.Attributes.id id
+                , Html.Attributes.name id
+                , Html.Attributes.disabled actuallyDisabled
+                , onFocus <| FocusInput (Just path)
+                , onBlur <| FocusInput Nothing
+                , onCheck <| (JsonValue.BoolValue >> EditValue path)
+                ]
+                []
+            , span [ class "jf-checkbox__label" ] [ schema |> getTitle isRequired |> text ]
+            , div [ class "jf-checkbox__box-outline" ]
+                [ div [ class "jf-checkbox__tick-outline" ] []
+                ]
+            , div [ class "jf-checkbox__helper-text" ] [ helperText ]
             ]
-        , div [ class "jf-checkbox__helper-text" ] [ helperText ]
         ]
