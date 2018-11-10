@@ -10,3 +10,15 @@
 .array-item-add .button {
     font-size: 16px;
 }
+
+h3 + div {
+    padding: var(--object-heading-indent);
+}
+
+.jf-nested-object {
+    padding: var(--nested-object-padding);
+}
+
+.jf-json-form {
+    background: var(--form-background);
+}

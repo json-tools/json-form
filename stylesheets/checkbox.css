@@ -64,6 +64,7 @@
 
 .jf-checkbox__helper-text {
     font-size: 12px;
+    padding-top: 4px;
     padding-right: 32px;
     color: rgba(0, 0, 0, 0.54);
 }

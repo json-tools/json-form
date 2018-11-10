@@ -25,7 +25,7 @@ import Json.Schema
 import Json.Schema.Definitions exposing (..)
 import Json.Schema.Validation exposing (Error)
 import Json.Value as JsonValue exposing (JsonValue(..))
-import JsonFormUtil as Util exposing (getUiSpec, jsonValueToString)
+import JsonFormUtil as Util exposing (getTitle, getUiSpec, jsonValueToString)
 import Task
 
 
@@ -210,14 +210,20 @@ viewObject model schema properties isRequired isDisabled path =
 
                 _ ->
                     []
+
+        title =
+            schema |> getTitle isRequired
     in
     if hidden then
         text ""
 
     else
-        properties
-            |> iterateOverSchemata
-            |> div []
+        div [ class "jf-nested-object" ]
+            [ Html.h3 [] [ text title ]
+            , properties
+                |> iterateOverSchemata
+                |> div []
+            ]
 
 
 updateConfig : Config -> Model -> Model

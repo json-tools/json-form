@@ -5,6 +5,8 @@
     --color-active--054: #8fd9e3;
     box-sizing: border-box;
     --form-background: #fafafa;
+    --object-heading-indent: 0px;
+    --nested-object-padding: 0px;
 }
 
 .app-topbar {
