@@ -11,14 +11,38 @@
     font-size: 16px;
 }
 
-h3 + div {
-    padding: var(--object-heading-indent);
-}
-
 .jf-nested-object {
     padding: var(--nested-object-padding);
 }
 
 .jf-json-form {
     background: var(--form-background);
+}
+
+
+
+.jf-heading {
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.jf-heading--expandable {
+    cursor: pointer;
+    font-size: 19px;
+}
+
+.jf-heading--expandable:before {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23aaa' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><polyline points='9 18 15 12 9 6'></polyline></svg>");
+    padding: 4px;
+}
+
+.jf-heading--expandable.jf-heading--expanded {
+}
+
+.jf-heading--expandable.jf-heading--expanded:before {
+    content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23aaa' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+}
+
+.jf-section--expandable {
+    padding: var(--expandable-section-padding);
 }

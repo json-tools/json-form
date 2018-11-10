@@ -325,6 +325,9 @@ flightBookingInputGeneratorSchema =
     "type": "object",
     "properties": {
         "payment": {
+            "ui": {
+                "expandable": true
+            },
             "title": "Payment",
             "type": "object",
             "properties": {
@@ -429,6 +432,9 @@ flightBookingInputGeneratorSchema =
             }
         },
         "account": {
+            "ui": {
+                "expandable": true
+            },
             "type": "object",
             "title": "Account",
             "properties": {
@@ -508,6 +514,9 @@ flightBookingInputGeneratorSchema =
             }
         },
         "passengers": {
+            "ui": {
+                "expandable": true
+            },
             "title": "Passengers",
             "type": "object",
             "properties": {

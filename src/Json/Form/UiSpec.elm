@@ -1,6 +1,6 @@
 module Json.Form.UiSpec exposing (MultilineTextFieldConfig, Rule(..), UiSpec, Widget(..), applyRule, blank, decoder, defaultMultilineTextFieldConfig)
 
-import Json.Decode as Decode exposing (Decoder, Value, fail, field, int, maybe, string, succeed)
+import Json.Decode as Decode exposing (Decoder, Value, bool, fail, field, int, maybe, string, succeed)
 import Json.Encode as Encode
 import Json.Schema exposing (validateValue)
 import Json.Schema.Definitions exposing (Schema(..))
@@ -10,6 +10,7 @@ import Json.Value as JsonValue exposing (JsonValue)
 type alias UiSpec =
     { widget : Maybe Widget
     , rule : Maybe Rule
+    , expandable : Bool
     }
 
 
@@ -42,14 +43,27 @@ blank : UiSpec
 blank =
     { widget = Nothing
     , rule = Nothing
+    , expandable = False
     }
 
 
 decoder : Decoder UiSpec
 decoder =
-    Decode.map2 UiSpec
+    Decode.map3 UiSpec
         (field "widget" widgetDecoder |> maybe)
         (field "rule" ruleDecoder |> maybe)
+        (field "expandable" bool
+            |> maybe
+            |> Decode.map
+                (\x ->
+                    case x of
+                        Just bool ->
+                            bool
+
+                        Nothing ->
+                            False
+                )
+        )
 
 
 widgetDecoder : Decoder Widget

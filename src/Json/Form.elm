@@ -12,7 +12,7 @@ import Browser.Dom
 import Dict exposing (Dict)
 import ErrorMessages exposing (stringifyError)
 import Html exposing (..)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, classList)
 import Html.Events exposing (onClick)
 import Json.Decode as Decode exposing (decodeValue)
 import Json.Encode as Encode
@@ -26,6 +26,7 @@ import Json.Schema.Definitions exposing (..)
 import Json.Schema.Validation exposing (Error)
 import Json.Value as JsonValue exposing (JsonValue(..))
 import JsonFormUtil as Util exposing (getTitle, getUiSpec, jsonValueToString)
+import Set
 import Task
 
 
@@ -206,6 +207,14 @@ viewObject model schema properties isRequired isDisabled path =
                 |> .rule
                 |> applyRule model.value path
 
+        isExpandable =
+            schema
+                |> getUiSpec
+                |> .expandable
+
+        isExpanded =
+            model.expandedNodes |> Set.member path
+
         required =
             case schema of
                 ObjectSchema os ->
@@ -222,10 +231,36 @@ viewObject model schema properties isRequired isDisabled path =
 
     else
         div [ class "jf-nested-object" ]
-            [ Html.h3 [] [ text title ]
-            , properties
-                |> iterateOverSchemata
-                |> div []
+            [ if title /= "" then
+                div
+                    ([ classList
+                        [ ( "jf-heading", True )
+                        , ( "jf-heading--expandable", isExpandable )
+                        , ( "jf-heading--expanded", isExpandable && isExpanded )
+                        ]
+                     ]
+                        ++ (if isExpandable then
+                                [ onClick <| ToggleNode path ]
+
+                            else
+                                []
+                           )
+                    )
+                    [ text title ]
+
+              else
+                text ""
+            , if isExpanded || not isExpandable then
+                properties
+                    |> iterateOverSchemata
+                    |> div
+                        [ classList
+                            [ ( "jf-section--expandable", isExpandable )
+                            ]
+                        ]
+
+              else
+                text ""
             ]
 
 
@@ -387,6 +422,19 @@ update msg model =
             )
                 |> withExMsg None
 
+        ToggleNode path ->
+            ( { model
+                | expandedNodes =
+                    if model.expandedNodes |> Set.member path then
+                        model.expandedNodes |> Set.remove path
+
+                    else
+                        model.expandedNodes |> Set.insert path
+              }
+            , Cmd.none
+            )
+                |> withExMsg None
+
 
 touch : Maybe Path -> Maybe Path -> List Path -> List Path
 touch path focused beingEdited =
@@ -523,6 +571,7 @@ init config schema v =
       , editedJson = ""
       , showPassword = False
       , fieldHeights = Dict.empty
+      , expandedNodes = Set.empty
       }
     , multilineFieldsPaths
         |> List.map (\path -> Browser.Dom.getViewportOf (config.name ++ "_" ++ String.join "_" path) |> Task.attempt (GetViewport path))

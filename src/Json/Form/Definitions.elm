@@ -9,6 +9,7 @@ import Json.Schema
 import Json.Schema.Definitions exposing (..)
 import Json.Schema.Validation exposing (Error)
 import Json.Value as JsonValue exposing (JsonValue)
+import Set exposing (Set)
 import Task
 
 
@@ -22,6 +23,7 @@ type alias Model =
     , editedJson : String
     , showPassword : Bool
     , fieldHeights : Dict Path Float
+    , expandedNodes : Set Path
     }
 
 
@@ -38,6 +40,7 @@ type Msg
     | ToggleShowPassword
     | DeleteProperty Path
     | GetViewport Path (Result Browser.Dom.Error Viewport)
+    | ToggleNode Path
 
 
 type EditingMode
