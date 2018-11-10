@@ -264,6 +264,19 @@ update msg model =
             in
             editValue updatedModel newPropPath JsonValue.NullValue
 
+        DeleteProperty path ->
+            ( { model
+                | value =
+                    if path == [] then
+                        Nothing
+
+                    else
+                        model.value |> Maybe.andThen (JsonValue.deleteIn path >> Result.toMaybe)
+              }
+            , Cmd.none
+            )
+                |> withExMsg None
+
         FocusInput focused ->
             ( { model
                 | focused = focused

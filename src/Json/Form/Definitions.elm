@@ -36,6 +36,7 @@ type Msg
     | EditMultiline Path Float String
     | AddItem Path Int
     | ToggleShowPassword
+    | DeleteProperty Path
     | GetViewport Path (Result Browser.Dom.Error Viewport)
 
 
