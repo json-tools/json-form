@@ -4,7 +4,7 @@ import Dict
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onBlur, onFocus, onInput)
-import Icons exposing (errorIcon, eye, eyeOff)
+import Icons exposing (deleteIcon, errorIcon, eye, eyeOff)
 import Json.Decode as Decode exposing (Decoder, Value)
 import Json.Encode as Encode
 import Json.Form.Config exposing (TextFieldStyle(..))
@@ -77,16 +77,19 @@ view model schema isJson isRequired isDisabled path =
         icon =
             if isPassword then
                 if model.showPassword then
-                    eyeOff ToggleShowPassword
+                    ToggleShowPassword |> eyeOff |> Just
 
                 else
-                    eye ToggleShowPassword
+                    ToggleShowPassword |> eye |> Just
 
             else if hasError then
-                errorIcon
+                errorIcon |> Just
+
+            else if not isRequired && editedValue /= "" && not actuallyDisabled then
+                DeleteProperty path |> deleteIcon |> Just
 
             else
-                text ""
+                Nothing
 
         baseAttributes =
             [ class "jf-textfield__input"
@@ -172,6 +175,7 @@ view model schema isJson isRequired isDisabled path =
                 , ( "jf-textfield--focused", model.focused |> Maybe.map ((==) path) |> Maybe.withDefault False )
                 , ( "jf-textfield--empty", editedValue == "" )
                 , ( "jf-textfield--invalid", hasError )
+                , ( "jf-textfield--has-icon", icon /= Nothing )
                 , ( "jf-textfield--disabled", actuallyDisabled )
                 , ( "jf-textfield--multiline", multilineConfig /= Nothing )
                 , ( "jf-textfield--json", isJson )
@@ -221,6 +225,30 @@ viewNumeric model schema isRequired isDisabled path =
 
         actuallyDisabled =
             isDisabled || disabled
+
+        icon =
+            if hasError then
+                errorIcon |> Just
+
+            else if not isRequired && editedValue /= "" && not actuallyDisabled then
+                DeleteProperty path |> deleteIcon |> Just
+
+            else
+                Nothing
+
+        numericInput =
+            input
+                [ class "jf-textfield__input"
+                , onFocus <| FocusFragileInput True (Just path)
+                , onBlur <| FocusFragileInput True Nothing
+                , onInput <| EditNumber
+                , Html.Attributes.id id
+                , Html.Attributes.name id
+                , value <| editedValue
+                , type_ "number"
+                , Html.Attributes.disabled actuallyDisabled
+                ]
+                []
     in
     div
         [ classList
@@ -237,22 +265,13 @@ viewNumeric model schema isRequired isDisabled path =
                 , ( "jf-textfield--focused", isFocused )
                 , ( "jf-textfield--empty", editedValue == "" )
                 , ( "jf-textfield--invalid", hasError )
+                , ( "jf-textfield--has-icon", icon /= Nothing )
                 , ( "jf-textfield--disabled", actuallyDisabled )
                 , ( "jf-textfield--hidden", hidden )
                 ]
             ]
-            [ input
-                [ class "jf-textfield__input"
-                , onFocus <| FocusFragileInput True (Just path)
-                , onBlur <| FocusFragileInput True Nothing
-                , onInput <| EditNumber
-                , Html.Attributes.id id
-                , Html.Attributes.name id
-                , value <| editedValue
-                , type_ "number"
-                , Html.Attributes.disabled actuallyDisabled
-                ]
-                []
+            [ numericInput
+            , icon |> Maybe.withDefault (text "")
             , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
             ]
         , div [ class "jf-helper-text" ] [ helperText ]
