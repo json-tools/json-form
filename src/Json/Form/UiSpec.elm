@@ -11,6 +11,7 @@ type alias UiSpec =
     { widget : Maybe Widget
     , rule : Maybe Rule
     , expandable : Bool
+    , editAsJson : Bool
     }
 
 
@@ -44,15 +45,28 @@ blank =
     { widget = Nothing
     , rule = Nothing
     , expandable = False
+    , editAsJson = False
     }
 
 
 decoder : Decoder UiSpec
 decoder =
-    Decode.map3 UiSpec
+    Decode.map4 UiSpec
         (field "widget" widgetDecoder |> maybe)
         (field "rule" ruleDecoder |> maybe)
         (field "expandable" bool
+            |> maybe
+            |> Decode.map
+                (\x ->
+                    case x of
+                        Just bool ->
+                            bool
+
+                        Nothing ->
+                            False
+                )
+        )
+        (field "editAsJson" bool
             |> maybe
             |> Decode.map
                 (\x ->

@@ -22,14 +22,17 @@ view model schema isJson isRequired isDisabled path =
         id =
             (model.config.name ++ "_") ++ (path |> String.join "_")
 
-        enum =
+        ( enum, examples ) =
             case schema of
                 ObjectSchema os ->
-                    os.enum
+                    ( os.enum
                         |> Maybe.map (List.map (\v -> v |> Decode.decodeValue Decode.string |> Result.withDefault ""))
+                    , os.examples
+                        |> Maybe.map (List.map (\v -> v |> Decode.decodeValue Decode.string |> Result.withDefault ""))
+                    )
 
                 _ ->
-                    Nothing
+                    ( Nothing, Nothing )
 
         isFocused =
             model.focused
@@ -108,7 +111,7 @@ view model schema isJson isRequired isDisabled path =
             , Html.Attributes.autocomplete False
             , Html.Attributes.disabled actuallyDisabled
             ]
-                ++ (if enum /= Nothing then
+                ++ (if enum /= Nothing || examples /= Nothing then
                         [ Html.Attributes.list <| id ++ "_enum" ]
 
                     else
@@ -218,7 +221,14 @@ view model schema isJson isRequired isDisabled path =
                     |> Html.datalist [ Html.Attributes.id <| id ++ "_enum" ]
 
             Nothing ->
-                text ""
+                case examples of
+                    Just listStrings ->
+                        listStrings
+                            |> List.map (\s -> Html.option [ Html.Attributes.value s ] [])
+                            |> Html.datalist [ Html.Attributes.id <| id ++ "_enum" ]
+
+                    Nothing ->
+                        text ""
         ]
 
 
@@ -295,7 +305,7 @@ viewNumeric model schema isRequired isDisabled path =
                 , ( "jf-textfield--focused", isFocused )
                 , ( "jf-textfield--empty", editedValue == "" )
                 , ( "jf-textfield--invalid", hasError )
-                , ( "jf-textfield--has-icon", icon /= Nothing )
+                , ( "jf-textfield--has-icon", True )
                 , ( "jf-textfield--disabled", actuallyDisabled )
                 , ( "jf-textfield--hidden", hidden )
                 ]

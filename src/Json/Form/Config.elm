@@ -7,6 +7,7 @@ type alias Config =
     { textFieldStyle : TextFieldStyle
     , dense : Bool
     , name : String
+    , collapseNestedObjects : Bool
     }
 
 
@@ -20,13 +21,14 @@ defaultConfig =
     { textFieldStyle = Outlined
     , dense = True
     , name = ""
+    , collapseNestedObjects = False
     }
 
 
 decoder : Decoder Config
 decoder =
-    Decode.map3 Config
-        (field "textFieldStyle" <|
+    Decode.map4 Config
+        ((field "textFieldStyle" <|
             Decode.andThen
                 (\x ->
                     if x == "filled" then
@@ -40,6 +42,10 @@ decoder =
                 )
             <|
                 string
+         )
+            |> maybe
+            |> Decode.map (Maybe.withDefault Outlined)
         )
-        (field "dense" bool |> maybe |> Decode.map (Maybe.withDefault False))
+        (field "dense" bool |> maybe |> Decode.map (Maybe.withDefault True))
         (field "name" string |> maybe |> Decode.map (Maybe.withDefault ""))
+        (field "collapseNestedObjects" bool |> maybe |> Decode.map (Maybe.withDefault False))

@@ -12,7 +12,7 @@
 }
 
 .jf-nested-object {
-    padding: var(--nested-object-padding);
+    /* padding: var(--nested-object-padding); */
 }
 
 .jf-json-form {
@@ -23,12 +23,15 @@
 
 .jf-heading {
     font-size: 16px;
-    padding: 10px 0;
+    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 10px;
 }
 
 .jf-heading--expandable {
     cursor: pointer;
     font-size: 19px;
+    margin-left: -20px;
 }
 
 .jf-heading--expandable:before {
@@ -44,5 +47,9 @@
 }
 
 .jf-section--expandable {
-    padding: var(--expandable-section-padding);
+    /* padding: var(--expandable-section-padding); */
+}
+
+.jf-section {
+    padding-left: 20px;
 }

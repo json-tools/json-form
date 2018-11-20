@@ -5,6 +5,7 @@ module Json.Form exposing
     , init
     , update
     , updateConfig
+    , updateSchema
     , view
     )
 
@@ -75,37 +76,45 @@ viewNode model schema isRequired isDisabled path =
 
 editingMode : Model -> Schema -> EditingMode
 editingMode model schema =
-    case schema of
-        ObjectSchema os ->
-            case os.type_ of
-                SingleType NumberType ->
-                    NumberField
+    let
+        uiSpec =
+            schema |> getUiSpec
+    in
+    if uiSpec.editAsJson then
+        JsonEditor
 
-                SingleType IntegerType ->
-                    NumberField
+    else
+        case schema of
+            ObjectSchema os ->
+                case os.type_ of
+                    SingleType NumberType ->
+                        NumberField
 
-                SingleType StringType ->
-                    TextField
+                    SingleType IntegerType ->
+                        NumberField
 
-                SingleType BooleanType ->
-                    getBooleanUiWidget schema
+                    SingleType StringType ->
+                        TextField
 
-                SingleType ObjectType ->
-                    case os.properties of
-                        Just schemata ->
-                            Object schemata
+                    SingleType BooleanType ->
+                        getBooleanUiWidget schema
 
-                        Nothing ->
-                            JsonEditor
+                    SingleType ObjectType ->
+                        case os.properties of
+                            Just schemata ->
+                                Object schemata
 
-                SingleType ArrayType ->
-                    Array
+                            Nothing ->
+                                JsonEditor
 
-                _ ->
-                    JsonEditor
+                    SingleType ArrayType ->
+                        Array
 
-        _ ->
-            JsonEditor
+                    _ ->
+                        JsonEditor
+
+            _ ->
+                JsonEditor
 
 
 getBooleanUiWidget : Schema -> EditingMode
@@ -190,6 +199,9 @@ viewArray model schema isRequired isDisabled path =
 viewObject : Model -> Schema -> Schemata -> Bool -> Bool -> Path -> Html Msg
 viewObject model schema properties isRequired isDisabled path =
     let
+        key =
+            path |> List.reverse |> List.head
+
         iterateOverSchemata (Schemata schemata) =
             schemata
                 |> List.map
@@ -208,9 +220,14 @@ viewObject model schema properties isRequired isDisabled path =
                 |> applyRule model.value path
 
         isExpandable =
-            schema
-                |> getUiSpec
-                |> .expandable
+            (model.config.collapseNestedObjects
+                || (schema
+                        |> getUiSpec
+                        |> .expandable
+                   )
+            )
+                && path
+                /= []
 
         isExpanded =
             model.expandedNodes |> Set.member path
@@ -224,7 +241,12 @@ viewObject model schema properties isRequired isDisabled path =
                     []
 
         title =
-            schema |> getTitle isRequired
+            case schema |> getTitle isRequired of
+                "" ->
+                    key |> Maybe.withDefault ""
+
+                x ->
+                    x
     in
     if hidden then
         text ""
@@ -256,6 +278,7 @@ viewObject model schema properties isRequired isDisabled path =
                     |> div
                         [ classList
                             [ ( "jf-section--expandable", isExpandable )
+                            , ( "jf-section", True )
                             ]
                         ]
 
@@ -267,6 +290,11 @@ viewObject model schema properties isRequired isDisabled path =
 updateConfig : Config -> Model -> Model
 updateConfig config model =
     { model | config = config }
+
+
+updateSchema : Schema -> Model -> Model
+updateSchema schema model =
+    { model | schema = schema }
 
 
 update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )
@@ -300,17 +328,33 @@ update msg model =
             editValue updatedModel newPropPath JsonValue.NullValue
 
         DeleteProperty path ->
-            ( { model
-                | value =
+            let
+                updatedJsonValue =
                     if path == [] then
                         Nothing
 
                     else
                         model.value |> Maybe.andThen (JsonValue.deleteIn path >> Result.toMaybe)
+
+                validationResult =
+                    model.schema
+                        |> Json.Schema.validateValue { applyDefaults = True } (JsonValue.encode <| Maybe.withDefault JsonValue.NullValue updatedJsonValue)
+
+                errors =
+                    case validationResult of
+                        Ok _ ->
+                            Dict.empty
+
+                        Err e ->
+                            dictFromListErrors e
+            in
+            ( { model
+                | value =
+                    updatedJsonValue
               }
             , Cmd.none
             )
-                |> withExMsg None
+                |> withExMsg (UpdateValue updatedJsonValue errors)
 
         FocusInput focused ->
             ( { model

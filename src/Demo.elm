@@ -106,6 +106,7 @@ update message model =
                                         { name = "form" ++ String.fromInt index
                                         , dense = True
                                         , textFieldStyle = Outlined
+                                        , collapseNestedObjects = False
                                         }
                                 in
                                 Json.Form.init config example.schema Nothing
