@@ -15,7 +15,10 @@ view model schema path =
                 |> Dict.get path
 
         hasError =
-            errors /= Nothing && List.member path model.beingEdited
+            errors
+                /= Nothing
+                && List.member path model.beingEdited
+                && List.member path model.beingFocused
     in
     ( hasError
     , if hasError then

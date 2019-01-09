@@ -205,13 +205,12 @@ view model schema isJson isRequired isDisabled path =
                 , ( "jf-textfield--multiline", multilineConfig /= Nothing )
                 , ( "jf-textfield--json", isJson )
                 ]
-
+            ]
             -- , onFocus <| FocusTextInput path
             -- , Html.Attributes.tabindex -1
-            ]
-            [ textInput
+            [ label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
+            , textInput
             , icon |> Maybe.withDefault (text "")
-            , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
             ]
         , div [ class "jf-helper-text" ] [ helperText ]
         , case enum of
@@ -310,9 +309,9 @@ viewNumeric model schema isRequired isDisabled path =
                 , ( "jf-textfield--hidden", hidden )
                 ]
             ]
-            [ numericInput
+            [ label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
+            , numericInput
             , icon |> Maybe.withDefault (text "")
-            , label [ class "jf-textfield__label" ] [ schema |> getTitle isRequired |> text ]
             ]
         , div [ class "jf-helper-text" ] [ helperText ]
         ]

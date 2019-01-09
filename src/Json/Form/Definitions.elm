@@ -20,6 +20,7 @@ type alias Model =
     , value : Maybe JsonValue
     , errors : Dict Path (List String)
     , beingEdited : List Path
+    , beingFocused : List Path
     , editedJson : String
     , showPassword : Bool
     , fieldHeights : Dict Path Float

@@ -359,7 +359,7 @@ update msg model =
         FocusInput focused ->
             ( { model
                 | focused = focused
-                , beingEdited = touch focused model.focused model.beingEdited
+                , beingFocused = touch focused model.focused model.beingFocused
               }
             , Cmd.none
             )
@@ -368,7 +368,7 @@ update msg model =
         FocusTextInput focused ->
             ( { model
                 | focused = Just focused
-                , beingEdited = touch (Just focused) model.focused model.beingEdited
+                , beingFocused = touch (Just focused) model.focused model.beingFocused
               }
             , focused |> String.join "_" |> Browser.Dom.focus |> Task.attempt (\_ -> NoOp)
             )
@@ -379,7 +379,7 @@ update msg model =
                 Nothing ->
                     if isNumber then
                         editValue
-                            { model | beingEdited = touch focused model.focused model.beingEdited, focused = Nothing }
+                            { model | beingFocused = touch focused model.focused model.beingFocused, focused = Nothing }
                             (model.focused |> Maybe.withDefault [])
                             (case model.editedJson |> String.toFloat of
                                 Just num ->
@@ -390,7 +390,7 @@ update msg model =
                             )
 
                     else
-                        ( { model | beingEdited = touch focused model.focused model.beingEdited, focused = Nothing }
+                        ( { model | beingFocused = touch focused model.focused model.beingFocused, focused = Nothing }
                         , Cmd.none
                         )
                             |> withExMsg None
@@ -481,13 +481,13 @@ update msg model =
 
 
 touch : Maybe Path -> Maybe Path -> List Path -> List Path
-touch path focused beingEdited =
+touch path focused beingWhat =
     if path == Nothing then
-        beingEdited
+        beingWhat
             |> (::) (focused |> Maybe.withDefault [])
 
     else
-        beingEdited
+        beingWhat
 
 
 editValue : Model -> Path -> JsonValue -> ( ( Model, Cmd Msg ), ExternalMsg )
@@ -516,6 +516,7 @@ editValue model path val =
                         |> decodeValue JsonValue.decoder
                         |> Result.toMaybe
                 , errors = Dict.empty
+                , beingEdited = touch Nothing (Just path) model.beingEdited
               }
             , Cmd.none
             )
@@ -529,6 +530,7 @@ editValue model path val =
             ( { model
                 | value = Just updatedJsonValue
                 , errors = errors
+                , beingEdited = touch Nothing (Just path) model.beingEdited
               }
             , Cmd.none
             )
@@ -612,6 +614,7 @@ init config schema v =
       , value = value
       , errors = errors
       , beingEdited = []
+      , beingFocused = []
       , editedJson = ""
       , showPassword = False
       , fieldHeights = Dict.empty
