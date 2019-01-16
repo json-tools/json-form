@@ -37,7 +37,7 @@ type Msg
     | EditNumber String
     | EditJson Path Float String
     | EditMultiline Path Float String
-    | AddItem Path Int
+    | AddItem Path Int Schema
     | ToggleShowPassword
     | DeleteProperty Path
     | GetViewport Path (Result Browser.Dom.Error Viewport)

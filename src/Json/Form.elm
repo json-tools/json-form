@@ -15,7 +15,7 @@ import ErrorMessages exposing (stringifyError)
 import Html exposing (..)
 import Html.Attributes exposing (class, classList)
 import Html.Events exposing (onClick)
-import Json.Decode as Decode exposing (decodeValue)
+import Json.Decode as Decode exposing (Value, decodeValue)
 import Json.Encode as Encode
 import Json.Form.Config exposing (Config)
 import Json.Form.Definitions as Definitions exposing (EditingMode(..), Msg(..), Path)
@@ -51,27 +51,29 @@ view model =
 
 viewNode : Model -> Schema -> Bool -> Bool -> Path -> Html Msg
 viewNode model schema isRequired isDisabled path =
-    case editingMode model schema of
-        TextField ->
-            TextField.view model schema False isRequired isDisabled path
+    Html.div [ class <| "nesting-level-" ++ String.fromInt (List.length path) ]
+        [ case editingMode model schema of
+            TextField ->
+                TextField.view model schema False isRequired isDisabled path
 
-        JsonEditor ->
-            TextField.view model schema True isRequired isDisabled path
+            JsonEditor ->
+                TextField.view model schema True isRequired isDisabled path
 
-        NumberField ->
-            TextField.viewNumeric model schema isRequired isDisabled path
+            NumberField ->
+                TextField.viewNumeric model schema isRequired isDisabled path
 
-        Definitions.Switch ->
-            Selection.switch model schema isRequired isDisabled path
+            Definitions.Switch ->
+                Selection.switch model schema isRequired isDisabled path
 
-        Checkbox ->
-            Selection.checkbox model schema isRequired isDisabled path
+            Checkbox ->
+                Selection.checkbox model schema isRequired isDisabled path
 
-        Object properties ->
-            viewObject model schema properties isRequired isDisabled path
+            Object properties ->
+                viewObject model schema properties isRequired isDisabled path
 
-        Array ->
-            viewArray model schema isRequired isDisabled path
+            Array ->
+                viewArray model schema isRequired isDisabled path
+        ]
 
 
 editingMode : Model -> Schema -> EditingMode
@@ -179,7 +181,7 @@ viewArray model schema isRequired isDisabled path =
                                 )
                             |> div []
                         , div [ class "array-item-add" ]
-                            [ button [ class "button", onClick <| AddItem path (List.length list) ] [ text "ADD ITEM" ]
+                            [ button [ class "button", onClick <| AddItem path (List.length list) itemSchema ] [ text "ADD ITEM" ]
                             ]
                         ]
                             |> div []
@@ -252,7 +254,7 @@ viewObject model schema properties isRequired isDisabled path =
         text ""
 
     else
-        div [ class "jf-nested-object" ]
+        div [ class "jf-object" ]
             [ if title /= "" then
                 div
                     ([ classList
@@ -297,6 +299,36 @@ updateSchema schema model =
     { model | schema = schema }
 
 
+initValue : Schema -> Value -> Value
+initValue schema someValue =
+    schema
+        |> Json.Schema.validateValue { applyDefaults = True } someValue
+        |> (\res ->
+                case res of
+                    Ok updValue ->
+                        updValue
+
+                    Err x ->
+                        someValue
+           )
+
+
+defaultFor : Schema -> JsonValue
+defaultFor s =
+    case s of
+        ObjectSchema os ->
+            if os.type_ == SingleType ObjectType then
+                Encode.object []
+                    |> initValue s
+                    |> JsonValue.decodeValue
+
+            else
+                NullValue
+
+        _ ->
+            NullValue
+
+
 update : Msg -> Model -> ( ( Model, Cmd Msg ), ExternalMsg )
 update msg model =
     case msg of
@@ -306,7 +338,7 @@ update msg model =
             )
                 |> withExMsg None
 
-        AddItem path index ->
+        AddItem path index schema ->
             let
                 newPropPath =
                     path ++ [ index |> String.fromInt ]
@@ -325,7 +357,7 @@ update msg model =
                                         |> Result.toMaybe
                             }
             in
-            editValue updatedModel newPropPath JsonValue.NullValue
+            editValue updatedModel newPropPath (defaultFor schema)
 
         DeleteProperty path ->
             let
@@ -378,16 +410,18 @@ update msg model =
             case focused of
                 Nothing ->
                     if isNumber then
-                        editValue
-                            { model | beingFocused = touch focused model.focused model.beingFocused, focused = Nothing }
-                            (model.focused |> Maybe.withDefault [])
-                            (case model.editedJson |> String.toFloat of
-                                Just num ->
-                                    JsonValue.NumericValue num
+                        case model.editedJson |> String.toFloat of
+                            Just num ->
+                                editValue
+                                    { model | beingFocused = touch focused model.focused model.beingFocused, focused = Nothing }
+                                    (model.focused |> Maybe.withDefault [])
+                                    (JsonValue.NumericValue num)
 
-                                _ ->
-                                    JsonValue.StringValue model.editedJson
-                            )
+                            _ ->
+                                ( model
+                                , Cmd.none
+                                )
+                                    |> withExMsg None
 
                     else
                         ( { model | beingFocused = touch focused model.focused model.beingFocused, focused = Nothing }
@@ -569,19 +603,19 @@ init config schema v =
         ( value, errors ) =
             case v of
                 Just something ->
-                    something |> JsonValue.encode |> initValue
+                    something |> JsonValue.encode |> initVal
 
                 Nothing ->
                     case schema of
                         ObjectSchema os ->
                             case os.default of
                                 Just def ->
-                                    def |> initValue
+                                    def |> initVal
 
                                 Nothing ->
                                     case os.type_ of
                                         SingleType ObjectType ->
-                                            Encode.object [] |> initValue
+                                            Encode.object [] |> initVal
 
                                         _ ->
                                             ( Nothing, Dict.empty )
@@ -589,7 +623,7 @@ init config schema v =
                         _ ->
                             ( Nothing, Dict.empty )
 
-        initValue someValue =
+        initVal someValue =
             schema
                 |> Json.Schema.validateValue { applyDefaults = True } someValue
                 |> (\res ->

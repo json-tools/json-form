@@ -297,12 +297,10 @@ getShowcase ds =
 
         Validation ->
             [ buildSchema
-                |> withType "string"
+                |> withType "number"
                 |> withTitle "Name"
                 |> withDescription "Enter name between 2 and 10 characters"
-                |> withMaxLength 10
-                |> withMinLength 2
-                |> withPattern "^\\D"
+                |> withMinimum 2
                 |> makeExample "Single field validation"
             , buildSchema
                 |> withType "string"

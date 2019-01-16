@@ -11,8 +11,7 @@
     font-size: 16px;
 }
 
-.jf-nested-object {
-    /* padding: var(--nested-object-padding); */
+.jf-object {
 }
 
 .jf-json-form {
