@@ -8,6 +8,7 @@ type alias Config =
     , dense : Bool
     , name : String
     , collapseNestedObjects : Bool
+    , showErrorIcon : Bool
     }
 
 
@@ -22,12 +23,13 @@ defaultConfig =
     , dense = True
     , name = ""
     , collapseNestedObjects = False
+    , showErrorIcon = True
     }
 
 
 decoder : Decoder Config
 decoder =
-    Decode.map4 Config
+    Decode.map5 Config
         ((field "textFieldStyle" <|
             Decode.andThen
                 (\x ->
@@ -49,3 +51,4 @@ decoder =
         (field "dense" bool |> maybe |> Decode.map (Maybe.withDefault True))
         (field "name" string |> maybe |> Decode.map (Maybe.withDefault ""))
         (field "collapseNestedObjects" bool |> maybe |> Decode.map (Maybe.withDefault False))
+        (field "showErrorIcon" bool |> maybe |> Decode.map (Maybe.withDefault True))

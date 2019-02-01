@@ -94,8 +94,8 @@ view model schema isJson isRequired isDisabled path =
                 else
                     ToggleShowPassword |> eye |> Just
 
-            else if hasError then
-                errorIcon |> Just
+            else if hasError && model.config.showErrorIcon then
+                Just errorIcon
 
             else if not isRequired && editedValue /= "" && not actuallyDisabled then
                 DeleteProperty path |> deleteIcon |> Just
