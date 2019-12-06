@@ -228,7 +228,7 @@ getShowcase ds =
                             |> withRuleAndWidget "disable" "switch"
                       )
                     ]
-                |> makeExample "Disable selection conrols"
+                |> makeExample "Disable selection controls"
             , buildSchema
                 |> withType "object"
                 |> withProperties
