@@ -107,6 +107,7 @@ update message model =
                                         , dense = True
                                         , textFieldStyle = Outlined
                                         , collapseNestedObjects = False
+                                        , showErrorIcon = False
                                         }
                                 in
                                 Json.Form.init config example.schema Nothing
@@ -162,7 +163,7 @@ content model =
             div [ class "example-section" ]
                 [ Html.h3 [ class "example-section__heading" ] [ text example.title ]
                 , div [ class "example-section__content" ]
-                    [ div [ style "display" "inline-block", style "max-width" "300px", style "min-width" "300px" ]
+                    [ div [ style "display" "inline-block", style "max-width" "350px", style "min-width" "350px" ]
                         [ div [ style "padding" "10px", style "background" "var(--form-background)" ]
                             [ form
                                 |> Json.Form.view

@@ -41,7 +41,7 @@
 
 .example-section__content > * {
     margin-bottom: 20px;
-    max-width: 300px;
+    max-width: 350px;
 }
 
 @media (min-width: 400px) {
